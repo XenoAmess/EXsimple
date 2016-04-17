@@ -17,6 +17,7 @@ know about SimpleHTTPRequestHandler?still not simple enough?so here is EXsimple.
   if you are one of these authors,but you don't want me use your code ,please tell me.I will rewrite that part.
   
 # how to use:
+
   simple: (in windows)
           double click.
           it will show start and show you what you wanna know.
@@ -24,5 +25,5 @@ know about SimpleHTTPRequestHandler?still not simple enough?so here is EXsimple.
           cd to the folder witch exsimple.py in.
           python3 exsimple.py
           it will show start and show you what you wanna know.
-# advanced:
+  advanced:
           open the score code to change whatever you want.
