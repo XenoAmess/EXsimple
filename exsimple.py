@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-VERSION = "2016/04/18";
+VERSION = "2017/03/21";
 DEFAULT_SERVER_IP = '192.168.135.213';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
@@ -1470,17 +1470,15 @@ class ServerListener(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.thread_stop = False;
-
+        global DEFAULT_LISTENER_PORT;
         while(1):
             try:
-                global DEFAULT_LISTENER_PORT;
                 self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
                 self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1);
                 self.sock.bind(("0.0.0.0", DEFAULT_LISTENER_PORT));
                 self.sock.listen(0);
                 break;
             except:
-                global DEFAULT_LISTENER_PORT;
                 DEFAULT_LISTENER_PORT += 1;
         print("LISTENER:");
         print(DEFAULT_LISTENER_PORT);
