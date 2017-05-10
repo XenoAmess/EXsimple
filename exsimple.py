@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-VERSION = "2017/03/21";
-DEFAULT_SERVER_IP = '192.168.135.213';
+VERSION = "2017/05/11";
+DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
 
@@ -1221,8 +1221,6 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         f.close();
         self.send_head();
         
-
-        
 #     #modified from http://www.jb51.net/article/57240.htm
 #         print('POST,HEHE');
 #         form = cgi.FieldStorage(
@@ -1325,6 +1323,18 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             f.close()
             raise
 
+    
+    
+    def do_CONNECT(self):
+        path = self.translate_path(self.path);
+        print('html PATH:', self.path);
+        print('real PATH:', path);
+    
+    
+    
+    
+    
+    
     
     
     def list_directory(self, path):
