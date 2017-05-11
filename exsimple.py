@@ -39,6 +39,10 @@ DEFAULT_GZIP = 0;
 # DEFAULT_ENC = sys.getfilesystemencoding();
 DEFAULT_ENC = 'utf-8';
 
+DEFAULT_ROBOTS_TXT = 'User-agent: *\r\nDisallow: /\r\n'
+
+DEFAULT_ENC_ROBOTS_TXT = DEFAULT_ROBOTS_TXT.encode(DEFAULT_ENC, 'surrogateescape');
+
 DEFAULT_CSS = '''
 <style type="text/css">
 html,body{
@@ -994,6 +998,16 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         return f
     
+    def give_robots_txt(self):
+        f = io.BytesIO();
+        f.write(DEFAULT_ENC_ROBOTS_TXT)
+        f.seek(0)
+        self.send_response(200)
+        self.send_header("Content-type", "text/txt; charset=%s" % DEFAULT_ENC)
+        self.send_header("Content-Length", str(len(DEFAULT_ROBOTS_TXT)))
+        self.end_headers()
+        return f
+    
     def give_css(self):        
         f = io.BytesIO();
         f.write(DEFAULT_ENC_CSS)
@@ -1291,6 +1305,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         
         if(self.path == '/index.html'):
             return self.give_index();
+        if(self.path == '/robots.txt'):
+            return self.give_robots_txt();
         if(path.endswith('stylesheet.css')):
             return self.give_css();
         if(path.endswith('favicon.ico')):
