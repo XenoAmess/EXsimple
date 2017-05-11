@@ -5,6 +5,7 @@ DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
 
+
 import html
 import http.server
 import io
@@ -22,16 +23,18 @@ import socket
 import struct
 import posixpath
 
+# -----SETTING_BEGIN-------
+
 DEFAULT_PORT = 80;
 DEFAULT_LISTENER_PORT = 11235;
-
-
+EXSIMPLE_TEST = 1
 
 CHEKEY = b'4615648741325156'
 
 DEFAULT_FILE_DIR = '/home';
 DEFAULT_GZIP = 0;
 
+# -----SETTING_END-------
 
 # DEFAULT_ENC = sys.getfilesystemencoding();
 DEFAULT_ENC = 'utf-8';
@@ -1133,8 +1136,20 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
     
 
+    def printHeaders(self):
+        print();
+        print();
+        print("-----HEADERS_BEGIN-----");
+        print(self.headers);
+        print("-----HEADERS_END-------");
+        print();
+        print();
+        
     def do_GET(self):
         """Serve a GET request."""
+        if (EXSIMPLE_TEST):
+            self.printHeaders();
+        
         f = self.send_head()
         if f:
             try:
@@ -1160,10 +1175,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 f.close();
                 
     def do_POST(self):
+        if (EXSIMPLE_TEST):
+            self.printHeaders();
+            
         path = self.translate_path(self.path);
         path = path[:len(path) - len("method_upload")];
-        print('RAW PATH:', self.path);
-        print('TRSLATED PATH:', path);
+        if (EXSIMPLE_TEST):
+            print('RAW PATH:', self.path);
+            print('TRSLATED PATH:', path);
         onetime_bytes = 1024 * 16;
         self._writeheaders();
         remain_bytes = int(self.headers.get('content-length'));
@@ -1171,8 +1190,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #         print(self.headers.get('Content-Type').split('boundary=')[1])
         str_boundary = self.headers.get('Content-Type').split('boundary=')[1].strip('-');
         b_boundary = bytes(str_boundary, encoding=DEFAULT_ENC);
-        print(remain_bytes);
-        print(str_boundary);
+        if (EXSIMPLE_TEST):
+            print(remain_bytes);
+            print(str_boundary);
 #         index = self.headers.find('boundary=');
     
 #-----------------------------9158069810016882161586011283\r\n         
@@ -1181,8 +1201,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
-        print("NAME_LINE");
-        print(now_line);
+        if (EXSIMPLE_TEST):
+            print("NAME_LINE");
+            print(now_line);
         str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), encoding=DEFAULT_ENC);
 # Content-Type: text/plain\r\n
         now_line = self.rfile.readline();
@@ -1191,8 +1212,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
 
-        print(path);
-        print(str_filename); 
+        if (EXSIMPLE_TEST):
+            print(path);
+            print(str_filename); 
         f = io.BufferedIOBase();
         global DEFAULT_GZIP;
         if(DEFAULT_GZIP == 1):
@@ -1211,11 +1233,13 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             f.write(pre_line);
             pre_line = now_line;
             now_line = self.rfile.readline();
-            
-        print(pre_line[:-2]);
+        if (EXSIMPLE_TEST):   
+            print(pre_line[:-2]);
         if(pre_line[-2:] == b'\r\n'):
             pre_line = pre_line[:len(pre_line) - len(b'\r\n')];
-        print(pre_line);
+        
+        if (EXSIMPLE_TEST):
+            print(pre_line);
         
         f.write(pre_line);
         f.close();
@@ -1258,8 +1282,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         """
         path = self.translate_path(self.path);
-        print('html PATH:', self.path);
-        print('real PATH:', path);
+        if (EXSIMPLE_TEST):
+            print('html PATH:', self.path);
+            print('real PATH:', path);
 #         print('addr:', self.address_string());
         
         
@@ -1326,10 +1351,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     
     
     def do_CONNECT(self):
-        path = self.translate_path(self.path);
-        print('html PATH:', self.path);
-        print('real PATH:', path);
-    
+        if (EXSIMPLE_TEST):
+            self.printHeaders();
     
     
     
@@ -1510,23 +1533,29 @@ class ServerDealer(threading.Thread):
         
     def run(self):
         try:     
-            print("here");
+            if (EXSIMPLE_TEST):
+                print("here");
             chekey = self.client.recv(len(CHEKEY));
-            print(chekey);
+            if (EXSIMPLE_TEST):
+                print(chekey);
             if(chekey != CHEKEY):
                 return;
             messagetype = struct.unpack('I', self.client.recv(4))[0];
-            print(messagetype);
+            if (EXSIMPLE_TEST):
+                print(messagetype);
             
             rawpath_len = struct.unpack('I', self.client.recv(4))[0];
-            print(rawpath_len)
+            if (EXSIMPLE_TEST):
+                print(rawpath_len)
             rawpath = str(self.client.recv(rawpath_len), encoding=DEFAULT_ENC);
             
-            print(rawpath)
+            if (EXSIMPLE_TEST):
+                print(rawpath)
             
             realpath = translate_path(rawpath);
-            print("REQUEST_FOLDER");
-            print(realpath);
+            if (EXSIMPLE_TEST):
+                print("REQUEST_FOLDER");
+                print(realpath);
             
             if(messagetype == 0):
     #             download
@@ -1534,15 +1563,17 @@ class ServerDealer(threading.Thread):
                     for f in each_path[2]:
                         now_path = os.path.join(each_path[0], f);
                         now_path_name = now_path[len(realpath):len(now_path)];
-                        print(now_path);
-                        print(now_path_name);
+                        if (EXSIMPLE_TEST):
+                            print(now_path);
+                            print(now_path_name);
                         b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
                         b_now_path_name_len = len(b_now_path_name);
                         self.client.send(struct.pack('i', b_now_path_name_len));
                         self.client.send(b_now_path_name);
                         
                         now_size = os.path.getsize(now_path);
-                        print(now_size);
+                        if (EXSIMPLE_TEST):
+                            print(now_size);
                         self.client.send(struct.pack('Q', now_size));
                         
                         now_file = open(now_path, 'rb');
@@ -1558,22 +1589,26 @@ class ServerDealer(threading.Thread):
     #             upload     
                 while(1):
                     b_now_path_len = struct.unpack('i', self.client.recv(4))[0];
-                    print(b_now_path_len);
+                    if (EXSIMPLE_TEST):
+                        print(b_now_path_len);
                     if(b_now_path_len == -1):
                         break;
                     b_now_path = self.client.recv(b_now_path_len);
                     now_path = str(b_now_path, encoding=DEFAULT_ENC);
-                    print(now_path);
+                    if (EXSIMPLE_TEST):
+                        print(now_path);
                     now_path = realpath + '/' + now_path;
                     now_dir = os.path.dirname(now_path);
-                    print(now_dir);
+                    if (EXSIMPLE_TEST):
+                        print(now_dir);
                     try:
                         os.makedirs(now_dir);
                     except:
                         pass;
                     
                     now_size = struct.unpack('Q', self.client.recv(8))[0];
-                    print(now_size);
+                    if (EXSIMPLE_TEST):
+                        print(now_size);
                     now_file = open(now_path, 'wb');
                     
                     while(now_size > 2048):
