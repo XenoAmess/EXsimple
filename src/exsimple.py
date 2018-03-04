@@ -721,23 +721,17 @@ input[type=button] {
         }
             
         function method_gotomain(){
-             var roota ="/";
+             var roota ="/FILE/";
              document.getElementById("innerframe").src = roota;  
         };
         
         
         function method_back(){
             var roota =  window.frames["innerframe"].document.location.pathname;
-            if(roota.endWith("//")){
+            while(roota.endWith("/")){
                 roota = roota.substring(0,roota.lastIndexOf("/"));
             }
-            
-            if(if_endWith_method(roota)){
-               roota = roota.substring(0,roota.lastIndexOf("/")+1);
-            }
-            if(roota.endWith("//")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
+            roota = roota.substring(0,roota.lastIndexOf("/"));
             while(roota.endWith("/")){
                 roota = roota.substring(0,roota.lastIndexOf("/"));
             }
@@ -761,7 +755,7 @@ input[type=button] {
             document.getElementById("innerframe").src = roota;  
         }; 
         function method_new_folder(){
-            var roota =  window.frames["innerframe"].document.location.pathname;
+            var roota = window.frames["innerframe"].document.location.pathname;
             
             if(roota.endWith("//")){
                 roota = roota.substring(0,roota.lastIndexOf("/"));
@@ -807,16 +801,13 @@ input[type=button] {
         function keydownEvent() {
             var e = window.event || arguments.callee.caller.arguments[0];
             if (e && e.keyCode == 13 ) {
-                document.getElementById("innerframe").src =  document.getElementById("URL").value;
+                document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE"+document.getElementById("URL").value;
             }
         };
        
         
         function inininin(){
-            document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/" ;
-        }
-        function every_time_inin(){
-            document.getElementById("URL").value = document.getElementById("innerframe").src ;
+            document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE/" ;
         }
         function setURL(strURL){
             document.getElementById("URL").value = strURL ;
@@ -1048,7 +1039,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                        <h3>No file nor folder here.Here 's empty.Click [new-folder] to creat a folder here:<br/>%s</h3>
                    </body> 
                 </html>
-                ''' % (self.path);
+                ''' % (self.path[5:]);
         
         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
@@ -1073,7 +1064,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                    <h3>ERROR!You had tried to creat an already-existed folder at:<br/>%s</h3>
                </body> 
             </html>
-            ''' % (self.path[:len(self.path) - len('method_new_folder')]);
+            ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
 
         elif(os.path.isfile(path)):
             RETURNED_MESSAGE = '''
@@ -1083,7 +1074,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                    <h3>ERROR!You had tried to creat an folder whose path is same to an already-existed file at:<br/>%s</h3>
                </body> 
             </html>
-            ''' % (self.path[:len(self.path) - len('method_new_folder')]);
+            ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
         else:
             try:
                 os.makedirs(path);
@@ -1094,7 +1085,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                        <h3>SUCCESS!You had created a new folder at:<br/>%s</h3>
                    </body> 
                 </html>
-                ''' % (self.path[:len(self.path) - len('method_new_folder')]);
+                ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
             except BaseException:
                 RETURNED_MESSAGE = '''
                 <html>
@@ -1103,7 +1094,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                        <h3>ERROR!You had failed to create a new folder at:<br/>%s</h3>
                    </body> 
                 </html>
-                ''' % (self.path[:len(self.path) - len('method_new_folder')]);
+                ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
         
         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
@@ -1309,8 +1300,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         DEBUG_PRINT('real PATH:', path);
 #         DEBUG_PRINT('addr:', self.address_string());
         
-        if(self.path == '/index.html'):
+        if(self.path == '/' or self.path == ''):
             return self.give_index();
+#         if(self.path == '/index.html'):
+#             return self.give_index();
         if(self.path == '/robots.txt'):
             return self.give_robots_txt();
         if(path.endswith('stylesheet.css')):
@@ -1407,7 +1400,11 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('''
         <script type="text/javascript">
         function sayhi(){
-            parent.setURL(window.location.pathname);
+            var urlStr = window.location.pathname;
+            //console.log(urlStr);
+            urlStr = urlStr.substring(urlStr.indexOf("FILE/")+"FILE/".length-1,urlStr.length);
+            //console.log(urlStr);
+            parent.setURL(urlStr);
             /*alert(window.location.href);*/
         }
         </script>''');
@@ -1416,7 +1413,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('<ul>'); 
         
 #         如果不在根目录
-        if(displaypath != '/'):
+        if(displaypath != '/FILE/'):
             
             fatherpath = None;
             for i in range(0, len(displaypath) - 1)[::-1]:
@@ -1482,7 +1479,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
     
     def translate_path(self, path):
-        os.chdir(DEFAULT_FILE_DIR);
+        os.chdir(DEFAULT_FILE_DIR + "/FILE");
         return http.server.SimpleHTTPRequestHandler.translate_path(self, path)
 
 
@@ -1650,7 +1647,7 @@ class ServerDealer(threading.Thread):
 
 
 if (__name__ == "__main__"):
-    DEFAULT_FILE_DIR = os.getcwd() + '/FILE';
+    DEFAULT_FILE_DIR = os.getcwd();
     DEBUG_PRINT ("received commands:");
     for au in sys.argv:
         DEBUG_PRINT (au);
