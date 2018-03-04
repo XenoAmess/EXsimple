@@ -540,15 +540,15 @@ DEFAULT_INDEX = '''
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" mce_href="favicon.ico"/>
+<link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
 
 <style type="text/css">
 html,body{
     font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
     margin:0px;
     padding:0;
-    width:100%;
-    height:100%;
+    width:100%%;
+    height:100%%;
     overflow : auto;
 } 
 body {
@@ -557,7 +557,7 @@ body {
 h1 {
     margin: 0px;
     padding: 0px;
-    color : orange;
+    color : pink;
     font-weight : 800;
     font-size : 80px;
     font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
@@ -622,7 +622,7 @@ div.window {
 input[type=button] {
     background: -moz-linear-gradient(#ffffff, #dfdfdf);
     background: -ms-linear-gradient(#ffffff, #dfdfdf);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #dfdfdf));
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%%, #ffffff), color-stop(100%%, #dfdfdf));
     background: -webkit-linear-gradient(#ffffff, #dfdfdf);
     background: -o-linear-gradient(#ffffff, #dfdfdf);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf');
@@ -815,14 +815,16 @@ input[type=button] {
         
         </script>
 
-<title>DailyPaste!</title>
+<title>%s</title>
 </head>
 <body  onload = "inininin()">
-<h1>DailyPaste!</h1>
-<h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
+<h1>%s</h1>
+<h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!(Don't over use it or I will be bankrupt )</h1>
+<h1 class = "subtitle">provided by XenoAmess.</h1>
+ 
 <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
 <div style = "clear:both" class = "window">
-<div class = "window-title">DailyPaste!</div>
+<div class = "window-title">%s</div>
 <div class = "window-button">
             <input type="button" value = "main" id = "method_gotomain" onclick = "method_gotomain()"/>
             <input type="button" value = "back" id = "method_back" onclick = "method_back()"/>
@@ -833,16 +835,16 @@ input[type=button] {
             <input type="button" value = "up-all" id = "method_up_all" onclick = "method_up_all()"/>
 </div>
 <div class = "window-url">
-<input type="text" name="URL" id ="URL" value="" onKeyDown="keydownEvent()"  style="width:95%"/>
+<input type="text" name="URL" id ="URL" value="" onKeyDown="keydownEvent()"  style="width:95%%"/>
 </div>
 <div class = "window-body">
-<iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%" height = "100%" style="border:none;"   allowtransparency="false">
+<iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false">
 </iframe>   
 </div>
 </div>
 </body>
 </html>
-''';
+''' % (DEFAULT_TITLE,DEFAULT_TITLE,DEFAULT_TITLE)
 
 DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 
@@ -1386,7 +1388,6 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         except UnicodeDecodeError:
             displaypath = urllib.parse.unquote(path)
         displaypath = html.escape(displaypath)
-        title = DEFAULT_TITLE;
 #         title = '路径: %s' % displaypath
         r.append('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" '
                  '"http://www.w3.org/TR/html4/strict.dtd">')
@@ -1394,7 +1395,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('<meta http-equiv="Content-Type" '
                  'content="text/html; charset=%s">' % DEFAULT_ENC)
 #         r.append('<link type="text/css" rel="stylesheet" href="stylesheet.css"/>');
-        r.append('<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" mce_href="favicon.ico"/>');
+        r.append('<link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>');
         r.append(DEFAULT_CSS);
         r.append(DEFAULT_JSCRIPT);
         r.append('''
@@ -1408,7 +1409,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             /*alert(window.location.href);*/
         }
         </script>''');
-        r.append('<title>%s</title>\n</head>' % title)
+        r.append('<title>%s</title>\n</head>' % DEFAULT_TITLE)
         r.append('<body onload = "sayhi()" >')
         r.append('<ul>'); 
         
