@@ -5,7 +5,6 @@ DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
 
-
 import html
 import http.server
 import io
@@ -27,7 +26,7 @@ import posixpath
 
 DEFAULT_PORT = 80;
 DEFAULT_LISTENER_PORT = 11235;
-EXSIMPLE_TEST = 1
+
 
 CHEKEY = b'4615648741325156'
 
@@ -952,8 +951,17 @@ elif(MODE == 1):
     upload();
 ''';
 
+MODE_DEBUG = False;
+
+
+def DEBUG_PRINT(*strs):
+    if(MODE_DEBUG):
+        print("\033[1;36;41m");
+        print(strs);
+        print("\033[0m");
 
 # DEFAULT_ENC_METHOD_DOWN_ALL = DEFAULT_METHOD_DOWN_ALL.encode(DEFAULT_ENC, 'surrogateescape');
+
 
 def txt_wrap_by(start_str, end_str, html_str):
     '''取出字符串html_str中的，被start_str与end_str包绕的字符串.这个版本和以前不同.将会从头和从尾两端向中间撸.'''
@@ -966,8 +974,6 @@ def txt_wrap_by(start_str, end_str, html_str):
         t_end += len(end_str);
     end = len(html_str) - t_end;
     return html_str[start:end].strip();
-
-
 
 
 def QUICK_START(file_dir=DEFAULT_FILE_DIR , port=DEFAULT_PORT):
@@ -986,9 +992,12 @@ def QUICK_START(file_dir=DEFAULT_FILE_DIR , port=DEFAULT_PORT):
     LISTENER.start();
     ss.serve_forever();
 
+
 class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+
     def __init__(self, request, client_address, server):
         http.server.SimpleHTTPRequestHandler.__init__(self=self, request=request, client_address=client_address, server=server); 
+
     def give_index(self):
         f = io.BytesIO();
         f.write(DEFAULT_ENC_INDEX)
@@ -1030,7 +1039,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
     
     def empty_here(self, path):
-        print('EMPTY here:', path);
+        DEBUG_PRINT('EMPTY here:', path);
         RETURNED_MESSAGE = '''
                 <html>
                    <head/>
@@ -1050,8 +1059,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
         self.end_headers();
         return f;
+
     def give_method_new_folder(self, path): 
-        print('new FOLDER:', path);
+        DEBUG_PRINT('new FOLDER:', path);
         RETURNED_MESSAGE = '';
         
         if(os.path.isdir(path)):
@@ -1106,7 +1116,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
         
     def give_method_down_all(self):
-        print('EMPTY here:');
+        DEBUG_PRINT('EMPTY here:');
         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (0, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
@@ -1120,7 +1130,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f;
     
     def give_method_up_all(self):
-        print('EMPTY here:');
+        DEBUG_PRINT('EMPTY here:');
         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (1, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
@@ -1144,26 +1154,24 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
     
     def _writeheaders(self):
-        print (self.path)
-#          print (self.headers)
+        DEBUG_PRINT (self.path)
+        DEBUG_PRINT (self.headers)
         self.send_response(200);
         self.send_header('Content-type', 'text/html');
         self.end_headers()
-    
 
     def printHeaders(self):
-        print();
-        print();
-        print("-----HEADERS_BEGIN-----");
-        print(self.headers);
-        print("-----HEADERS_END-------");
-        print();
-        print();
+        DEBUG_PRINT();
+        DEBUG_PRINT();
+        DEBUG_PRINT("-----HEADERS_BEGIN-----");
+        DEBUG_PRINT(self.headers);
+        DEBUG_PRINT("-----HEADERS_END-------");
+        DEBUG_PRINT();
+        DEBUG_PRINT();
         
     def do_GET(self):
         """Serve a GET request."""
-        if (EXSIMPLE_TEST):
-            self.printHeaders();
+        self.printHeaders();
         
         f = self.send_head()
         if f:
@@ -1190,24 +1198,24 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 f.close();
                 
     def do_POST(self):
-        if (EXSIMPLE_TEST):
-            self.printHeaders();
+        
+        self.printHeaders();
             
         path = self.translate_path(self.path);
         path = path[:len(path) - len("method_upload")];
-        if (EXSIMPLE_TEST):
-            print('RAW PATH:', self.path);
-            print('TRSLATED PATH:', path);
+        
+        DEBUG_PRINT('RAW PATH:', self.path);
+        DEBUG_PRINT('TRSLATED PATH:', path);
         onetime_bytes = 8388608;
         self._writeheaders();
         remain_bytes = int(self.headers.get('content-length'));
         
-#         print(self.headers.get('Content-Type').split('boundary=')[1])
+#         DEBUG_PRINT(self.headers.get('Content-Type').split('boundary=')[1])
         str_boundary = self.headers.get('Content-Type').split('boundary=')[1].strip('-');
         b_boundary = bytes(str_boundary, encoding=DEFAULT_ENC);
-        if (EXSIMPLE_TEST):
-            print(remain_bytes);
-            print(str_boundary);
+        
+        DEBUG_PRINT(remain_bytes);
+        DEBUG_PRINT(str_boundary);
 #         index = self.headers.find('boundary=');
     
 #-----------------------------9158069810016882161586011283\r\n         
@@ -1216,9 +1224,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
-        if (EXSIMPLE_TEST):
-            print("NAME_LINE");
-            print(now_line);
+        
+        DEBUG_PRINT("NAME_LINE");
+        DEBUG_PRINT(now_line);
         str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), encoding=DEFAULT_ENC);
 # Content-Type: text/plain\r\n
         now_line = self.rfile.readline();
@@ -1226,10 +1234,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 # \r\n
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
-
-        if (EXSIMPLE_TEST):
-            print(path);
-            print(str_filename); 
+        
+        DEBUG_PRINT(path);
+        DEBUG_PRINT(str_filename); 
         f = io.BufferedIOBase();
         global DEFAULT_GZIP;
         if(DEFAULT_GZIP == 1):
@@ -1248,13 +1255,12 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             f.write(pre_line);
             pre_line = now_line;
             now_line = self.rfile.readline();
-        if (EXSIMPLE_TEST):   
-            print(pre_line[:-2]);
+          
+        DEBUG_PRINT(pre_line[:-2]);
         if(pre_line[-2:] == b'\r\n'):
             pre_line = pre_line[:len(pre_line) - len(b'\r\n')];
         
-        if (EXSIMPLE_TEST):
-            print(pre_line);
+        DEBUG_PRINT(pre_line);
         
         f.write(pre_line);
         f.close();
@@ -1297,12 +1303,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         """
         path = self.translate_path(self.path);
-        if (EXSIMPLE_TEST):
-            print('html PATH:', self.path);
-            print('real PATH:', path);
-#         print('addr:', self.address_string());
         
-        
+        DEBUG_PRINT('html PATH:', self.path);
+        DEBUG_PRINT('real PATH:', path);
+#         DEBUG_PRINT('addr:', self.address_string());
         
         if(self.path == '/index.html'):
             return self.give_index();
@@ -1342,7 +1346,6 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.list_directory(path)
         ctype = self.guess_type(path)
         
-        
         if (not os.path.isfile(path)):
             if (not path.endswith('/')):
                 path += '/';
@@ -1364,18 +1367,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         except:
             f.close()
             raise
-
-    
     
     def do_CONNECT(self):
-        if (EXSIMPLE_TEST):
-            self.printHeaders();
-    
-    
-    
-    
-    
-    
+        self.printHeaders();
     
     def list_directory(self, path):
         """Helper to produce a directory listing (absent index.html).
@@ -1423,15 +1417,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #         如果不在根目录
         if(displaypath != '/'):
             
-            
             fatherpath = None;
             for i in range(0, len(displaypath) - 1)[::-1]:
                 if(displaypath[i] == '/'):
                     fatherpath = displaypath[:i + 1];
                     break;
             
-#             print('now user is in displaypath:', displaypath);
-#             print('user can go back fatherpath:', fatherpath);
+#             DEBUG_PRINT('now user is in displaypath:', displaypath);
+#             DEBUG_PRINT('user can go back fatherpath:', fatherpath);
             
             if(fatherpath != None):
                 r.append('<li class = "link"><a class = "link_in_list" href="%s" target="_self" >%s</a></li>'
@@ -1473,7 +1466,6 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                                               errors='surrogatepass'),
                            html.escape(displayname)));
             
-            
         r.append('</ul>');
         r.append('</body>');
         r.append('</html>');
@@ -1491,6 +1483,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def translate_path(self, path):
         os.chdir(DEFAULT_FILE_DIR);
         return http.server.SimpleHTTPRequestHandler.translate_path(self, path)
+
 
 def translate_path(path):
     os.chdir(DEFAULT_FILE_DIR);
@@ -1516,7 +1509,9 @@ def translate_path(path):
         path += '/'
     return path
 
+
 class ServerListener(threading.Thread):
+
     def __init__(self):
         threading.Thread.__init__(self)
         self.thread_stop = False;
@@ -1532,6 +1527,7 @@ class ServerListener(threading.Thread):
                 DEFAULT_LISTENER_PORT += 1;
         print("LISTENER:");
         print(DEFAULT_LISTENER_PORT);
+
     def run(self):
         while True:
             if(self.thread_stop == True):
@@ -1540,39 +1536,39 @@ class ServerListener(threading.Thread):
             client, cltadd = self.sock.accept();
             ServerDealer(client=client, client_ip=cltadd , listener=self).start();
 
+
 class ServerDealer(threading.Thread):
+
     def __init__(self, client, listener, client_ip):
         threading.Thread.__init__(self)
         self.client = client
         self.listener = listener
         self.client_ip = client_ip
-
         
     def run(self):
         try:     
-            if (EXSIMPLE_TEST):
-                print("here");
+            
+            DEBUG_PRINT("here");
             chekey = self.client.recv(len(CHEKEY));
-            if (EXSIMPLE_TEST):
-                print(chekey);
+            
+            DEBUG_PRINT(chekey);
             if(chekey != CHEKEY):
                 return;
             messagetype = struct.unpack('I', self.client.recv(4))[0];
-            if (EXSIMPLE_TEST):
-                print(messagetype);
+            
+            DEBUG_PRINT(messagetype);
             
             rawpath_len = struct.unpack('I', self.client.recv(4))[0];
-            if (EXSIMPLE_TEST):
-                print(rawpath_len)
+            
+            DEBUG_PRINT(rawpath_len)
             rawpath = str(self.client.recv(rawpath_len), encoding=DEFAULT_ENC);
             
-            if (EXSIMPLE_TEST):
-                print(rawpath)
+            DEBUG_PRINT(rawpath)
             
             realpath = translate_path(rawpath);
-            if (EXSIMPLE_TEST):
-                print("REQUEST_FOLDER");
-                print(realpath);
+            
+            DEBUG_PRINT("REQUEST_FOLDER");
+            DEBUG_PRINT(realpath);
             
             if(messagetype == 0):
     #             download
@@ -1580,17 +1576,17 @@ class ServerDealer(threading.Thread):
                     for f in each_path[2]:
                         now_path = os.path.join(each_path[0], f);
                         now_path_name = now_path[len(realpath):len(now_path)];
-                        if (EXSIMPLE_TEST):
-                            print(now_path);
-                            print(now_path_name);
+                        
+                        DEBUG_PRINT(now_path);
+                        DEBUG_PRINT(now_path_name);
                         b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
                         b_now_path_name_len = len(b_now_path_name);
                         self.client.send(struct.pack('i', b_now_path_name_len));
                         self.client.send(b_now_path_name);
                         
                         now_size = os.path.getsize(now_path);
-                        if (EXSIMPLE_TEST):
-                            print(now_size);
+                        
+                        DEBUG_PRINT(now_size);
                         self.client.send(struct.pack('Q', now_size));
                         
                         now_file = open(now_path, 'rb');
@@ -1606,26 +1602,26 @@ class ServerDealer(threading.Thread):
     #             upload     
                 while(1):
                     b_now_path_len = struct.unpack('i', self.client.recv(4))[0];
-                    if (EXSIMPLE_TEST):
-                        print(b_now_path_len);
+                    
+                    DEBUG_PRINT(b_now_path_len);
                     if(b_now_path_len == -1):
                         break;
                     b_now_path = self.client.recv(b_now_path_len);
                     now_path = str(b_now_path, encoding=DEFAULT_ENC);
-                    if (EXSIMPLE_TEST):
-                        print(now_path);
+                    
+                    DEBUG_PRINT(now_path);
                     now_path = realpath + '/' + now_path;
                     now_dir = os.path.dirname(now_path);
-                    if (EXSIMPLE_TEST):
-                        print(now_dir);
+                    
+                    DEBUG_PRINT(now_dir);
                     try:
                         os.makedirs(now_dir);
                     except:
                         pass;
                     
                     now_size = struct.unpack('Q', self.client.recv(8))[0];
-                    if (EXSIMPLE_TEST):
-                        print(now_size);
+                    
+                    DEBUG_PRINT(now_size);
                     now_file = open(now_path, 'wb');
                     
                     while(now_size > 8388608):
@@ -1651,11 +1647,12 @@ class ServerDealer(threading.Thread):
 #             string = False
 #         return string
 
+
 if (__name__ == "__main__"):
     DEFAULT_FILE_DIR = os.getcwd() + '/FILE';
-    print ("received commands:");
+    DEBUG_PRINT ("received commands:");
     for au in sys.argv:
-        print (au);
+        DEBUG_PRINT (au);
         au_num = -1;
         try:
             au_num = int(au);
@@ -1692,11 +1689,12 @@ if (__name__ == "__main__"):
                     DEFAULT_GZIP = 1;
                 elif(au == "gzip"):
                     DEFAULT_GZIP = 1;
+                elif(au == "debug"):
+                    MODE_DEBUG = 1;
                 elif(au.startswith("port=")):
                     DEFAULT_PORT = int(au[-(len(au) - len("port=")):]);
                 elif(au.startswith("port:")):
                     DEFAULT_PORT = int(au[-(len(au) - len("port:")):]);
-            
             
 #     print(DEFAULT_FILE_DIR);
     while(1):
@@ -1706,7 +1704,4 @@ if (__name__ == "__main__"):
             DEFAULT_PORT += 1;
             pass;
 #     QUICK_START("/home/sfeq/FILES", 10001);
-
-
-
 
