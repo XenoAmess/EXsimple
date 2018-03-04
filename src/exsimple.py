@@ -1479,7 +1479,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
     
     def translate_path(self, path):
-        os.chdir(DEFAULT_FILE_DIR + "/FILE");
+        os.chdir(DEFAULT_FILE_DIR);
         return http.server.SimpleHTTPRequestHandler.translate_path(self, path)
 
 
@@ -1662,6 +1662,7 @@ if (__name__ == "__main__"):
             if(au[-len('.py'):] == '.py'):
                 pass;
 #                DEFAULT_FILE_DIR = os.path.dirname(au) + '/FILE';
+            
             if(os.path.isdir(au)):
                 DEFAULT_FILE_DIR = au;
             elif(au.startswith("dir=")):
@@ -1693,7 +1694,11 @@ if (__name__ == "__main__"):
                     DEFAULT_PORT = int(au[-(len(au) - len("port=")):]);
                 elif(au.startswith("port:")):
                     DEFAULT_PORT = int(au[-(len(au) - len("port:")):]);
-            
+                    
+    if not os.path.isdir(DEFAULT_FILE_DIR):
+        os.mkdir(DEFAULT_FILE_DIR);
+    if not os.path.isdir(DEFAULT_FILE_DIR+ "/FILE/"): 
+        os.mkdir(DEFAULT_FILE_DIR + "/FILE/");
 #     print(DEFAULT_FILE_DIR);
     while(1):
         try:
