@@ -829,7 +829,7 @@ input[type=button] {
 <body  onload = "inininin()">
 <h1>EXsimple</h1>
 <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
-<h1 class = "subtitle">github : <a target="_blank" href="https://github.com/a386881/EXsimple/">https://github.com/a386881/EXsimple/</a></h1>
+<h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/a386881/EXsimple/</a></h1>
 <div style = "clear:both" class = "window">
 <div class = "window-title">EXsimple</div>
 <div class = "window-button">
