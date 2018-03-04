@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-VERSION = "2018/03/04";
+VERSION = "2018/03/05";
 DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
