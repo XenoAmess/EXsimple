@@ -27,7 +27,6 @@ import posixpath
 DEFAULT_PORT = 80;
 DEFAULT_LISTENER_PORT = 11235;
 
-
 CHEKEY = b'4615648741325156'
 
 DEFAULT_FILE_DIR = '/home';
@@ -956,9 +955,11 @@ MODE_DEBUG = False;
 
 def DEBUG_PRINT(*strs):
     if(MODE_DEBUG):
-        print("\033[1;36;41m");
-        print(strs);
-        print("\033[0m");
+#         print("\033[1;36;41m",end='');
+        for str in strs:
+            print(str, end=' ');
+        print();
+#         print("\033[0m",end='');
 
 # DEFAULT_ENC_METHOD_DOWN_ALL = DEFAULT_METHOD_DOWN_ALL.encode(DEFAULT_ENC, 'surrogateescape');
 
@@ -1690,7 +1691,7 @@ if (__name__ == "__main__"):
                 elif(au == "gzip"):
                     DEFAULT_GZIP = 1;
                 elif(au == "debug"):
-                    MODE_DEBUG = 1;
+                    MODE_DEBUG = True;
                 elif(au.startswith("port=")):
                     DEFAULT_PORT = int(au[-(len(au) - len("port=")):]);
                 elif(au.startswith("port:")):
