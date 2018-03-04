@@ -2,7 +2,7 @@
 know about SimpleHTTPRequestHandler?still not simple enough?so here is EXsimple.
 
 # living example
-[Title]http://dailypaste.com/
+http://dailypaste.com/
 	
 # what is it:
   an extention to the SimpleHTTPRequestHandler,includes:
