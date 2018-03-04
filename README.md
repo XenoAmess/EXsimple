@@ -1,6 +1,9 @@
 # EXsimple
 know about SimpleHTTPRequestHandler?still not simple enough?so here is EXsimple.
 
+# living example
+	http://dailypaste.com/
+	
 # what is it:
   an extention to the SimpleHTTPRequestHandler,includes:
   file upload
@@ -27,3 +30,4 @@ know about SimpleHTTPRequestHandler?still not simple enough?so here is EXsimple.
           it will show start and show you what you wanna know.
   advanced:
           open the score code to change whatever you want.
+          also,notice that if you use pypy3 instead of python3,it might run far faster.
