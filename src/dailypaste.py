@@ -37,7 +37,7 @@ DEFAULT_GZIP = 0;
 # DEFAULT_ENC = sys.getfilesystemencoding();
 DEFAULT_ENC = 'utf-8';
 
-DEFAULT_ROBOTS_TXT = 'User-agent: *\r\nDisallow: /\r\n'
+DEFAULT_ROBOTS_TXT = 'User-agent: *\r\nDisallow: /FILE/\r\n'
 
 DEFAULT_ENC_ROBOTS_TXT = DEFAULT_ROBOTS_TXT.encode(DEFAULT_ENC, 'surrogateescape');
 
@@ -1314,11 +1314,11 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.give_index();
 #         if(self.path == '/index.html'):
 #             return self.give_index();
-        if(self.path == '/robots.txt'):
+        if(self.path == '/robots.txt' or self.path == '/robot.txt' ):
             return self.give_robots_txt();
         if(path.endswith('stylesheet.css')):
             return self.give_css();
-        if(path.endswith('favicon.ico')):
+        if(self.path == '/FILE/favicon.ico'):
             return self.give_ico();
         if(path.endswith('method_upload')):
             return self.give_method_upload();
