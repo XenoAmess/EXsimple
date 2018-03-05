@@ -27,7 +27,7 @@ import posixpath
 DEFAULT_PORT = 80;
 DEFAULT_LISTENER_PORT = 11235;
 
-CHEKEY = bytes(VERSION, encoding = "utf8")
+CHEKEY = bytes(VERSION, encoding="utf8")
 
 DEFAULT_FILE_DIR = '/home';
 DEFAULT_GZIP = 0;
@@ -852,7 +852,7 @@ input[type=button] {
 </div>
 </body>
 </html>
-''' % (DEFAULT_TITLE,DEFAULT_TITLE,DEFAULT_TITLE)
+''' % (DEFAULT_TITLE, DEFAULT_TITLE, DEFAULT_TITLE)
 
 DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 
@@ -1319,7 +1319,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.give_index();
 #         if(self.path == '/index.html'):
 #             return self.give_index();
-        if(self.path == '/robots.txt' or self.path == '/robot.txt' ):
+        if(self.path == '/robots.txt' or self.path == '/robot.txt'):
             return self.give_robots_txt();
         if(path.endswith('stylesheet.css')):
             return self.give_css();
@@ -1711,7 +1711,7 @@ if (__name__ == "__main__"):
                     
     if not os.path.isdir(DEFAULT_FILE_DIR):
         os.mkdir(DEFAULT_FILE_DIR);
-    if not os.path.isdir(DEFAULT_FILE_DIR+ "/FILE/"): 
+    if not os.path.isdir(DEFAULT_FILE_DIR + "/FILE/"): 
         os.mkdir(DEFAULT_FILE_DIR + "/FILE/");
 #     print(DEFAULT_FILE_DIR);
     while(1):
