@@ -16,6 +16,10 @@ http://dailypaste.com/
   and change it to your own IP
   //but if you don't do so,it's OK either.
   
+# drag it to move!
+  I just notice that soo many people don't know this...
+  ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/drag.gif)
+  
   
 # notice:
   some codes are not modified(or copied) by others in their teaching blogs.I had put links on the front these codes.of course I had no rights with these codes.thanks for the original authors to write blogs to teach me so much.thank you.
