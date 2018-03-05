@@ -1208,6 +1208,11 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         
         DEBUG_PRINT('RAW PATH:', self.path);
         DEBUG_PRINT('TRSLATED PATH:', path);
+        if(not self.path.startswith("/FILE/")):
+            DEBUG_PRINT("REFUSED!!");
+            self.send_head();
+            return;
+        
         onetime_bytes = 8388608;
         self._writeheaders();
         remain_bytes = int(self.headers.get('content-length'));
