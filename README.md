@@ -14,7 +14,9 @@ http://dailypaste.com/
 # please:
   find this line in exsimple.py:  DEFAULT_SERVER_IP = '192.168.135.213';
   and change it to your own IP
-
+  //but if you don't do so,it's OK either.
+  
+  
 # notice:
   some codes are not modified(or copied) by others in their teaching blogs.I had put links on the front these codes.of course I had no rights with these codes.thanks for the original authors to write blogs to teach me so much.thank you.
   if you are one of these authors,but you don't want me use your code ,please tell me.I will rewrite that part.
