@@ -20,6 +20,16 @@ http://dailypaste.com/
   I just notice that soo many people don't know this...
   ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/drag.gif)
   
+# enter a not-in-use url,and press Enter,then press new-folder button,boom!a new folder appears!
+  I just notice that soo many people don't know this...
+  ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/newFolder.gif)
+  
+# Do not upload a file with a same name to a file in the same folder.
+  doing that would replace the old file with the new one,the old file just rest-in-peace.
+  this is used for people to update their own file,not used to f**k up others' file.
+  I hope nobody shall be that bad person,making fun of others' pain.
+  
+  
   
 # notice:
   some codes are not modified(or copied) by others in their teaching blogs.I had put links on the front these codes.of course I had no rights with these codes.thanks for the original authors to write blogs to teach me so much.thank you.
