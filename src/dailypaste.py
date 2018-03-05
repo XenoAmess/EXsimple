@@ -1066,6 +1066,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         DEBUG_PRINT('new FOLDER:', path);
         RETURNED_MESSAGE = '';
         
+        if(not self.path.startswith("/FILE/")):
+            return "";
+        
         if(os.path.isdir(path)):
             RETURNED_MESSAGE = '''
             <html>
