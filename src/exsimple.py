@@ -1204,7 +1204,6 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_head();
             return;
         
-        onetime_bytes = 8388608;
         self._writeheaders();
         remain_bytes = int(self.headers.get('content-length'));
         
@@ -1242,11 +1241,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         else:
             f = open(path + str_filename, 'wb');
         
-        while(remain_bytes > onetime_bytes * 2):        
-            now_line = self.rfile.read(onetime_bytes);
-            remain_bytes -= len(now_line);
-            f.write(now_line);
-            
+        if(remain_bytes>1024):
+            f.write(self.rfile.read(remain_bytes-1024));
+            remain_bytes -= 1024;
+        
         pre_line = self.rfile.readline();
         now_line = self.rfile.readline();
         while(not(b_boundary in now_line)):
