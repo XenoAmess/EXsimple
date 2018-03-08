@@ -1,9 +1,11 @@
 # -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-VERSION = "2018/03/05";
-DEFAULT_SERVER_IP = '127.0.0.1';
+VERSION = "2018/03/09";
+THIS_IS_DAILYPASTE = False;
+# DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
+# no need to change it more.somethings has been deprecated.RIP.
 
 import html
 import http.server
@@ -21,25 +23,37 @@ import threading
 import socket
 import struct
 import posixpath
+import zlib
 
 # -----SETTING_BEGIN-------
 
 DEFAULT_PORT = 80;
-DEFAULT_LISTENER_PORT = 11235;
-
+# DEFAULT_LISTENER_PORT = 11235;
 CHEKEY = bytes(VERSION, encoding="utf8")
-
 DEFAULT_FILE_DIR = '/home';
 DEFAULT_GZIP = 0;
-
-# -----SETTING_END-------
-
-# DEFAULT_ENC = sys.getfilesystemencoding();
 DEFAULT_ENC = 'utf-8';
-
 DEFAULT_ROBOTS_TXT = 'User-agent: *\r\nDisallow: /FILE/\r\n'
-
 DEFAULT_ENC_ROBOTS_TXT = DEFAULT_ROBOTS_TXT.encode(DEFAULT_ENC, 'surrogateescape');
+DEFAULT_ICON_B64 = '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';
+DEFAULT_ICON = base64.b64decode(DEFAULT_ICON_B64);
+DEFAULT_ICON = zlib.decompress(DEFAULT_ICON);
+DEFAULT_TITLE = 'EXsimple';
+DEFAULT_TITLE_WORDS='''
+    <h1>%s</h1>
+    <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
+    <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
+'''%(DEFAULT_TITLE);
+
+if THIS_IS_DAILYPASTE:
+    DEFAULT_TITLE = 'DailyPaste!'
+    DEFAULT_TITLE_WORDS ='''
+    <h1>%s</h1>
+    <h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!</h1>
+    <h1 class = "subtitle">(Don't over use it or I will be bankrupt!)</h1>
+    <h1 class = "subtitle">provided by XenoAmess!</h1>
+    <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
+'''%(DEFAULT_TITLE);
 
 DEFAULT_CSS = '''
 <style type="text/css">
@@ -117,73 +131,74 @@ a.link_in_list:hover {
 /*访问过后的样式*/
 </style>
 '''
+DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
 
-DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape')
-DEFAULT_ICON_B64 = 'AAABAAMAEBAAAAEAIABoBAAANgAAACAgAAABACAAqBAAAJ4EAAAwMAAAAQAgAKglAABGFQAAKAAAABAAAAAgAAAAAQAgAAAAAABABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAHQAAADUAAABCAAAARwAAAEUAAAA4AAAAHwAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP9DxTDnT+swv0v33JtD//xzM//8Zx/rYEpfAewAAADsAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE7e/fdE2///Otj//zDU//8m0P///////xvL/fcAAABAAAAAHAAAAAkAAAAFAAAAAQAAAAIAAAAJAAAAEwAAABJY4///Tt///0Tb//861///MNP//yXQ//8czP//AAAAQQAAADUAAAAsAAAAHgAAAAsAAAAIAAAAIQAAADwAAAA1Yuf//1jj//9O3///PcfoqjTF66kqwuupIb7rqRi766kYu+upEpvGeQAAAEEAAAAgo3VAb6JzPfeccDr/AAAAS2zr//9i5///WOP//07f//9D2///Odf//y/T//8kz///HMz//xzM//8SmsJ6AAAANK59Q9eoeUH/oXQ9/0syHFtv4/WzbOv//2Hn//9X4///Td///0Pb//851///LtP//yTP//8czP//GsHzwgAAAEGygUb3rX1E/6Z4QP+RZzaqAAAATm7h8qZq6f33Yeb//1fj//9N3///Qtv//zjX//8u0///JM///xvL/fcAAABHuYdK/7KBR/+rfEP/pXY//5NpNrZFMRtcAAAATAAAAEgAAABHAAAAQUXD4mtB2f33ONf//y3T//8jz///AAAARr6LTf+3hUn/sIBG/6p7Qv+jdT7/nHA7/5ZqN/+UaTb/kmg194dgMrYAAABPRc7siELa//831v//LdP//wAAAD3Dj1D/vIlM/7WESP+vf0X/qHlB/6F0Pf+bbzr/lGk2/5RpNv+UaTb/h2AytgAAAENL3v//Qdr//zbV/e0AAAAkxpFSvcGNT/+7iEv/tINI/619RP+meED/oHM9/5ltOf+UaTb/lGk2/5RpNv8AAABIVeL//0rd/fc+1fmCAAAACgAAAADEj05+v4pMoLaFSKGtfUOjoXQ9p5ZsOaqQZjaql2w4/5Rp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'
-DEFAULT_ICON = base64.b64decode(DEFAULT_ICON_B64);
-DEFAULT_TITLE = 'EXsimple';
-DEFAULT_JSCRIPT = '''
-        <script type="text/javascript">
-            //modified from http://www.cnblogs.com/dolphinX/p/3290520.html
-            var Dragging=function(validateHandler){ 
-                var draggingObj=null;
-                var diffX=0;
-                var diffY=0;
-                
-                function mouseHandler(e){
-                    switch(e.type){
-                        case 'mousedown':
-                            draggingObj=validateHandler(e);//验证是否为可点击移动区域
-                            if(draggingObj!=null){
-                                diffX=e.clientX-draggingObj.offsetLeft;
-                                diffY=e.clientY-draggingObj.offsetTop;
-                            }
-                            break;
-                        
-                        case 'mousemove':
-                            if(draggingObj){
-                                draggingObj.style.left=(e.clientX-diffX)+'px';
-                                draggingObj.style.top=(e.clientY-diffY)+'px';
-                            }
-                            break;
-                        
-                        case 'mouseup':
-                            draggingObj =null;
-                            diffX=0;
-                            diffY=0;
-                            break;
-                    }
-                };
-                
-                return {
-                    enable:function(){
-                        document.addEventListener('mousedown',mouseHandler);
-                        document.addEventListener('mousemove',mouseHandler);
-                        document.addEventListener('mouseup',mouseHandler);
-                    },
-                    disable:function(){
-                        document.removeEventListener('mousedown',mouseHandler);
-                        document.removeEventListener('mousemove',mouseHandler);
-                        document.removeEventListener('mouseup',mouseHandler);
-                    }
-                }
-            }
 
-            function getDraggingDialog(e){
-                var target=e.target;
-                while(target && target.className.indexOf('window-title')==-1){
-                    target=target.offsetParent;
-                }
-                if(target!=null){
-                    return target.offsetParent;
-                }else{
-                    return null;
-                }
-            }
-            
-            Dragging(getDraggingDialog).enable();
-        </script>
-'''
+
+
+
+# DEFAULT_JSCRIPT = '''
+#         <script type="text/javascript">
+#             //modified from http://www.cnblogs.com/dolphinX/p/3290520.html
+#             var Dragging=function(validateHandler){ 
+#                 var draggingObj=null;
+#                 var diffX=0;
+#                 var diffY=0;
+#                 
+#                 function mouseHandler(e){
+#                     switch(e.type){
+#                         case 'mousedown':
+#                             draggingObj=validateHandler(e);//验证是否为可点击移动区域
+#                             if(draggingObj!=null){
+#                                 diffX=e.clientX-draggingObj.offsetLeft;
+#                                 diffY=e.clientY-draggingObj.offsetTop;
+#                             }
+#                             break;
+#                         
+#                         case 'mousemove':
+#                             if(draggingObj){
+#                                 draggingObj.style.left=(e.clientX-diffX)+'px';
+#                                 draggingObj.style.top=(e.clientY-diffY)+'px';
+#                             }
+#                             break;
+#                         
+#                         case 'mouseup':
+#                             draggingObj =null;
+#                             diffX=0;
+#                             diffY=0;
+#                             break;
+#                     }
+#                 };
+#                 
+#                 return {
+#                     enable:function(){
+#                         document.addEventListener('mousedown',mouseHandler);
+#                         document.addEventListener('mousemove',mouseHandler);
+#                         document.addEventListener('mouseup',mouseHandler);
+#                     },
+#                     disable:function(){
+#                         document.removeEventListener('mousedown',mouseHandler);
+#                         document.removeEventListener('mousemove',mouseHandler);
+#                         document.removeEventListener('mouseup',mouseHandler);
+#                     }
+#                 }
+#             }
+# 
+#             function getDraggingDialog(e){
+#                 var target=e.target;
+#                 while(target && target.className.indexOf('window-title')==-1){
+#                     target=target.offsetParent;
+#                 }
+#                 if(target!=null){
+#                     return target.offsetParent;
+#                 }else{
+#                     return null;
+#                 }
+#             }
+#             
+#             Dragging(getDraggingDialog).enable();
+#         </script>
+# '''
 
 DEFAULT_METHOD_UPLOAD = '''
 <html lang="en" >
@@ -537,7 +552,7 @@ DEFAULT_ENC_METHOD_UPLOAD = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogate
 
 DEFAULT_INDEX = '''
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html manifest="exsimple.appcache">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
@@ -813,11 +828,7 @@ DEFAULT_INDEX = '''
         <title>%s</title>
     </head>
     <body  onload = "inininin()">
-        <div id="titlewords">
-            <h1>%s</h1>
-            <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
-            <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
-        </div>
+        <div id="titlewords">%s</div>
         <script type="text/javascript">
             //if the html is in a inframe
             if(window.location!=top.location){
@@ -848,7 +859,9 @@ DEFAULT_INDEX = '''
         </div>
     </body>
 </html>
-''' % (DEFAULT_TITLE, DEFAULT_TITLE, DEFAULT_TITLE)
+''' % (DEFAULT_TITLE, DEFAULT_TITLE, DEFAULT_TITLE_WORDS)
+
+
 
 DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 
@@ -921,13 +934,6 @@ def upload():
                 file_content = now_file.read(8388608);
             now_file.close();
     sock.send(struct.pack('i', -1));  
-        
-        
-        
-        
-        
-        
-         
 
 CLIENT_DIR = os.getcwd();
 print(CLIENT_DIR);
@@ -953,8 +959,8 @@ MODE_DEBUG = False;
 def DEBUG_PRINT(*strs):
     if(MODE_DEBUG):
 #         print("\033[1;36;41m",end='');
-        for str in strs:
-            print(str, end=' ');
+        for stra in strs:
+            print(stra, end=' ');
         print();
 #         print("\033[0m",end='');
 
@@ -986,8 +992,8 @@ def QUICK_START(file_dir=DEFAULT_FILE_DIR , port=DEFAULT_PORT):
         pass;
     ss = socketserver.ThreadingTCPServer(('', port), EX_SimpleHTTPRequestHandler);
     print ("dir %s serving at port %s" % (file_dir, port));
-    LISTENER = ServerListener();
-    LISTENER.start();
+#     LISTENER = ServerListener();
+#     LISTENER.start();
     ss.serve_forever();
 
 
@@ -1116,33 +1122,33 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         return f
         
-    def give_method_down_all(self):
-        DEBUG_PRINT('EMPTY here:');
-        RETURNED_MESSAGE = DEFAULT_METHOD_PY % (0, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
-        ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
-        
-        f = io.BytesIO();
-        f.write(ENC_RETURNED_MESSAGE);
-        f.seek(0);
-        self.send_response(200);
-        self.send_header("Content-type", "code/python3; charset=%s" % DEFAULT_ENC);
-        self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
-        self.end_headers();
-        return f;
-    
-    def give_method_up_all(self):
-        DEBUG_PRINT('EMPTY here:');
-        RETURNED_MESSAGE = DEFAULT_METHOD_PY % (1, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
-        ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
-        
-        f = io.BytesIO();
-        f.write(ENC_RETURNED_MESSAGE);
-        f.seek(0);
-        self.send_response(200);
-        self.send_header("Content-type", "code/python3; charset=%s" % DEFAULT_ENC);
-        self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
-        self.end_headers();
-        return f;
+#     def give_method_down_all(self):
+#         DEBUG_PRINT('EMPTY here:');
+#         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (0, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
+#         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
+#
+#         f = io.BytesIO();
+#         f.write(ENC_RETURNED_MESSAGE);
+#         f.seek(0);
+#         self.send_response(200);
+#         self.send_header("Content-type", "code/python3; charset=%s" % DEFAULT_ENC);
+#         self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
+#         self.end_headers();
+#         return f;
+#     
+#     def give_method_up_all(self):
+#         DEBUG_PRINT('EMPTY here:');
+#         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (1, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
+#         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
+#
+#         f = io.BytesIO();
+#         f.write(ENC_RETURNED_MESSAGE);
+#         f.seek(0);
+#         self.send_response(200);
+#         self.send_header("Content-type", "code/python3; charset=%s" % DEFAULT_ENC);
+#         self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
+#         self.end_headers();
+#         return f;
     
     def give_ico(self):        
         f = io.BytesIO();
@@ -1412,14 +1418,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #         r.append(DEFAULT_JSCRIPT);
         r.append('''
         <script type="text/javascript">
-        function sayhi(){
-            var urlStr = window.location.pathname;
-            //console.log(urlStr);
-            urlStr = urlStr.substring(urlStr.indexOf("FILE/")+"FILE/".length-1,urlStr.length);
-            //console.log(urlStr);
-            parent.setURL(urlStr);
-            /*alert(window.location.href);*/
-        }
+            function sayhi(){
+                var urlStr = window.location.pathname;
+                //console.log(urlStr);
+                urlStr = urlStr.substring(urlStr.indexOf("FILE/")+"FILE/".length-1,urlStr.length);
+                //console.log(urlStr);
+                parent.setURL(urlStr);
+                /*alert(window.location.href);*/
+            }
         </script>''');
         r.append('<title>%s</title>\n</head>' % DEFAULT_TITLE)
         r.append('<body onload = "sayhi()" >')
@@ -1520,132 +1526,130 @@ def translate_path(path):
         path += '/'
     return path
 
-
-class ServerListener(threading.Thread):
-
-    def __init__(self):
-        threading.Thread.__init__(self)
-        self.thread_stop = False;
-        global DEFAULT_LISTENER_PORT;
-        while(1):
-            try:
-                self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-                self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1);
-                self.sock.bind(("0.0.0.0", DEFAULT_LISTENER_PORT));
-                self.sock.listen(0);
-                break;
-            except:
-                DEFAULT_LISTENER_PORT += 1;
-        print("LISTENER:");
-        print(DEFAULT_LISTENER_PORT);
-
-    def run(self):
-        while True:
-            if(self.thread_stop == True):
-                self.sock.close();
-                return
-            client, cltadd = self.sock.accept();
-            ServerDealer(client=client, client_ip=cltadd , listener=self).start();
-
-
-class ServerDealer(threading.Thread):
-
-    def __init__(self, client, listener, client_ip):
-        threading.Thread.__init__(self)
-        self.client = client
-        self.listener = listener
-        self.client_ip = client_ip
-        
-    def run(self):
-        try:     
-            
-            DEBUG_PRINT("here");
-            chekey = self.client.recv(len(CHEKEY));
-            
-            DEBUG_PRINT(chekey);
-            if(chekey != CHEKEY):
-                return;
-            messagetype = struct.unpack('I', self.client.recv(4))[0];
-            
-            DEBUG_PRINT(messagetype);
-            
-            rawpath_len = struct.unpack('I', self.client.recv(4))[0];
-            
-            DEBUG_PRINT(rawpath_len)
-            rawpath = str(self.client.recv(rawpath_len), encoding=DEFAULT_ENC);
-            
-            DEBUG_PRINT(rawpath)
-            
-            realpath = translate_path(rawpath);
-            
-            DEBUG_PRINT("REQUEST_FOLDER");
-            DEBUG_PRINT(realpath);
-            
-            if(messagetype == 0):
-    #             download
-                for each_path in os.walk(realpath):
-                    for f in each_path[2]:
-                        now_path = os.path.join(each_path[0], f);
-                        now_path_name = now_path[len(realpath):len(now_path)];
-                        
-                        DEBUG_PRINT(now_path);
-                        DEBUG_PRINT(now_path_name);
-                        b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
-                        b_now_path_name_len = len(b_now_path_name);
-                        self.client.send(struct.pack('i', b_now_path_name_len));
-                        self.client.send(b_now_path_name);
-                        
-                        now_size = os.path.getsize(now_path);
-                        
-                        DEBUG_PRINT(now_size);
-                        self.client.send(struct.pack('Q', now_size));
-                        
-                        now_file = open(now_path, 'rb');
-                        
-                        file_content = now_file.read(8388608);
-                        while(file_content):
-                            self.client.send(file_content);
-                            file_content = now_file.read(8388608);
-                        now_file.close();
-                self.client.send(struct.pack('i', -1));
-                       
-            elif(messagetype == 1):
-    #             upload     
-                while(1):
-                    b_now_path_len = struct.unpack('i', self.client.recv(4))[0];
-                    
-                    DEBUG_PRINT(b_now_path_len);
-                    if(b_now_path_len == -1):
-                        break;
-                    b_now_path = self.client.recv(b_now_path_len);
-                    now_path = str(b_now_path, encoding=DEFAULT_ENC);
-                    
-                    DEBUG_PRINT(now_path);
-                    now_path = realpath + '/' + now_path;
-                    now_dir = os.path.dirname(now_path);
-                    
-                    DEBUG_PRINT(now_dir);
-                    try:
-                        os.makedirs(now_dir);
-                    except:
-                        pass;
-                    
-                    now_size = struct.unpack('Q', self.client.recv(8))[0];
-                    
-                    DEBUG_PRINT(now_size);
-                    now_file = open(now_path, 'wb');
-                    
-                    while(now_size > 8388608):
-                        now_size -= 8388608;
-                        now_file.write(self.client.recv(8388608));
-                        
-                    now_file.write(self.client.recv(now_size));
-                    now_file.close();          
-        
-        except:
-            pass;
+# class ServerListener(threading.Thread):
+# 
+#     def __init__(self):
+#         threading.Thread.__init__(self)
+#         self.thread_stop = False;
+#         global DEFAULT_LISTENER_PORT;
+#         while(1):
+#             try:
+#                 self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+#                 self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1);
+#                 self.sock.bind(("0.0.0.0", DEFAULT_LISTENER_PORT));
+#                 self.sock.listen(0);
+#                 break;
+#             except:
+#                 DEFAULT_LISTENER_PORT += 1;
+#         print("LISTENER:");
+#         print(DEFAULT_LISTENER_PORT);
+# 
+#     def run(self):
+#         while True:
+#             if(self.thread_stop == True):
+#                 self.sock.close();
+#                 return
+#             client, cltadd = self.sock.accept();
+#             ServerDealer(client=client, client_ip=cltadd , listener=self).start();
+# 
+# 
+# class ServerDealer(threading.Thread):
+# 
+#     def __init__(self, client, listener, client_ip):
+#         threading.Thread.__init__(self)
+#         self.client = client
+#         self.listener = listener
+#         self.client_ip = client_ip
+#         
+#     def run(self):
+#         try:     
+#             
+#             DEBUG_PRINT("here");
+#             chekey = self.client.recv(len(CHEKEY));
+#             
+#             DEBUG_PRINT(chekey);
+#             if(chekey != CHEKEY):
+#                 return;
+#             messagetype = struct.unpack('I', self.client.recv(4))[0];
+#             
+#             DEBUG_PRINT(messagetype);
+#             
+#             rawpath_len = struct.unpack('I', self.client.recv(4))[0];
+#             
+#             DEBUG_PRINT(rawpath_len)
+#             rawpath = str(self.client.recv(rawpath_len), encoding=DEFAULT_ENC);
+#             
+#             DEBUG_PRINT(rawpath)
+#             
+#             realpath = translate_path(rawpath);
+#             
+#             DEBUG_PRINT("REQUEST_FOLDER");
+#             DEBUG_PRINT(realpath);
+#             
+#             if(messagetype == 0):
+#     #             download
+#                 for each_path in os.walk(realpath):
+#                     for f in each_path[2]:
+#                         now_path = os.path.join(each_path[0], f);
+#                         now_path_name = now_path[len(realpath):len(now_path)];
+#                         
+#                         DEBUG_PRINT(now_path);
+#                         DEBUG_PRINT(now_path_name);
+#                         b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
+#                         b_now_path_name_len = len(b_now_path_name);
+#                         self.client.send(struct.pack('i', b_now_path_name_len));
+#                         self.client.send(b_now_path_name);
+#                         
+#                         now_size = os.path.getsize(now_path);
+#                         
+#                         DEBUG_PRINT(now_size);
+#                         self.client.send(struct.pack('Q', now_size));
+#                         
+#                         now_file = open(now_path, 'rb');
+#                         
+#                         file_content = now_file.read(8388608);
+#                         while(file_content):
+#                             self.client.send(file_content);
+#                             file_content = now_file.read(8388608);
+#                         now_file.close();
+#                 self.client.send(struct.pack('i', -1));
+#                        
+#             elif(messagetype == 1):
+#     #             upload     
+#                 while(1):
+#                     b_now_path_len = struct.unpack('i', self.client.recv(4))[0];
+#                     
+#                     DEBUG_PRINT(b_now_path_len);
+#                     if(b_now_path_len == -1):
+#                         break;
+#                     b_now_path = self.client.recv(b_now_path_len);
+#                     now_path = str(b_now_path, encoding=DEFAULT_ENC);
+#                     
+#                     DEBUG_PRINT(now_path);
+#                     now_path = realpath + '/' + now_path;
+#                     now_dir = os.path.dirname(now_path);
+#                     
+#                     DEBUG_PRINT(now_dir);
+#                     try:
+#                         os.makedirs(now_dir);
+#                     except:
+#                         pass;
+#                     
+#                     now_size = struct.unpack('Q', self.client.recv(8))[0];
+#                     
+#                     DEBUG_PRINT(now_size);
+#                     now_file = open(now_path, 'wb');
+#                     
+#                     while(now_size > 8388608):
+#                         now_size -= 8388608;
+#                         now_file.write(self.client.recv(8388608));
+#                         
+#                     now_file.write(self.client.recv(now_size));
+#                     now_file.close();          
+#         
+#         except:
+#             pass;
 #         print("close:", self.client.getpeername())
-        
 #     def readline(self):
 #         rec = self.inputs.readline()
 #         if rec:
