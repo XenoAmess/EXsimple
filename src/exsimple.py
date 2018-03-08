@@ -5,7 +5,9 @@ THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
-# no need to change it more.somethings has been deprecated.RIP.
+# no need to change it more.
+# somethings has been deprecated due to some reason.
+# RIP,[download all module] and [upload all module]
 
 import html
 import http.server
@@ -198,7 +200,7 @@ DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
 
 DEFAULT_METHOD_UPLOAD = '''
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" manifest="DEFAULT_METHOD_UPLOAD.appcache">
     <head>
     <!--modified from https://www.script-tutorials.com/pure-html5-file-upload/-->
         <meta charset="utf-8" />
@@ -549,7 +551,7 @@ DEFAULT_ENC_METHOD_UPLOAD = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogate
 
 DEFAULT_INDEX = '''
 <!DOCTYPE html>
-<html manifest="exsimple.appcache">
+<html manifest="DEFAULT_INDEX.appcache">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
