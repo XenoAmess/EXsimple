@@ -538,121 +538,120 @@ DEFAULT_ENC_METHOD_UPLOAD = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogate
 DEFAULT_INDEX = '''
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
 
-<style type="text/css">
-html,body{
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-    margin:0px;
-    padding:0;
-    width:100%%;
-    height:100%%;
-    overflow : auto;
-} 
-body {
-    background-color: #888888;
-}
-h1 {
-    margin: 0px;
-    padding: 0px;
-    color : orange;
-    font-weight : 800;
-    font-size : 80px;
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-}
-h1.subtitle {
-    font-size : 30px;
-}
-div.window {
-    font-weight : 800;
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-    position: absolute;;padding: 0px;
-    margin: 0px;
-    /*display: block;*/
-    border: 2px solid #000000;
-    padding: 0px;
-    border-radius: 8px 8px;
-    background-color: #FFFFFF;
-    width : 400px ;
-    height : 600px ;
-}
-.window-title{
-    color:#FFFFFF;
-    background-color:#404040;
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-    font-size:16pt;
-    cursor:move; 
-    height:20px;
-    padding:4px;
-}
-.window-button {
-    color:#FFFFFF;
-    background-color:#404040;
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-    font-size:16pt;
-    cursor:move; 
-    height:50px;
-    padding:4px;
-}
-.window-url {
-    color:#FFFFFF;
-    background-color:#404040;
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-    font-size:16pt;
-    cursor:move; 
-    height:30px;
-    padding:4px;
-}
-.window-body {
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-    position: absolute;
-    margin: 0px;
-    /*display: block;*/
-    padding: 0px;
-    border-radius: 8px 8px;
-    background-color: #FFFFFF;
-    overflow : hidden;
-    left : 0px;
-    right : 0px;
-    top : 125px;
-    bottom: 0px;
-}
-input[type=button] {
-    background: -moz-linear-gradient(#ffffff, #dfdfdf);
-    background: -ms-linear-gradient(#ffffff, #dfdfdf);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%%, #ffffff), color-stop(100%%, #dfdfdf));
-    background: -webkit-linear-gradient(#ffffff, #dfdfdf);
-    background: -o-linear-gradient(#ffffff, #dfdfdf);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf');
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf')";
-    background: linear-gradient(#ffffff, #dfdfdf);
-    border-radius: 5px 5px;
-}
-</style>
-
+        <style type="text/css">
+            html,body{
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                margin:0px;
+                padding:0;
+                width:100%%;
+                height:100%%;
+                overflow : auto;
+            } 
+            body {
+                background-color: #888888;
+            }
+            h1 {
+                margin: 0px;
+                padding: 0px;
+                color : orange;
+                font-weight : 800;
+                font-size : 80px;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+            }
+            h1.subtitle {
+                font-size : 30px;
+            }
+            div.window {
+                font-weight : 800;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                position: absolute;;padding: 0px;
+                margin: 0px;
+                /*display: block;*/
+                border: 2px solid #000000;
+                padding: 0px;
+                border-radius: 8px 8px;
+                background-color: #FFFFFF;
+                width : 400px ;
+                height : 600px ;
+            }
+            .window-title{
+                color:#FFFFFF;
+                background-color:#404040;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-size:16pt;
+                cursor:move; 
+                height:20px;
+                padding:4px;
+            }
+            .window-button {
+                color:#FFFFFF;
+                background-color:#404040;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-size:16pt;
+                cursor:move;
+                height:20px;
+                padding:4px;
+            }
+            .window-url {
+                color:#FFFFFF;
+                background-color:#404040;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-size:16pt;
+                cursor:move; 
+                height:30px;
+                padding:4px;
+            }
+            .window-body {
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                position: absolute;
+                margin: 0px;
+                /*display: block;*/
+                padding: 0px;
+                border-radius: 8px 8px;
+                background-color: #FFFFFF;
+                overflow : hidden;
+                left : 0px;
+                right : 0px;
+                top : 95px;
+                bottom: 0px;
+            }
+            input[type=button] {
+                background: -moz-linear-gradient(#ffffff, #dfdfdf);
+                background: -ms-linear-gradient(#ffffff, #dfdfdf);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%%, #ffffff), color-stop(100%%, #dfdfdf));
+                background: -webkit-linear-gradient(#ffffff, #dfdfdf);
+                background: -o-linear-gradient(#ffffff, #dfdfdf);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf');
+                -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf')";
+                background: linear-gradient(#ffffff, #dfdfdf);
+                border-radius: 5px 5px;
+            }
+        </style>
 
         <script type="text/javascript">
         //http://www.jb51.net/article/36496.htm
-              String.prototype.endWith=function(s){
-              if(s==null||s==""||this.length==0||s.length>this.length)
-                 return false;
-              if(this.substring(this.length-s.length)==s)
-                 return true;
-              else
-                 return false;
-              return true;
-             }
-             String.prototype.startWith=function(s){
-              if(s==null||s==""||this.length==0||s.length>this.length)
-               return false;
-              if(this.substr(0,s.length)==s)
-                 return true;
-              else
-                 return false;
-              return true;
-             }
+            String.prototype.endWith=function(s){
+                if(s==null||s==""||this.length==0||s.length>this.length)
+                    return false;
+                if(this.substring(this.length-s.length)==s)
+                    return true;
+                else
+                    return false;
+                return true;
+            }
+            String.prototype.startWith=function(s){
+                if(s==null||s==""||this.length==0||s.length>this.length)
+                    return false;
+                if(this.substr(0,s.length)==s)
+                    return true;
+                else
+                    return false;
+                return true;
+            }
              
             //modified from http://www.cnblogs.com/dolphinX/p/3290520.html
             var Dragging=function(validateHandler){ 
@@ -710,144 +709,144 @@ input[type=button] {
                     return null;
                 }
             }
-            
-            Dragging(getDraggingDialog).enable();
+                
         
-        function if_endWith_method(roota){
-            if(roota.endWith("/index.html") ||roota.endWith("/method_upload") ||roota.endWith("/method_new_folder") ||roota.endWith("/method_down_all")||roota.endWith("/method_up_all")){
-                return true;
+            function if_endWith_method(roota){
+                if(roota.endWith("/index.html") ||roota.endWith("/method_upload") ||roota.endWith("/method_new_folder") ||roota.endWith("/method_down_all")||roota.endWith("/method_up_all")){
+                    return true;
+                }
+                return false;
             }
-            return false;
-        }
+                
+            function method_gotomain(){
+                 var roota ="/FILE/";
+                 document.getElementById("innerframe").src = roota;  
+            };
             
-        function method_gotomain(){
-             var roota ="/FILE/";
-             document.getElementById("innerframe").src = roota;  
-        };
-        
-        
-        function method_back(){
-            var roota =  window.frames["innerframe"].document.location.pathname;
-            while(roota.endWith("/")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            roota = roota.substring(0,roota.lastIndexOf("/"));
-            while(roota.endWith("/")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            roota += "/";
-            document.getElementById("innerframe").src = roota;  
-        }; 
-        
-        function method_upload(){
-            var roota =  window.frames["innerframe"].document.location.pathname;
             
-            if(roota.endWith("//")){
+            function method_back(){
+                var roota =  window.frames["innerframe"].document.location.pathname;
+                while(roota.endWith("/")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
                 roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            if(if_endWith_method(roota)){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            while(roota.endWith("/")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            roota = roota +"/method_upload";
-            document.getElementById("innerframe").src = roota;  
-        }; 
-        function method_new_folder(){
-            var roota = window.frames["innerframe"].document.location.pathname;
+                while(roota.endWith("/")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                roota += "/";
+                document.getElementById("innerframe").src = roota;  
+            }; 
             
-            if(roota.endWith("//")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            if(if_endWith_method(roota)){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            while(roota.endWith("/")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            roota = roota +"/method_new_folder";
-            document.getElementById("innerframe").src = roota;
-        }; 
-        function method_down_all(){
-            var roota =  window.frames["innerframe"].document.location.pathname;
-            if(roota.endWith("//")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            if(if_endWith_method(roota)){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            while(roota.endWith("/")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            roota = roota +"/method_down_all.py";
-            document.getElementById("innerframe").src = roota;
-        }; 
-        function method_up_all(){
-            var roota =  window.frames["innerframe"].document.location.pathname;
-            if(roota.endWith("//")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            if(if_endWith_method(roota)){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            while(roota.endWith("/")){
-                roota = roota.substring(0,roota.lastIndexOf("/"));
-            }
-            roota = roota +"/method_up_all.py";
-            document.getElementById("innerframe").src = roota;
-        }; 
+            function method_upload(){
+                var roota =  window.frames["innerframe"].document.location.pathname;
+                
+                if(roota.endWith("//")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                if(if_endWith_method(roota)){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                while(roota.endWith("/")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                roota = roota +"/method_upload";
+                document.getElementById("innerframe").src = roota;  
+            }; 
+            function method_new_folder(){
+                var roota = window.frames["innerframe"].document.location.pathname;
+                
+                if(roota.endWith("//")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                if(if_endWith_method(roota)){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                while(roota.endWith("/")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                roota = roota +"/method_new_folder";
+                document.getElementById("innerframe").src = roota;
+            }; 
+            function method_down_all(){
+                var roota =  window.frames["innerframe"].document.location.pathname;
+                if(roota.endWith("//")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                if(if_endWith_method(roota)){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                while(roota.endWith("/")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                roota = roota +"/method_down_all.py";
+                document.getElementById("innerframe").src = roota;
+            }; 
+            function method_up_all(){
+                var roota =  window.frames["innerframe"].document.location.pathname;
+                if(roota.endWith("//")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                if(if_endWith_method(roota)){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                while(roota.endWith("/")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                roota = roota +"/method_up_all.py";
+                document.getElementById("innerframe").src = roota;
+            }; 
 
-        function keydownEvent() {
-            var e = window.event || arguments.callee.caller.arguments[0];
-            if (e && e.keyCode == 13 ) {
-                document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE"+document.getElementById("URL").value;
+            function keydownEvent() {
+                var e = window.event || arguments.callee.caller.arguments[0];
+                if (e && e.keyCode == 13 ) {
+                    document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE"+document.getElementById("URL").value;
+                }
+            };
+
+            function inininin(){
+                document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE/" ;
             }
-        };
-       
-        
-        function inininin(){
-            document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE/" ;
-        }
-        function setURL(strURL){
-            document.getElementById("URL").value = strURL ;
-        }
-        
+            function setURL(strURL){
+                document.getElementById("URL").value = strURL ;
+            }   
         </script>
-
-<title>%s</title>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-6228761866839926",
-    enable_page_level_ads: true
-  });
-</script>
-</head>
-<body  onload = "inininin()">
-<h1>%s</h1>
-<h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
-<h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
-<div style = "clear:both" class = "window">
-<div class = "window-title">%s</div>
-<div class = "window-button">
-            <input type="button" value = "main" id = "method_gotomain" onclick = "method_gotomain()"/>
-            <input type="button" value = "back" id = "method_back" onclick = "method_back()"/>
-            <input type="button" value = "upload" id = "method_upload" onclick = "method_upload()"/>
-            <input type="button" value = "new-folder" id = "method_upload" onclick = "method_new_folder()"/>
-            <br/>
-            <input type="button" value = "down-all" id = "method_down_all" onclick = "method_down_all()"/>
-            <input type="button" value = "up-all" id = "method_up_all" onclick = "method_up_all()"/>
-</div>
-<div class = "window-url">
-<input type="text" name="URL" id ="URL" value="" onKeyDown="keydownEvent()"  style="width:95%%"/>
-</div>
-<div class = "window-body">
-<iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false">
-</iframe>   
-</div>
-</div>
-</body>
+        <title>%s</title>
+    </head>
+    <body  onload = "inininin()">
+        <div id="titlewords">
+            <h1>%s</h1>
+            <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
+            <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
+        </div>
+        <script type="text/javascript">
+            //if the html is in a inframe
+            if(window.location!=top.location){
+                document.getElementById("titlewords").style.display="none";
+            }else{
+                Dragging(getDraggingDialog).enable();
+            }
+        </script>
+        <div style = "clear:both" class = "window">
+            <div class = "window-title">%s</div>
+            <div class = "window-button">
+                <input type="button" value = "main" id = "method_gotomain" onclick = "method_gotomain()"/>
+                <input type="button" value = "back" id = "method_back" onclick = "method_back()"/>
+                <input type="button" value = "upload" id = "method_upload" onclick = "method_upload()"/>
+                <input type="button" value = "new-folder" id = "method_upload" onclick = "method_new_folder()"/>
+                <!--
+                    <br/>
+                    <input type="button" value = "down-all" id = "method_down_all" onclick = "method_down_all()"/>
+                    <input type="button" value = "up-all" id = "method_up_all" onclick = "method_up_all()"/>
+                -->
+            </div>
+            <div class = "window-url">
+                <input type="text" name="URL" id ="URL" value="" onKeyDown="keydownEvent()"  style="width:95%%"/>
+            </div>
+            <div class = "window-body">
+                <iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false">your browser does not support iframe???!!!</iframe>
+            </div>
+        </div>
+    </body>
 </html>
 ''' % (DEFAULT_TITLE, DEFAULT_TITLE, DEFAULT_TITLE)
 
@@ -1410,7 +1409,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #         r.append('<link type="text/css" rel="stylesheet" href="stylesheet.css"/>');
         r.append('<link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>');
         r.append(DEFAULT_CSS);
-        r.append(DEFAULT_JSCRIPT);
+#         r.append(DEFAULT_JSCRIPT);
         r.append('''
         <script type="text/javascript">
         function sayhi(){
