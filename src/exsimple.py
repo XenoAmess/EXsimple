@@ -1184,6 +1184,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     g = gzip.GzipFile(mode="rb", fileobj=f);
 #                     self.copyfile(g, self.wfile);
                     while 1:
+                        buf=b'';
                         try:
                             buf = g.read(8388608);
                             if not buf:
@@ -1197,6 +1198,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     f.seek(0);
 #                     self.copyfile(f, self.wfile);
                     while 1:
+                        buf=b'';
                         try:
                             buf = f.read(8388608);
                             if not buf:
