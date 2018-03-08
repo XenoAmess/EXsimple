@@ -1181,33 +1181,11 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if f:
             try:
                 try:
-                    g = gzip.GzipFile(mode="rb",compresslevel=9, fileobj=f);
-#                     self.copyfile(g, self.wfile);
-                    while 1:
-                        buf=b'';
-                        try:
-                            buf = g.read(8388608);
-                            if not buf:
-                                break
-                            self.wfile.write(buf);
-                        except EOFError:
-                            print("GEOFError");
-                            self.wfile.write(buf);
-                            break;
+                    g = gzip.GzipFile(mode="rb",fileobj=f);
+                    self.copyfile(g, self.wfile);
                 except OSError:
                     f.seek(0);
-#                     self.copyfile(f, self.wfile);
-                    while 1:
-                        buf=b'';
-                        try:
-                            buf = f.read(8388608);
-                            if not buf:
-                                break
-                            self.wfile.write(buf);
-                        except EOFError:
-                            print("FEOFError");
-                            self.wfile.write(buf);
-                            break;
+                    self.copyfile(f, self.wfile);
             finally:
                 g.close();
                 f.close();
