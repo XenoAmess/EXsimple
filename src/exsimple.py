@@ -201,6 +201,7 @@ DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
 # '''
 
 DEFAULT_METHOD_UPLOAD = '''
+<!DOCTYPE html>
 <html lang="en" >
     <head>
     <!--modified from https://www.script-tutorials.com/pure-html5-file-upload/-->
@@ -551,7 +552,7 @@ function uploadAbort(e) { // upload abort
 DEFAULT_ENC_METHOD_UPLOAD = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogateescape');
 
 DEFAULT_INDEX = '''
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html manifest="exsimple.appcache">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -865,93 +866,93 @@ DEFAULT_INDEX = '''
 
 DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 
-DEFAULT_METHOD_PY = '''
-MODE = %d;
-CHEKEY = b'%s';
-REQUEST_DIR = '%s';
-SERVER_IP = '%s';
-SERVER_PORT = %d;
-
-
-DEFAULT_ENC = 'utf-8';
-CLIENT_DIR = '';
-import socket
-import struct
-import os
-
-def download():   
-    while(1):
-        b_now_path_len = struct.unpack('i', sock.recv(4))[0];
-        print(b_now_path_len);
-        if(b_now_path_len == -1):
-            break;
-        b_now_path = sock.recv(b_now_path_len);
-        now_path = str(b_now_path, encoding=DEFAULT_ENC);
-        print(now_path);
-        now_path = CLIENT_DIR + '/' + now_path;
-        now_dir = os.path.dirname(now_path);
-        print(now_dir);
-        try:
-            os.makedirs(now_dir);
-        except:
-            pass;
-        
-        
-        now_size = struct.unpack('Q', sock.recv(8))[0];
-        print(now_size);
-        now_file = open(now_path, 'wb');
-        
-        while(now_size > 8388608):
-            now_size -= 8388608;
-            now_file.write(sock.recv(8388608));
-            
-        now_file.write(sock.recv(now_size));
-        now_file.close();
-        
-def upload():
-    for each_path in os.walk(CLIENT_DIR):
-        for f in each_path[2]:
-            now_path = os.path.join(each_path[0], f);
-            if(f == 'method_up_all.py'):
-                continue;
-            now_path_name = now_path[len(CLIENT_DIR):len(now_path)];
-            print(now_path);
-            print(now_path_name);
-            b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
-            b_now_path_name_len = len(b_now_path_name);
-            sock.send(struct.pack('i', b_now_path_name_len));
-            sock.send(b_now_path_name);
-            
-            now_size = os.path.getsize(now_path);
-            print(now_size);
-            sock.send(struct.pack('Q', now_size));
-            
-            now_file = open(now_path, 'rb');
-            
-            file_content = now_file.read(8388608);
-            while(file_content):
-                sock.send(file_content);
-                file_content = now_file.read(8388608);
-            now_file.close();
-    sock.send(struct.pack('i', -1));  
-
-CLIENT_DIR = os.getcwd();
-print(CLIENT_DIR);
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-sock.connect((SERVER_IP, SERVER_PORT));
-print("CHEKEY");
-sock.send(CHEKEY);
-print(CHEKEY);
-sock.send(struct.pack('I', MODE));
-sock.send(struct.pack('I', len(REQUEST_DIR)));
-sock.send(bytes(REQUEST_DIR, encoding=DEFAULT_ENC));
-
-if(MODE == 0):
-    download();
-elif(MODE == 1):
-    upload();
-''';
+# DEFAULT_METHOD_PY = '''
+# MODE = %d;
+# CHEKEY = b'%s';
+# REQUEST_DIR = '%s';
+# SERVER_IP = '%s';
+# SERVER_PORT = %d;
+# 
+# 
+# DEFAULT_ENC = 'utf-8';
+# CLIENT_DIR = '';
+# import socket
+# import struct
+# import os
+# 
+# def download():   
+#     while(1):
+#         b_now_path_len = struct.unpack('i', sock.recv(4))[0];
+#         print(b_now_path_len);
+#         if(b_now_path_len == -1):
+#             break;
+#         b_now_path = sock.recv(b_now_path_len);
+#         now_path = str(b_now_path, encoding=DEFAULT_ENC);
+#         print(now_path);
+#         now_path = CLIENT_DIR + '/' + now_path;
+#         now_dir = os.path.dirname(now_path);
+#         print(now_dir);
+#         try:
+#             os.makedirs(now_dir);
+#         except:
+#             pass;
+#         
+#         
+#         now_size = struct.unpack('Q', sock.recv(8))[0];
+#         print(now_size);
+#         now_file = open(now_path, 'wb');
+#         
+#         while(now_size > 8388608):
+#             now_size -= 8388608;
+#             now_file.write(sock.recv(8388608));
+#             
+#         now_file.write(sock.recv(now_size));
+#         now_file.close();
+#         
+# def upload():
+#     for each_path in os.walk(CLIENT_DIR):
+#         for f in each_path[2]:
+#             now_path = os.path.join(each_path[0], f);
+#             if(f == 'method_up_all.py'):
+#                 continue;
+#             now_path_name = now_path[len(CLIENT_DIR):len(now_path)];
+#             print(now_path);
+#             print(now_path_name);
+#             b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
+#             b_now_path_name_len = len(b_now_path_name);
+#             sock.send(struct.pack('i', b_now_path_name_len));
+#             sock.send(b_now_path_name);
+#             
+#             now_size = os.path.getsize(now_path);
+#             print(now_size);
+#             sock.send(struct.pack('Q', now_size));
+#             
+#             now_file = open(now_path, 'rb');
+#             
+#             file_content = now_file.read(8388608);
+#             while(file_content):
+#                 sock.send(file_content);
+#                 file_content = now_file.read(8388608);
+#             now_file.close();
+#     sock.send(struct.pack('i', -1));  
+# 
+# CLIENT_DIR = os.getcwd();
+# print(CLIENT_DIR);
+# 
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+# sock.connect((SERVER_IP, SERVER_PORT));
+# print("CHEKEY");
+# sock.send(CHEKEY);
+# print(CHEKEY);
+# sock.send(struct.pack('I', MODE));
+# sock.send(struct.pack('I', len(REQUEST_DIR)));
+# sock.send(bytes(REQUEST_DIR, encoding=DEFAULT_ENC));
+# 
+# if(MODE == 0):
+#     download();
+# elif(MODE == 1):
+#     upload();
+# ''';
 
 MODE_DEBUG = False;
 
