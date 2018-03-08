@@ -39,21 +39,21 @@ DEFAULT_ICON_ZLIB_B64 = 'eJzFWwdYVMcWHkueGI0a7NHEih0bhiYgvUgT0Kgxz2gsiahgrLGgmNh
 DEFAULT_ICON_ZLIB = base64.b64decode(DEFAULT_ICON_ZLIB_B64);
 DEFAULT_ICON = zlib.decompress(DEFAULT_ICON_ZLIB);
 DEFAULT_TITLE = 'EXsimple';
-DEFAULT_TITLE_WORDS='''
+DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
     <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
     <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
-'''%(DEFAULT_TITLE);
+''' % (DEFAULT_TITLE);
 
 if THIS_IS_DAILYPASTE:
     DEFAULT_TITLE = 'DailyPaste!'
-    DEFAULT_TITLE_WORDS ='''
+    DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
     <h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!</h1>
     <h1 class = "subtitle">(Don't over use it or I will be bankrupt!)</h1>
     <h1 class = "subtitle">provided by XenoAmess!</h1>
     <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
-'''%(DEFAULT_TITLE);
+''' % (DEFAULT_TITLE);
 
 DEFAULT_CSS = '''
 <style type="text/css">
@@ -132,10 +132,6 @@ a.link_in_list:hover {
 </style>
 '''
 DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
-
-
-
-
 
 # DEFAULT_JSCRIPT = '''
 #         <script type="text/javascript">
@@ -828,7 +824,7 @@ DEFAULT_INDEX = '''
         </script>
         <title>%s</title>
     </head>
-    <body  onload = "inininin()">
+    <body onload = "inininin()">
         <div id="titlewords">%s</div>
         <script type="text/javascript">
             //if the html is in a inframe
@@ -860,9 +856,7 @@ DEFAULT_INDEX = '''
         </div>
     </body>
 </html>
-''' % (DEFAULT_TITLE, DEFAULT_TITLE, DEFAULT_TITLE_WORDS)
-
-
+''' % (DEFAULT_TITLE, DEFAULT_TITLE_WORDS, DEFAULT_TITLE)
 
 DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 
