@@ -1238,7 +1238,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         f = io.BufferedIOBase();
         global DEFAULT_GZIP;
         if(DEFAULT_GZIP == 1):
-            f = gzip.GzipFile(filename="", mode="wb", compresslevel=9, fileobj=open(path + str_filename, 'wb'));
+            f = gzip.GzipFile(filename="", mode="wb", compresslevel=0, fileobj=open(path + str_filename, 'wb'));
         else:
             f = open(path + str_filename, 'wb');
         
