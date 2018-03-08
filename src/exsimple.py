@@ -1241,24 +1241,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         else:
             f = open(path + str_filename, 'wb');
         
-        if(remain_bytes>1024):
-            f.write(self.rfile.read(remain_bytes-1024));
-            remain_bytes -= 1024;
-        
-        pre_line = self.rfile.readline();
-        now_line = self.rfile.readline();
-        while(not(b_boundary in now_line)):
-            f.write(pre_line);
-            pre_line = now_line;
-            now_line = self.rfile.readline();
-          
-        DEBUG_PRINT(pre_line[:-2]);
-        if(pre_line[-2:] == b'\r\n'):
-            pre_line = pre_line[:len(pre_line) - len(b'\r\n')];
-        
-        DEBUG_PRINT(pre_line);
-        
-        f.write(pre_line);
+        self.copyfile(self.rfile, f);
         f.close();
         self.send_head();
         
