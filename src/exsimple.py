@@ -5,7 +5,7 @@ THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
 # because pooooor python can never get an IP from computer.
-# no need to change it more.
+# no need to change it anymore.
 # somethings has been deprecated due to some reason.
 # RIP,[download all module] and [upload all module]
 
