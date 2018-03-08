@@ -1184,19 +1184,27 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     g = gzip.GzipFile(mode="rb", fileobj=f);
 #                     self.copyfile(g, self.wfile);
                     while 1:
-                        buf = g.read(8388608)
-                        if not buf:
-                            break
-                        self.wfile.write(buf)
+                        try:
+                            buf = g.read(8388608);
+                            if not buf:
+                                break
+                            self.wfile.write(buf);
+                        except EOFError:
+                            self.wfile.write(buf);
+                            break;
                 except OSError:
                     
                     f.seek(0);
 #                     self.copyfile(f, self.wfile);
                     while 1:
-                        buf = f.read(8388608)
-                        if not buf:
-                            break
-                        self.wfile.write(buf)
+                        try:
+                            buf = g.read(8388608);
+                            if not buf:
+                                break
+                            self.wfile.write(buf);
+                        except EOFError:
+                            self.wfile.write(buf);
+                            break;
             finally:
                 g.close();
                 f.close();
