@@ -1237,11 +1237,21 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         f = io.BufferedIOBase();
         global DEFAULT_GZIP;
         if(DEFAULT_GZIP == 1):
-            f = gzip.GzipFile(filename="", mode="wb", compresslevel=0, fileobj=open(path + str_filename, 'wb'));
+            f = gzip.GzipFile(filename="", mode="wb", compresslevel=9, fileobj=open(path + str_filename, 'wb'));
         else:
             f = open(path + str_filename, 'wb');
         
-        self.copyfile(self.rfile, f);
+        if remain_bytes > 10240:
+            f.write(self.rfile.read(remain_bytes % 10240));
+            remain_bytes -= remain_bytes % 10240;
+        while remain_bytes > 10240:
+            f.write(self.rfile.read(10240))
+            remain_bytes -= 10240;
+        while 1:
+            buf = self.rfile.readline();
+            if(b_boundary in buf):
+                break;
+            f.write(buf)
         f.close();
         self.send_head();
         
