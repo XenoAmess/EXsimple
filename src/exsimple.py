@@ -523,7 +523,7 @@ function uploadAbort(e) { // upload abort
                     <div id="error">You should select valid image files only!</div>
                     <div id="error2">An error occurred while uploading the file</div>
                     <div id="abort">The upload has been canceled by the user or the browser dropped the connection</div>
-                    <div id="warnsize">Your file is very big. We can't accept it. Please select more small file</div>
+                    <div id="warnsize">Your file is very big.Keep in mind that larger the file means larger probability to occur errors.</div>
 
                     <div id="progress_info">
                         <div id="progress"></div>
