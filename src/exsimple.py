@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-from sqlite3.test.userfunctions import func_returnlonglong
 VERSION = "2018/03/05";
 DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
@@ -1203,7 +1202,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         
         self.printHeaders();
-        
+
         path = self.translate_path(self.path);
         path = path[:len(path) - len("method_upload")];
         

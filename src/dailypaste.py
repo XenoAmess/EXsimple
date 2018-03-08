@@ -829,7 +829,6 @@ input[type=button] {
 <h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!</h1>
 <h1 class = "subtitle">(Don't over use it or I will be bankrupt!)</h1>
 <h1 class = "subtitle">provided by XenoAmess!</h1>
- 
 <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
 <div style = "clear:both" class = "window">
 <div class = "window-title">%s</div>
@@ -1205,7 +1204,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         
         self.printHeaders();
-            
+
         path = self.translate_path(self.path);
         path = path[:len(path) - len("method_upload")];
         
