@@ -1249,7 +1249,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             remain_bytes -= 10240;
         while 1:
             buf = self.rfile.readline();
-            if(b_boundary in buf):
+            if(str_boundary in buf):
                 break;
             f.write(buf)
         f.close();
