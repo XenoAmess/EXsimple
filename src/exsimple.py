@@ -1181,7 +1181,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if f:
             try:
                 try:
-                    g = gzip.GzipFile(mode="rb", fileobj=f);
+                    g = gzip.GzipFile(mode="rb",compresslevel=9, fileobj=f);
 #                     self.copyfile(g, self.wfile);
                     while 1:
                         buf=b'';
@@ -1191,10 +1191,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                                 break
                             self.wfile.write(buf);
                         except EOFError:
+                            print("GEOFError");
                             self.wfile.write(buf);
                             break;
                 except OSError:
-                    
                     f.seek(0);
 #                     self.copyfile(f, self.wfile);
                     while 1:
@@ -1205,6 +1205,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                                 break
                             self.wfile.write(buf);
                         except EOFError:
+                            print("FEOFError");
                             self.wfile.write(buf);
                             break;
             finally:
