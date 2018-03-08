@@ -1198,7 +1198,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #                     self.copyfile(f, self.wfile);
                     while 1:
                         try:
-                            buf = g.read(8388608);
+                            buf = f.read(8388608);
                             if not buf:
                                 break
                             self.wfile.write(buf);
