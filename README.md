@@ -26,9 +26,8 @@ http://dailypaste.com/
   ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/newFolder.gif)
 
 # get it in a inframe,and it would shut up!
-{::nomarkdown}
 <iframe src="http://dailypaste.com/" frameborder="0" scrolling="no" width="404" height="604">Dailypaste!</iframe>
-{:/}
+
 
 # Do not upload a file with a same name to a file in the same folder.
   doing that would replace the old file with the new one,the old file just rest-in-peace.
