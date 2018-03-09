@@ -418,10 +418,9 @@ DEFAULT_METHOD_UPLOAD = '''
             //console.log(document.getElementById('upload_file'));
             
             
-            //var vFD = new FormData(document.getElementById('upload_form')); 
             var vFD = new FormData();
             for (i=0;i<document.getElementById('upload_file').files.length;i++){
-                vFD.append("file[]",document.getElementById('upload_file').files[i]);
+                vFD.append("files[]",document.getElementById('upload_file').files[i]);
             }
             
             //console.log(vFD);
@@ -1190,7 +1189,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if f:
             try:
                 try:
-                    g = gzip.GzipFile(mode="rb",fileobj=f);
+                    g = gzip.GzipFile(mode="rb", fileobj=f);
                     self.copyfile(g, self.wfile);
                 except OSError:
                     f.seek(0);
@@ -1201,7 +1200,6 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
     def do_POST(self):
         DEBUG_PRINT("do_POST");
-
         
         self.printHeaders();
 
@@ -1225,15 +1223,12 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         DEBUG_PRINT(remain_bytes);
         DEBUG_PRINT(str_boundary);
         
-        
-        
 #         index = self.headers.find('boundary=');
     
 #-----------------------------9158069810016882161586011283\r\n         
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
         DEBUG_PRINT(now_line);
-        
         
         while 1:
     # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
@@ -1266,7 +1261,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             else:
                 f = open(path + str_filename, 'wb');
             
-            now_line=b'';
+            now_line = b'';
             old_line = self.rfile.readline();
             DEBUG_PRINT(old_line);
             while 1:
@@ -1277,7 +1272,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     f.write(now_line[:-2]);
                     break;
                 f.write(now_line);
-            print("FILE_OUTPUT_COMPLETE:",str_filename);
+            print("FILE_OUTPUT_COMPLETE:", str_filename);
         f.close();
         self.send_head();
         
