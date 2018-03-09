@@ -62,5 +62,3 @@ http://dailypaste.com/
           open the score code to change whatever you want.
 	  
           also,notice that if you use pypy3 instead of python3,it might run far faster.
-	  
-# and now it can upload several files one turn !!

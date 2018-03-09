@@ -17,13 +17,7 @@ import socketserver
 import sys
 import urllib.parse
 import base64
-from builtins import type
-import cgi
 import gzip
-import copy
-import threading
-import socket
-import struct
 import posixpath
 import zlib
 
@@ -31,7 +25,7 @@ import zlib
 
 DEFAULT_PORT = 80;
 # DEFAULT_LISTENER_PORT = 11235;
-CHEKEY = bytes(VERSION, encoding="utf8")
+CHEKEY = bytes(VERSION, "utf8")
 DEFAULT_FILE_DIR = '/home';
 DEFAULT_GZIP = 0;
 DEFAULT_ENC = 'utf-8';
@@ -907,7 +901,7 @@ DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 #         if(b_now_path_len == -1):
 #             break;
 #         b_now_path = sock.recv(b_now_path_len);
-#         now_path = str(b_now_path, encoding=DEFAULT_ENC);
+#         now_path = str(b_now_path, DEFAULT_ENC);
 #         print(now_path);
 #         now_path = CLIENT_DIR + '/' + now_path;
 #         now_dir = os.path.dirname(now_path);
@@ -938,7 +932,7 @@ DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 #             now_path_name = now_path[len(CLIENT_DIR):len(now_path)];
 #             print(now_path);
 #             print(now_path_name);
-#             b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
+#             b_now_path_name = bytes(now_path_name, DEFAULT_ENC);
 #             b_now_path_name_len = len(b_now_path_name);
 #             sock.send(struct.pack('i', b_now_path_name_len));
 #             sock.send(b_now_path_name);
@@ -966,7 +960,7 @@ DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 # print(CHEKEY);
 # sock.send(struct.pack('I', MODE));
 # sock.send(struct.pack('I', len(REQUEST_DIR)));
-# sock.send(bytes(REQUEST_DIR, encoding=DEFAULT_ENC));
+# sock.send(bytes(REQUEST_DIR, DEFAULT_ENC));
 # 
 # if(MODE == 0):
 #     download();
@@ -1145,7 +1139,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         
 #     def give_method_down_all(self):
 #         DEBUG_PRINT('EMPTY here:');
-#         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (0, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
+#         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (0, str(CHEKEY, DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
 #         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
 #
 #         f = io.BytesIO();
@@ -1159,7 +1153,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #     
 #     def give_method_up_all(self):
 #         DEBUG_PRINT('EMPTY here:');
-#         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (1, str(CHEKEY, encoding=DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
+#         RETURNED_MESSAGE = DEFAULT_METHOD_PY % (1, str(CHEKEY, DEFAULT_ENC), os.path.dirname(self.path), DEFAULT_SERVER_IP, DEFAULT_LISTENER_PORT);
 #         ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
 #
 #         f = io.BytesIO();
@@ -1235,7 +1229,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         
 #         DEBUG_PRINT(self.headers.get('Content-Type').split('boundary=')[1])
         str_boundary = self.headers.get('Content-Type').split('boundary=')[1].strip('-');
-        b_boundary = bytes(str_boundary, encoding=DEFAULT_ENC);
+        b_boundary = bytes(str_boundary, DEFAULT_ENC);
         
         DEBUG_PRINT(remain_bytes);
         DEBUG_PRINT(str_boundary);
@@ -1257,12 +1251,12 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             
             DEBUG_PRINT("NAME_LINE");
             DEBUG_PRINT(now_line);
-            str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), encoding=DEFAULT_ENC);
-            filesum = int(str(txt_wrap_by(b'name="', b'"; filename=', now_line), encoding=DEFAULT_ENC))
+            str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), DEFAULT_ENC);
+            filesum = int(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC))
             DEBUG_PRINT("filesum");
             DEBUG_PRINT(filesum);
             DEBUG_PRINT("strbname");
-            DEBUG_PRINT(str(txt_wrap_by(b'name="', b'"; filename=', now_line), encoding=DEFAULT_ENC));
+            DEBUG_PRINT(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC));
     # Content-Type: text/plain\r\n
             now_line = self.rfile.readline();
             DEBUG_PRINT(now_line);
@@ -1605,7 +1599,7 @@ def translate_path(path):
 #             rawpath_len = struct.unpack('I', self.client.recv(4))[0];
 #             
 #             DEBUG_PRINT(rawpath_len)
-#             rawpath = str(self.client.recv(rawpath_len), encoding=DEFAULT_ENC);
+#             rawpath = str(self.client.recv(rawpath_len), DEFAULT_ENC);
 #             
 #             DEBUG_PRINT(rawpath)
 #             
@@ -1623,7 +1617,7 @@ def translate_path(path):
 #                         
 #                         DEBUG_PRINT(now_path);
 #                         DEBUG_PRINT(now_path_name);
-#                         b_now_path_name = bytes(now_path_name, encoding=DEFAULT_ENC);
+#                         b_now_path_name = bytes(now_path_name, DEFAULT_ENC);
 #                         b_now_path_name_len = len(b_now_path_name);
 #                         self.client.send(struct.pack('i', b_now_path_name_len));
 #                         self.client.send(b_now_path_name);
@@ -1651,7 +1645,7 @@ def translate_path(path):
 #                     if(b_now_path_len == -1):
 #                         break;
 #                     b_now_path = self.client.recv(b_now_path_len);
-#                     now_path = str(b_now_path, encoding=DEFAULT_ENC);
+#                     now_path = str(b_now_path, DEFAULT_ENC);
 #                     
 #                     DEBUG_PRINT(now_path);
 #                     now_path = realpath + '/' + now_path;
