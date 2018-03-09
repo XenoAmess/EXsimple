@@ -62,3 +62,5 @@ http://dailypaste.com/
           open the score code to change whatever you want.
 	  
           also,notice that if you use pypy3 instead of python3,it might run far faster.
+	  
+	  nuitka is even far more faster than pypy.but it is not so easy to use.
