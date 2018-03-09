@@ -25,7 +25,7 @@ http://dailypaste.com/
   I just notice that soo many people don't know this,too...
   ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/newFolder.gif)
 
-#get it in a inframe,and it would shut up!
+# get it in a inframe,and it would shut up!
 <iframe src="http://dailypaste.com/" frameborder="0" scrolling="no" width="404" height="604">Dailypaste!</iframe>
 
 # Do not upload a file with a same name to a file in the same folder.
