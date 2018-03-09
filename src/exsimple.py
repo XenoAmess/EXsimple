@@ -415,10 +415,18 @@ DEFAULT_METHOD_UPLOAD = '''
         
             // get form data for POSTing
             //var vFD = document.getElementById('upload_form').getFormData(); // for FF3
-            var vFD = new FormData(document.getElementById('upload_form')); 
-        
+            //console.log(document.getElementById('upload_file'));
+            
+            
+            //var vFD = new FormData(document.getElementById('upload_form')); 
+            var vFD = new FormData();
+            for (i=0;i<document.getElementById('upload_file').files.length;i++){
+                vFD.append("file[]",document.getElementById('upload_file').files[i]);
+            }
+            
+            //console.log(vFD);
             // create XMLHttpRequest object, adding few event listeners, and POSTing our data
-            var oXHR = new XMLHttpRequest();        
+            var oXHR = new XMLHttpRequest();     
             oXHR.upload.addEventListener('progress', uploadProgress, false);
             oXHR.addEventListener('load', uploadFinish, false);
             oXHR.addEventListener('error', uploadError, false);
@@ -507,7 +515,7 @@ DEFAULT_METHOD_UPLOAD = '''
             <div class="contr"><h2>Select the file and click Upload button</h2></div>
 
             <div class="upload_form_cont">
-                <form id="upload_form" enctype="multipart/form-data" method="post" action="upload.php">
+                <form id="upload_form" method="post" action="upload.php">
                     <div>
                         <div><label for="upload_file">Please select a file</label></div>
                         <div><input type="file" multiple="multiple" name="upload_file" id="upload_file" onchange="fileSelected();" /></div>
@@ -1174,6 +1182,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         
     def do_GET(self):
         """Serve a GET request."""
+        DEBUG_PRINT("do_GET");
+        
         self.printHeaders();
         
         f = self.send_head()
@@ -1190,6 +1200,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 f.close();
                 
     def do_POST(self):
+        DEBUG_PRINT("do_POST");
+
         
         self.printHeaders();
 
@@ -1212,46 +1224,60 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         
         DEBUG_PRINT(remain_bytes);
         DEBUG_PRINT(str_boundary);
+        
+        
+        
 #         index = self.headers.find('boundary=');
     
 #-----------------------------9158069810016882161586011283\r\n         
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
-# Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
-        now_line = self.rfile.readline();
-        remain_bytes -= len(now_line);
-        
-        DEBUG_PRINT("NAME_LINE");
         DEBUG_PRINT(now_line);
-        str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), encoding=DEFAULT_ENC);
-# Content-Type: text/plain\r\n
-        now_line = self.rfile.readline();
         
-        remain_bytes -= len(now_line);
-# \r\n
-        now_line = self.rfile.readline();
-        remain_bytes -= len(now_line);
         
-        DEBUG_PRINT(path);
-        DEBUG_PRINT(str_filename); 
-        f = io.BufferedIOBase();
-        global DEFAULT_GZIP;
-        if(DEFAULT_GZIP == 1):
-            f = gzip.GzipFile(filename="", mode="wb", compresslevel=9, fileobj=open(path + str_filename, 'wb'));
-        else:
-            f = open(path + str_filename, 'wb');
-        
-        if remain_bytes > 10240:
-            f.write(self.rfile.read(remain_bytes % 10240));
-            remain_bytes -= remain_bytes % 10240;
-        while remain_bytes > 10240:
-            f.write(self.rfile.read(10240))
-            remain_bytes -= 10240;
         while 1:
-            buf = self.rfile.readline();
-            if(b_boundary in buf):
+    # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
+            now_line = self.rfile.readline();
+            if not now_line:
                 break;
-            f.write(buf)
+            remain_bytes -= len(now_line);
+            
+            DEBUG_PRINT("NAME_LINE");
+            DEBUG_PRINT(now_line);
+            str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), encoding=DEFAULT_ENC);
+            if not str_filename:
+                break;
+    # Content-Type: text/plain\r\n
+            now_line = self.rfile.readline();
+            DEBUG_PRINT(now_line);
+            
+            remain_bytes -= len(now_line);
+    # \r\n
+            now_line = self.rfile.readline();
+            remain_bytes -= len(now_line);
+            DEBUG_PRINT(now_line);
+            
+            DEBUG_PRINT(path);
+            DEBUG_PRINT(str_filename); 
+            f = io.BufferedIOBase();
+            global DEFAULT_GZIP;
+            if(DEFAULT_GZIP == 1):
+                f = gzip.GzipFile(filename="", mode="wb", compresslevel=9, fileobj=open(path + str_filename, 'wb'));
+            else:
+                f = open(path + str_filename, 'wb');
+            
+            now_line=b'';
+            old_line = self.rfile.readline();
+            DEBUG_PRINT(old_line);
+            while 1:
+                now_line = old_line;
+                old_line = self.rfile.readline();
+                DEBUG_PRINT(old_line);
+                if(b_boundary in old_line):
+                    f.write(now_line[:-2]);
+                    break;
+                f.write(now_line);
+            print("FILE_OUTPUT_COMPLETE:",str_filename);
         f.close();
         self.send_head();
         
