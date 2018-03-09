@@ -200,7 +200,7 @@ DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
 
 DEFAULT_METHOD_UPLOAD = '''
 <!DOCTYPE html>
-<html lang="en" manifest="DEFAULT_METHOD_UPLOAD.appcache">
+<html lang="en">
     <head>
     <!--modified from https://www.script-tutorials.com/pure-html5-file-upload/-->
         <meta charset="utf-8" />
@@ -365,39 +365,58 @@ DEFAULT_METHOD_UPLOAD = '''
             document.getElementById('warnsize').style.display = 'none';
         
             // get selected file element
-            var oFile = document.getElementById('upload_file').files[0];
-        
-        
-            // little test for filesize
-            if (oFile.size > iMaxFilesize) {
-                document.getElementById('warnsize').style.display = 'block';
-                return;
-            }
-        
-            // get preview element
-            var oImage = document.getElementById('preview');
-        
-            // prepare HTML5 FileReader
-            var oReader = new FileReader();
+            
+            for(i=0;i<document.getElementById('upload_file').files.length;i++){
+                var oFile = document.getElementById('upload_file').files[i];
+
+                // little test for filesize
+                //if (oFile.size > iMaxFilesize) {
+                //    document.getElementById('warnsize').style.display = 'block';
+                //    return;
+                //}
+            
+                // get preview element
+                var imageDiv = document.getElementById('preview');
+                
+                // prepare HTML5 FileReader
+                var oReader = new FileReader();
                 oReader.onload = function(e){
-        
-                // e.target.result contains the DataURL which we will use as a source of the image
-                oImage.src = e.target.result;
-        
-                oImage.onload = function () { // binding onload event
-        
-                    // we are going to display some custom image information here
-                    sResultFileSize = bytesToSize(oFile.size);
-                    document.getElementById('fileinfo').style.display = 'block';
-                    document.getElementById('filename').innerHTML = 'Name: ' + oFile.name;
-                    document.getElementById('filesize').innerHTML = 'Size: ' + sResultFileSize;
-                    document.getElementById('filetype').innerHTML = 'Type: ' + oFile.type;
-                    document.getElementById('filedim').innerHTML = 'Dimension: ' + oImage.naturalWidth + ' x ' + oImage.naturalHeight;
+                    //console.log(e);
+                    // e.target.result contains the DataURL which we will use as a source of the image
+                    var oImage = document.createElement("img");
+                    oImage.width = "300";
+                    oImage.height = "300";
+                    
+                    
+                    oImage.src = e.target.result;
+                    oImage.style.visibility ="visible";
+                    //console.log(oImage.src);
+                    
+                    oImage.onload = function () { // binding onload event
+                        // we are going to display some custom image information here
+                        sResultFileSize = bytesToSize(oFile.size);
+                        var fileinfo = document.createElement("div");
+                        imageDiv.appendChild(fileinfo);
+                        fileinfo.appendChild(oImage);
+                       fileinfo.style.display = 'block';
+                        var filename = document.createElement("div");
+                        var filesize = document.createElement("div");
+                        var filetype = document.createElement("div");
+                        var filedim = document.createElement("div");
+                        filename.innerHTML = 'Name: ' + oFile.name;
+                        filesize.innerHTML = 'Size: ' + sResultFileSize;
+                        filetype.innerHTML = 'Type: ' + oFile.type;
+                        filedim.innerHTML = 'Dimension: ' + oImage.naturalWidth + ' x ' + oImage.naturalHeight;
+                        fileinfo.appendChild(filename);
+                        fileinfo.appendChild(filesize);
+                        fileinfo.appendChild(filetype);
+                        fileinfo.appendChild(filedim);
+                    };
+                    
                 };
-            };
-        
-            // read selected file as DataURL
-            oReader.readAsDataURL(oFile);
+                oReader.readAsDataURL(oFile);
+            }     
+            // read selected file as DataURL       
         }
         
         function startUploading() {
@@ -420,18 +439,19 @@ DEFAULT_METHOD_UPLOAD = '''
             
             var vFD = new FormData();
             for (i=0;i<document.getElementById('upload_file').files.length;i++){
-                vFD.append("files[]",document.getElementById('upload_file').files[i]);
+                vFD.append(""+document.getElementById('upload_file').files.length,document.getElementById('upload_file').files[i]); 
             }
+            var oXHR = new XMLHttpRequest();
+            oXHR.upload.addEventListener('progress', uploadProgress, true);
+            oXHR.upload.addEventListener('load', uploadFinish, true);
+            oXHR.upload.addEventListener('error', uploadError, true);
+            oXHR.upload.addEventListener('abort', uploadAbort, true);
+            oXHR.open('POST', document.URL);
+            oXHR.send(vFD);
             
             //console.log(vFD);
             // create XMLHttpRequest object, adding few event listeners, and POSTing our data
-            var oXHR = new XMLHttpRequest();     
-            oXHR.upload.addEventListener('progress', uploadProgress, false);
-            oXHR.addEventListener('load', uploadFinish, false);
-            oXHR.addEventListener('error', uploadError, false);
-            oXHR.addEventListener('abort', uploadAbort, false);
-            oXHR.open('POST', '');
-            oXHR.send(vFD);
+
         
             // set inner timer
             oTimer = setInterval(doInnerUpdates, 300);
@@ -468,7 +488,7 @@ DEFAULT_METHOD_UPLOAD = '''
                 iBytesTotal = e.total;
                 var iPercentComplete = Math.round(e.loaded * 100 / e.total);
                 var iBytesTransfered = bytesToSize(iBytesUploaded);
-        
+                
                 document.getElementById('progress_percent').innerHTML = iPercentComplete.toString() + '%';
                 document.getElementById('progress').style.width = (iPercentComplete * 4).toString() + 'px';
                 document.getElementById('b_transfered').innerHTML = iBytesTransfered;
@@ -484,9 +504,8 @@ DEFAULT_METHOD_UPLOAD = '''
         
         function uploadFinish(e) { // upload successfully finished
             var oUploadResponse = document.getElementById('upload_response');
-            oUploadResponse.innerHTML = e.target.responseText;
+            oUploadResponse.innerHTML = e.target.responseText || "Upload Succeed!";
             oUploadResponse.style.display = 'block';
-        
             document.getElementById('progress_percent').innerHTML = '100%';
             document.getElementById('progress').style.width = '400px';
             document.getElementById('filesize').innerHTML = sResultFileSize;
@@ -546,8 +565,7 @@ DEFAULT_METHOD_UPLOAD = '''
                         <div id="upload_response"></div>
                     </div>
                 </form>
-
-                <img id="preview" />
+                <div id="preview"/>
             </div>
         </div>
     </body>
@@ -557,7 +575,7 @@ DEFAULT_ENC_METHOD_UPLOAD = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogate
 
 DEFAULT_INDEX = '''
 <!DOCTYPE html>
-<html manifest="DEFAULT_INDEX.appcache">
+<html">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
@@ -1209,9 +1227,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         DEBUG_PRINT('RAW PATH:', self.path);
         DEBUG_PRINT('TRSLATED PATH:', path);
         if(not self.path.startswith("/FILE/")):
-            DEBUG_PRINT("REFUSED!!");
-            self.send_head();
-            return;
+            self.send_error(403, "No permission to upload in this folder!")
+            return None
         
         self._writeheaders();
         remain_bytes = int(self.headers.get('content-length'));
@@ -1229,19 +1246,23 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
         DEBUG_PRINT(now_line);
-        
-        while 1:
+        filesum = 1 << 30;
+        getfilenum = 0;
+        while getfilenum < filesum:
+            getfilenum += 1;
     # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
+            now_line = b"";
             now_line = self.rfile.readline();
-            if not now_line:
-                break;
             remain_bytes -= len(now_line);
             
             DEBUG_PRINT("NAME_LINE");
             DEBUG_PRINT(now_line);
             str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), encoding=DEFAULT_ENC);
-            if not str_filename:
-                break;
+            filesum = int(str(txt_wrap_by(b'name="', b'"; filename=', now_line), encoding=DEFAULT_ENC))
+            DEBUG_PRINT("filesum");
+            DEBUG_PRINT(filesum);
+            DEBUG_PRINT("strbname");
+            DEBUG_PRINT(str(txt_wrap_by(b'name="', b'"; filename=', now_line), encoding=DEFAULT_ENC));
     # Content-Type: text/plain\r\n
             now_line = self.rfile.readline();
             DEBUG_PRINT(now_line);
@@ -1272,9 +1293,12 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     f.write(now_line[:-2]);
                     break;
                 f.write(now_line);
-            print("FILE_OUTPUT_COMPLETE:", str_filename);
-        f.close();
-        self.send_head();
+            DEBUG_PRINT("FILE_OUTPUT_COMPLETE:", str_filename);
+            f.close();
+        DEBUG_PRINT("DO_POST_OVER");
+        return self.send_head();
+    
+#         return self.send_head();
         
 #     #modified from http://www.jb51.net/article/57240.htm
 #         print('POST,HEHE');
@@ -1381,8 +1405,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             raise
     
     def do_CONNECT(self):
-        self.printHeaders();
+        return self.send_head();
     
+    def do_OPTIONS(self):
+        return self.send_head();
+    
+    def do_PROPFIND(self):
+        return self.send_head();
+        
     def list_directory(self, path):
         """Helper to produce a directory listing (absent index.html).
 
