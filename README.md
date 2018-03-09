@@ -38,12 +38,21 @@ http://dailypaste.com/
 # how to use:
 
   simple: (in windows)
+  
           double click.
+	  
           it will show start and show you what you wanna know.
+	  
           (in linux)
+	  
           cd to the folder witch exsimple.py in.
+	  
           python3 exsimple.py
+	  
           it will show start and show you what you wanna know.
+	  
   advanced:
+  
           open the score code to change whatever you want.
+	  
           also,notice that if you use pypy3 instead of python3,it might run far faster.
