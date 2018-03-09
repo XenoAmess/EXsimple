@@ -361,8 +361,7 @@ DEFAULT_METHOD_UPLOAD = '''
             // get selected file element
             
             for(i=0;i<document.getElementById('upload_file').files.length;i++){
-                var oFile = document.getElementById('upload_file').files[i];
-
+               var oFile = document.getElementById('upload_file').files[i];
                 // little test for filesize
                 //if (oFile.size > iMaxFilesize) {
                 //    document.getElementById('warnsize').style.display = 'block';
@@ -392,19 +391,7 @@ DEFAULT_METHOD_UPLOAD = '''
                         var fileinfo = document.createElement("div");
                         imageDiv.appendChild(fileinfo);
                         fileinfo.appendChild(oImage);
-                       fileinfo.style.display = 'block';
-                        var filename = document.createElement("div");
-                        var filesize = document.createElement("div");
-                        var filetype = document.createElement("div");
-                        var filedim = document.createElement("div");
-                        filename.innerHTML = 'Name: ' + oFile.name;
-                        filesize.innerHTML = 'Size: ' + sResultFileSize;
-                        filetype.innerHTML = 'Type: ' + oFile.type;
-                        filedim.innerHTML = 'Dimension: ' + oImage.naturalWidth + ' x ' + oImage.naturalHeight;
-                        fileinfo.appendChild(filename);
-                        fileinfo.appendChild(filesize);
-                        fileinfo.appendChild(filetype);
-                        fileinfo.appendChild(filedim);
+                        fileinfo.style.display = 'block';
                     };
                     
                 };
