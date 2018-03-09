@@ -5,11 +5,11 @@ http://dailypaste.com/
 	
 # what is it:
   
-  It is used as a public,open,share Web-side-netdisc.
+  It is used as a public,open,share netdisc.
   
   Yes,it supports multi-files upload in one turn.
   
-  Actually it is a homemade light dynamic web site framework,which has implyments of POST,GET,HEAD methods.
+  Actually it is a light Web application framework  exactly easy to deploy , which has implyments of POST,GET,HEAD methods.
   
   
 # drag it to move!
