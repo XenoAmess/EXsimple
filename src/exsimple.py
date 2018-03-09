@@ -1163,8 +1163,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
     
     def _writeheaders(self):
-        DEBUG_PRINT (self.path)
-        DEBUG_PRINT (self.headers)
+        DEBUG_PRINT ("_writeheaders")
+        DEBUG_PRINT ("self.path",self.path)
+        DEBUG_PRINT ("self.headers",self.headers)
         self.send_response(200);
         self.send_header('Content-type', 'text/html');
         self.end_headers()
@@ -1218,44 +1219,44 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         str_boundary = self.headers.get('Content-Type').split('boundary=')[1].strip('-');
         b_boundary = bytes(str_boundary, DEFAULT_ENC);
         
-        DEBUG_PRINT(remain_bytes);
-        DEBUG_PRINT(str_boundary);
+        DEBUG_PRINT("remain_bytes",remain_bytes);
+        DEBUG_PRINT("str_boundary",str_boundary);
         
 #         index = self.headers.find('boundary=');
     
 #-----------------------------9158069810016882161586011283\r\n         
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
-        DEBUG_PRINT(now_line);
+        DEBUG_PRINT("now_line",now_line);
         filesum = 1 << 30;
         getfilenum = 0;
         while getfilenum < filesum:
+            DEBUG_PRINT("getfilenum",getfilenum);
             getfilenum += 1;
     # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
             now_line = b"";
             now_line = self.rfile.readline();
             remain_bytes -= len(now_line);
             
-            DEBUG_PRINT("NAME_LINE");
-            DEBUG_PRINT(now_line);
+            DEBUG_PRINT("NAME_LINE",now_line);
             str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), DEFAULT_ENC);
-            filesum = int(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC))
-            DEBUG_PRINT("filesum");
-            DEBUG_PRINT(filesum);
-            DEBUG_PRINT("strbname");
-            DEBUG_PRINT(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC));
+            if(filesum == (1<<30)):
+                filesum = int(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC))
+            DEBUG_PRINT("filesum",filesum);
+#             DEBUG_PRINT("strbname",);
+#             DEBUG_PRINT(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC));
     # Content-Type: text/plain\r\n
             now_line = self.rfile.readline();
-            DEBUG_PRINT(now_line);
+            DEBUG_PRINT("firstline",now_line);
             
             remain_bytes -= len(now_line);
     # \r\n
             now_line = self.rfile.readline();
             remain_bytes -= len(now_line);
-            DEBUG_PRINT(now_line);
+            DEBUG_PRINT("secondline",now_line);
             
-            DEBUG_PRINT(path);
-            DEBUG_PRINT(str_filename); 
+            DEBUG_PRINT("path",path);
+            DEBUG_PRINT("str_filename",str_filename); 
             f = io.BufferedIOBase();
             global DEFAULT_GZIP;
             if(DEFAULT_GZIP == 1):
@@ -1265,12 +1266,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             
             now_line = b'';
             old_line = self.rfile.readline();
-            DEBUG_PRINT(old_line);
+            DEBUG_PRINT("oldline",old_line);
             while 1:
                 now_line = old_line;
                 old_line = self.rfile.readline();
-                DEBUG_PRINT(old_line);
+#                 DEBUG_PRINT(old_line);
                 if(b_boundary in old_line):
+                    DEBUG_PRINT("lastline",old_line);
+                    DEBUG_PRINT("last2line",now_line);
                     f.write(now_line[:-2]);
                     break;
                 f.write(now_line);
