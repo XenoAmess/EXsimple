@@ -1,31 +1,26 @@
 # EXsimple
-know about SimpleHTTPRequestHandler?
-
-still not simple enough?
-
-so here is EXsimple.
 
 # living example
 http://dailypaste.com/
 	
 # what is it:
-  an extention to the SimpleHTTPRequestHandler,includes:
   
-  file upload
+  It is used as a public,open,share Web-side-netdisc.
   
-  multi-files upload
+  Yes,it supports multi-files upload in one turn.
   
-  and a better html operator interface
+  Actually it is a homemade light dynamic web site framework,which has implyments of POST,GET,HEAD methods.
+  
   
 # drag it to move!
-  I just notice that soo many people don't know this...
+  It might be really hard to notice it without Instructions. 
   ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/drag.gif)
   
 # enter a not-in-use url,and press Enter,then press new-folder button,boom!a new folder appears!
-  I just notice that soo many people don't know this,too...
+  It might be really hard to notice it without Instructions,too.
   ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/newFolder.gif)
 
-# get it in a inframe,and it would be smart!
+# get it in a inframe,and it would be streamline smartly!
 [example link](https://xenoamess.github.io/).
 
 
@@ -34,10 +29,10 @@ http://dailypaste.com/
   
   this is used for people to update their own file,not used to f**k up others' file.
   
-  I hope nobody shall be that bad person,making fun of others' pain.
+  I hope nobody shall be that bad person,making fun in others' pain.
   
 # notice:
-  some codes are not modified(or copied) by others in their teaching blogs.I had put links on the front these codes.of course I had no rights with these codes.thanks for the original authors to write blogs to teach me so much.thank you.
+  some codes are modified from others' in their blogs.I had put links on the front these codes.of course I had no complete rights with these codes.thanks for the original authors to write blogs to teach me so much.thank you.
   
   if you are one of these authors,but you don't want me use your code ,please tell me.I will rewrite that part.
   
