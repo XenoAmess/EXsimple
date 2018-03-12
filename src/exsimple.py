@@ -559,7 +559,7 @@ DEFAULT_INDEX = '''
 <html">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" mce_href="favicon.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
 
         <style type="text/css">
             html,body{
@@ -1334,7 +1334,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.give_robots_txt();
         if(path.endswith('stylesheet.css')):
             return self.give_css();
-        if(self.path == 'favicon.ico'):
+        if(self.path == '/FILE/favicon.ico'):
             return self.give_ico();
         if(path.endswith('method_upload')):
             return self.give_method_upload();
@@ -1425,7 +1425,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('<meta http-equiv="Content-Type" '
                  'content="text/html; charset=%s">' % DEFAULT_ENC)
 #         r.append('<link type="text/css" rel="stylesheet" href="stylesheet.css"/>');
-        r.append('<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" mce_href="favicon.ico" media="screen"/>');
+        r.append('<link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>');
         r.append(DEFAULT_CSS);
 #         r.append(DEFAULT_JSCRIPT);
         r.append('''
