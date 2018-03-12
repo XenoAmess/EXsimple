@@ -1,7 +1,7 @@
 import base64
 import zlib
 
-str = open("favicon.ico","rb").read();
-str = zlib.compress(str);
-str = base64.b64encode(str);
+tstr = open("favicon.ico","rb").read();
+tstr = zlib.compress(tstr);
+tstr = base64.b64encode(tstr);
 print(str);
