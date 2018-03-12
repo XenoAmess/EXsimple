@@ -556,11 +556,10 @@ DEFAULT_ENC_METHOD_UPLOAD = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogate
 
 DEFAULT_INDEX = '''
 <!DOCTYPE html>
-<html>
+<html">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        
-        <link rel="shortcut icon" type="image/png" href="http://st.codeforces.com/s/36000/favicon.png">
+        <link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
 
         <style type="text/css">
             html,body{
