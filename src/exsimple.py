@@ -46,7 +46,7 @@ if THIS_IS_DAILYPASTE:
     DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
     <h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!</h1>
-    <h1 class = "subtitle">(Don't over use it or I will be bankrupt!)</h1>
+    <h1 class = "subtitle">(Don't over-use it or I will be bankrupt!)</h1>
     <h1 class = "subtitle">provided by XenoAmess!</h1>
     <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
 ''' % (DEFAULT_TITLE);
