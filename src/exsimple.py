@@ -54,7 +54,7 @@ if THIS_IS_DAILYPASTE:
 DEFAULT_CSS = '''
 <style type="text/css">
 html,body{
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
     margin:0px;
     padding:0;
     width:100%;
@@ -71,7 +71,7 @@ body {
 }
 
 ul {
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
     font-weight : 800;
     border: 0px;
     border-radius: 0px;
@@ -82,7 +82,7 @@ ul {
     width : 100% ;
 }
 li { 
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
     font-weight : 800;
     /*filter:alpha(Opacity=60);-moz-opacity:0.6;opacity: 0.6; */  
     margin: 5px;
@@ -114,17 +114,17 @@ a.link_in_list:link {
     color: black ; 
     text-decoration:none;
 } 
-/*常规时候的样式*/
+/*甯歌鏃跺�欑殑鏍峰紡*/
 a.link_in_list:visited {
     color: black; 
     text-decoration:none;
 } 
-/*鼠标指上去的样式*/
+/*榧犳爣鎸囦笂鍘荤殑鏍峰紡*/
 a.link_in_list:hover {
     color: black ;
     text-decoration:none;
 }
-/*访问过后的样式*/
+/*璁块棶杩囧悗鐨勬牱寮�*/
 </style>
 '''
 DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
@@ -140,7 +140,7 @@ DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
 #                 function mouseHandler(e){
 #                     switch(e.type){
 #                         case 'mousedown':
-#                             draggingObj=validateHandler(e);//验证是否为可点击移动区域
+#                             draggingObj=validateHandler(e);//楠岃瘉鏄惁涓哄彲鐐瑰嚮绉诲姩鍖哄煙
 #                             if(draggingObj!=null){
 #                                 diffX=e.clientX-draggingObj.offsetLeft;
 #                                 diffY=e.clientY-draggingObj.offsetTop;
@@ -559,11 +559,11 @@ DEFAULT_INDEX = '''
 <html">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" mce_href="/favicon.ico"/>
 
         <style type="text/css">
             html,body{
-                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
                 margin:0px;
                 padding:0;
                 width:100%%;
@@ -579,14 +579,14 @@ DEFAULT_INDEX = '''
                 color : orange;
                 font-weight : 800;
                 font-size : 80px;
-                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
             }
             h1.subtitle {
                 font-size : 30px;
             }
             div.window {
                 font-weight : 800;
-                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
                 position: absolute;;padding: 0px;
                 margin: 0px;
                 /*display: block;*/
@@ -600,7 +600,7 @@ DEFAULT_INDEX = '''
             .window-title{
                 color:#FFFFFF;
                 background-color:#404040;
-                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
                 font-size:16pt;
                 cursor:move; 
                 height:20px;
@@ -609,7 +609,7 @@ DEFAULT_INDEX = '''
             .window-button {
                 color:#FFFFFF;
                 background-color:#404040;
-                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
                 font-size:16pt;
                 cursor:move;
                 height:20px;
@@ -618,14 +618,14 @@ DEFAULT_INDEX = '''
             .window-url {
                 color:#FFFFFF;
                 background-color:#404040;
-                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
                 font-size:16pt;
                 cursor:move; 
                 height:30px;
                 padding:4px;
             }
             .window-body {
-                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '寰蒋闆呴粦', Arial, sans-serif;
                 position: absolute;
                 margin: 0px;
                 /*display: block;*/
@@ -681,7 +681,7 @@ DEFAULT_INDEX = '''
                 function mouseHandler(e){
                     switch(e.type){
                         case 'mousedown':
-                            draggingObj=validateHandler(e);//验证是否为可点击移动区域
+                            draggingObj=validateHandler(e);//楠岃瘉鏄惁涓哄彲鐐瑰嚮绉诲姩鍖哄煙
                             if(draggingObj!=null){
                                 diffX=e.clientX-draggingObj.offsetLeft;
                                 diffY=e.clientY-draggingObj.offsetTop;
@@ -970,7 +970,7 @@ def DEBUG_PRINT(*strs):
 
 
 def txt_wrap_by(start_str, end_str, html_str):
-    '''取出字符串html_str中的，被start_str与end_str包绕的字符串.这个版本和以前不同.将会从头和从尾两端向中间撸.'''
+    '''鍙栧嚭瀛楃涓瞙tml_str涓殑锛岃start_str涓巈nd_str鍖呯粫鐨勫瓧绗︿覆.杩欎釜鐗堟湰鍜屼互鍓嶄笉鍚�.灏嗕細浠庡ご鍜屼粠灏句袱绔悜涓棿鎾�.'''
     start = html_str.find(start_str);
     if start >= 0:
         start += len(start_str);
@@ -1303,7 +1303,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #             field_item = form[field]
 #             filename = field_item.filename
 #             filevalue = field_item.value
-#             filesize = len(filevalue)  # 文件大小(字节)
+#             filesize = len(filevalue)  # 鏂囦欢澶у皬(瀛楄妭)
 #             print (len(filevalue))
 #             with open(filename.decode('utf-8') + 'a', 'wb') as f:
 #                 f.write(filevalue)
@@ -1334,7 +1334,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.give_robots_txt();
         if(path.endswith('stylesheet.css')):
             return self.give_css();
-        if(self.path == '/FILE/favicon.ico'):
+        if(self.path == '/favicon.ico'):
             return self.give_ico();
         if(path.endswith('method_upload')):
             return self.give_method_upload();
@@ -1418,14 +1418,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         except UnicodeDecodeError:
             displaypath = urllib.parse.unquote(path)
         displaypath = html.escape(displaypath)
-#         title = '路径: %s' % displaypath
+#         title = '璺緞: %s' % displaypath
         r.append('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" '
                  '"http://www.w3.org/TR/html4/strict.dtd">')
         r.append('<html>\n<head>')
         r.append('<meta http-equiv="Content-Type" '
                  'content="text/html; charset=%s">' % DEFAULT_ENC)
 #         r.append('<link type="text/css" rel="stylesheet" href="stylesheet.css"/>');
-        r.append('<link rel="shortcut icon" type="image/x-icon" href="/FILE/favicon.ico" mce_href="/FILE/favicon.ico"/>');
+        r.append('<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" mce_href="/favicon.ico"/>');
         r.append(DEFAULT_CSS);
 #         r.append(DEFAULT_JSCRIPT);
         r.append('''
@@ -1443,7 +1443,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('<body onload = "sayhi()" >')
         r.append('<ul>'); 
         
-#         如果不在根目录
+#         濡傛灉涓嶅湪鏍圭洰褰�
         if(displaypath != '/FILE/'):
             
             fatherpath = None;
