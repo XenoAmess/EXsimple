@@ -1,2 +1,6 @@
 FILE
+
 *.bak
+.project
+.pydevproject
+.settings
