@@ -1,6 +1,6 @@
 ﻿# -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-VERSION = "2018/03/09";
+VERSION = "2018/03/15";
 THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
@@ -38,7 +38,7 @@ DEFAULT_TITLE = 'EXsimple';
 DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
     <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
-    <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
+    <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
 ''' % (DEFAULT_TITLE);
 
 if THIS_IS_DAILYPASTE:
@@ -46,9 +46,11 @@ if THIS_IS_DAILYPASTE:
     DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
     <h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!</h1>
-    <h1 class = "subtitle">(Don't over-use it or I will be bankrupt!)</h1>
-    <h1 class = "subtitle">provided by XenoAmess!</h1>
-    <h1 class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></h1>
+    <div>
+        <p class = "subtitle">(Don't over-use it or I will be bankrupt!)</p>
+        <p class = "subtitle">provided by XenoAmess!</p>
+        <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
+    </div>
 ''' % (DEFAULT_TITLE);
 
 DEFAULT_CSS = '''
@@ -584,6 +586,14 @@ DEFAULT_INDEX = '''
             h1.subtitle {
                 font-size : 30px;
             }
+            p.subtitle{
+                margin: 0px;
+                padding: 0px;
+                color : orange;
+                font-weight : 800;
+                font-size : 30px;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+            }
             div.window {
                 font-weight : 800;
                 font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
@@ -858,7 +868,7 @@ DEFAULT_INDEX = '''
                 <input type="text" name="URL" id ="URL" value="" onKeyDown="keydownEvent()"  style="width:95%%"/>
             </div>
             <div class = "window-body">
-                <iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false">your browser does not support iframe???!!!</iframe>
+                <iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false" />
             </div>
         </div>
     </body>
@@ -1164,8 +1174,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     
     def _writeheaders(self):
         DEBUG_PRINT ("_writeheaders")
-        DEBUG_PRINT ("self.path",self.path)
-        DEBUG_PRINT ("self.headers",self.headers)
+        DEBUG_PRINT ("self.path", self.path)
+        DEBUG_PRINT ("self.headers", self.headers)
         self.send_response(200);
         self.send_header('Content-type', 'text/html');
         self.end_headers()
@@ -1219,44 +1229,44 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         str_boundary = self.headers.get('Content-Type').split('boundary=')[1].strip('-');
         b_boundary = bytes(str_boundary, DEFAULT_ENC);
         
-        DEBUG_PRINT("remain_bytes",remain_bytes);
-        DEBUG_PRINT("str_boundary",str_boundary);
+        DEBUG_PRINT("remain_bytes", remain_bytes);
+        DEBUG_PRINT("str_boundary", str_boundary);
         
 #         index = self.headers.find('boundary=');
     
 #-----------------------------9158069810016882161586011283\r\n         
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
-        DEBUG_PRINT("now_line",now_line);
+        DEBUG_PRINT("now_line", now_line);
         filesum = 1 << 30;
         getfilenum = 0;
         while getfilenum < filesum:
-            DEBUG_PRINT("getfilenum",getfilenum);
+            DEBUG_PRINT("getfilenum", getfilenum);
             getfilenum += 1;
     # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
             now_line = b"";
             now_line = self.rfile.readline();
             remain_bytes -= len(now_line);
             
-            DEBUG_PRINT("NAME_LINE",now_line);
+            DEBUG_PRINT("NAME_LINE", now_line);
             str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), DEFAULT_ENC);
-            if(filesum == (1<<30)):
+            if(filesum == (1 << 30)):
                 filesum = int(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC))
-            DEBUG_PRINT("filesum",filesum);
+            DEBUG_PRINT("filesum", filesum);
 #             DEBUG_PRINT("strbname",);
 #             DEBUG_PRINT(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC));
     # Content-Type: text/plain\r\n
             now_line = self.rfile.readline();
-            DEBUG_PRINT("firstline",now_line);
+            DEBUG_PRINT("firstline", now_line);
             
             remain_bytes -= len(now_line);
     # \r\n
             now_line = self.rfile.readline();
             remain_bytes -= len(now_line);
-            DEBUG_PRINT("secondline",now_line);
+            DEBUG_PRINT("secondline", now_line);
             
-            DEBUG_PRINT("path",path);
-            DEBUG_PRINT("str_filename",str_filename); 
+            DEBUG_PRINT("path", path);
+            DEBUG_PRINT("str_filename", str_filename); 
             f = io.BufferedIOBase();
             global DEFAULT_GZIP;
             if(DEFAULT_GZIP == 1):
@@ -1266,14 +1276,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             
             now_line = b'';
             old_line = self.rfile.readline();
-            DEBUG_PRINT("oldline",old_line);
+            DEBUG_PRINT("oldline", old_line);
             while 1:
                 now_line = old_line;
                 old_line = self.rfile.readline();
 #                 DEBUG_PRINT(old_line);
                 if(b_boundary in old_line):
-                    DEBUG_PRINT("lastline",old_line);
-                    DEBUG_PRINT("last2line",now_line);
+                    DEBUG_PRINT("lastline", old_line);
+                    DEBUG_PRINT("last2line", now_line);
                     f.write(now_line[:-2]);
                     break;
                 f.write(now_line);
