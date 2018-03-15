@@ -31,7 +31,7 @@ DEFAULT_GZIP = 0;
 DEFAULT_ENC = 'utf-8';
 DEFAULT_ROBOTS_TXT = 'User-agent: *\r\nDisallow: /FILE/\r\n'
 DEFAULT_ENC_ROBOTS_TXT = DEFAULT_ROBOTS_TXT.encode(DEFAULT_ENC, 'surrogateescape');
-DEFAULT_ICON_ZLIB_B64 = 'eJztWrFqIzEQVbgixRUXOLgmRVxeETiTJuW5TJlPiOFI7cLXBc4fYJxPyCcYjMFltrzORSqDYdO7iDuHcEQ3Tyut5bWklbTrGEJemIhsdkfzpNGMNLuMHdDP2Rmj3w329ztj3xhj1DC6xH6x7LrC18+ZfMCKHyRtkgHJmOSBZEHyImUhr43lPW35zN7BOT99enrqHh0dTejPFS4FCp6ZpGnaha492H9O0idJSfjl5WWo/bm0Wi0ukUqd529g/zHJDcmcaxgOh9E87u7ueAFz2cfxjjhckIyKnQLkW5x8K5gDnsGzFqCvizo53N7ya9I5s3UY61t4pgQzmurreljw3zRsS9LnRIxvGXxqA/f3nO7jS9hQlQPJM7yKuPDp1M2l0WgE+ZQLaZr1ib6lDZFcMJ9iLJQushNrwd53r9fz5nF1dWXVgz6azXW/UpaZTUEcaH3xWUGPEOi3cZnShPnySDHgFiAUm/qWNnmufcQ7PrLoEdLp2OekSUTLOLh8CtPk6lva5hGT+U2JHicX5VuwFfGoQzdCkO/U+rmlAGgCLvv0ndno5EC5lM89dXFTuEE+cOQE6/9kbPKVeWarlUc/QJeIJ2Xx2AeIgyH9SulbOJxi+YXqw7qvCqTDCB5pZvMWj26oLsyHI+x4AzoQ0yO4dA08JqF64NN1Ab6l5T1fmRQ40HmGr0J0WEJOJSBuBPJYZbbnPNqh/rQrRPhXW7Gg0D4ImVNXHqwKSj9BPChGDPLZ4HwMHQjt8Hn4DGxFLDLxq2Nt22CLwZgn5HrwhI1aGhprPB5senE/dCNPQEf5kaE6MIboC+ulbI9NeNB4LHZu3O6w0Hi87NuYCnh5hzzei19Z1zmAszfO0th/u85xdUHt97G/x9nMtX/mm+tcxF2c0WAzzhD6eaEo93VuSAqAzaY+YYviBxs1fnncJZsHpmdt0tlhIoRuXztwVqPzZ54HWVYzDnq+ZK6jEVJzkdLWeGCvFVRntp1NqyCiBrZi2zX7SeicDOs4DEpgzQVy4NLmIrqhesBl6rFxKAPiS0x9WNpcBM6IaaiuZg0H28j3Dqm02YT+PuYDOiLmw1JnEEAtZe6ry5ZHQM0WzrDnN+37oSuAy1za6sKNjy5brRyphckzI1wO6R+i1zqxJzcBMdCTR0kdTgA1x5FLj2tv4nMuxT02eOTBkbTRB6gFz0x6tPd5Rp8p46DEFbId634mbQsBavRLXU/DNZB87VM+4tpuYq+A8SpwWEqbYoB3J8/MMzaF1DqwflxbG+QUbY/yLG2pAjy/LNvjwk98Ofj4FiDj8bIGDgIUm0rfc3q8t9gSj5rFDH3XwUGBO987h3NQvuWoIdX+3lnjYvwOIKKemYshl+z0O4ACn8J3GfE8tO1Zyt/ouwwDn1PyKbxvQK0+qM4tBc9MyLf28p2MGaJmj3o3nTNxZsb5H7UM1GWELOS1sbynzTZq5R8AMtdMWC6vjJ2gpcxziPaRsQO0CW6mtkftn0QkJ/YzYa9oTxL2D+2XRCQsdpiI5Ms+rdtHtAfrNhG9b7c90bberLXZUbS3yEfxVLzVOKhxycdJjZsaRzWuapxzyebhP/+VdI4=';
+DEFAULT_ICON_ZLIB_B64 = "eJwBlgJp/YlQTkcNChoKAAAADUlIRFIAAABAAAAAQAgGAAAAqmlx3gAAAl1JREFUeF7tlt1SxiAMBXn/l1YpfrVsoeQE6M/YHffGhuQk44UhvMzn6+fHK3s9gq9IYZleOed2LItvKSzRZdb6RmTJtnCBXgswy6kwzA4u0GMDZpsOA1ThIl4NMOM0OPgQLuLVCLOOhvPacBGPIjEng4/g05jz2nAhVYFtzix9J2zMucdwIVUB5vxbwQ8brprhQooCzLexCzbLNPNZSNUIc0E3bFTURKxTNcI8FWXYoKqJWKdqgFkamuHDpiZinWIDZjBqgo9MNok1VhtwtmATPpA8C84VPYTFsrPhPIdVWOh2FpzTYREWuZ0BZ3S6gwVuZ8JZnWbwo8sz4MwOM/hR9kw422kGP8qeCWc7XeEH2StgBqdhSV/4IHkFzOA0VNMXioteCbNYxHttAzYTnw+HWdRc8gHuhrJsiccfoJf3APzFf+P9C3gP0HOA+LTj+R2wH+CzbMkrYRYxz/4AbGbxSpilZoV0ABZ7vAJmUF1a/OcDhOW/yAQ/uDwTzna4Lv8eYNQBomfAmU7nHCA6E87qMDvAI47AGR1y9wUWuZ0F53TI3VdYKDsbznPInTNYLHkWnCvKnXfwgdkGqbXNJpxt9HfFY/jIZIPU1q4JZjCYNjTAh4caSC01TWxzNFwWU2CDokZSO00T2ywHLgt5YKNMI6mNrplPnopxDzdstiqQ2vg0E2srhl7YUCW18CkR62EYRdZYID31KxPf/BpGszQWSc/6lEnv5sF5NWLpCBXCWXBwiVg2QivhbBiAxJJRtghXwjCR+OuR1gh3AsGGSsID2C3R61MWL7FbRnAq39s3pzcpuPMTAAAAAElFTkSuQmCCzKEm/A==";
 DEFAULT_ICON_ZLIB = base64.b64decode(DEFAULT_ICON_ZLIB_B64);
 DEFAULT_ICON = zlib.decompress(DEFAULT_ICON_ZLIB);
 DEFAULT_TITLE = 'EXsimple';
@@ -561,7 +561,7 @@ DEFAULT_INDEX = '''
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" mce_href="/favicon.ico"/>
+        <link rel="icon" type="image/png" href="/favicon.png" />
 
         <style type="text/css">
             html,body{
@@ -1344,7 +1344,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.give_robots_txt();
         if(path.endswith('stylesheet.css')):
             return self.give_css();
-        if(self.path == '/favicon.ico'):
+        if(self.path == '/favicon.png'):
             return self.give_ico();
         if(path.endswith('method_upload')):
             return self.give_method_upload();
@@ -1435,7 +1435,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('<meta http-equiv="Content-Type" '
                  'content="text/html; charset=%s">' % DEFAULT_ENC)
 #         r.append('<link type="text/css" rel="stylesheet" href="stylesheet.css"/>');
-        r.append('<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" mce_href="/favicon.ico"/>');
+        r.append('<link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />');
         r.append(DEFAULT_CSS);
 #         r.append(DEFAULT_JSCRIPT);
         r.append('''
