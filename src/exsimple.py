@@ -835,7 +835,6 @@ DEFAULT_INDEX = '''
             function bodyInit(){
                 document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE/" ;
                 
-                
                 //if the html is in a inframe, or is on a mobile device.
                 if(window.location!=top.location||(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))){
                     document.getElementById("titlewords").style.display="none";
@@ -872,7 +871,7 @@ DEFAULT_INDEX = '''
                 <input type="text" name="URL" id ="URL" value="" onKeyDown="keydownEvent()"  style="width:95%%"/>
             </div>
             <div class = "window-body">
-                <iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false" />
+                <iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false" scrolling="auto" style="overflow-x:scroll; overflow-y:hidden;"/>
             </div>
         </div>
     </body>
@@ -1443,6 +1442,16 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append(DEFAULT_CSS);
 #         r.append(DEFAULT_JSCRIPT);
         r.append('''
+        <style>
+        ul li{
+            list-style: none;
+            display: block;
+            word-wrap: break-word;
+            word-break: normal; 
+        }
+        </style>
+        ''');
+        r.append('''
         <script type="text/javascript">
             function sayhi(){
                 var urlStr = window.location.pathname;
@@ -1504,7 +1513,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             if os.path.isfile(fullname):
                 displayname = name;
                 linkname = name;
-                r.append('<li class = "file"><a class = "link_in_list" href="%s" target="_blank" >%s</a></li>'
+                r.append('<li class = "file"><a class = "link_in_list" href="%s" target="_blank">%s</a></li>'
                         % (urllib.parse.quote(linkname,
                                               errors='surrogatepass'),
                            html.escape(displayname)));
