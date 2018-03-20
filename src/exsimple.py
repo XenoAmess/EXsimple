@@ -832,26 +832,30 @@ DEFAULT_INDEX = '''
                 }
             };
 
-            function inininin(){
+            function bodyInit(){
                 document.getElementById("innerframe").src = location.protocol +"//" + location.host + "/FILE/" ;
+                
+                
+                //if the html is in a inframe, or is on a mobile device.
+                if(window.location!=top.location||(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))){
+                    document.getElementById("titlewords").style.display="none";
+                    document.getElementById("mainWindow").style.width="100%%";
+                    document.getElementById("mainWindow").style.height="100%%";
+                }else{
+                    Dragging(getDraggingDialog).enable();
+                }
+            
             }
             function setURL(strURL){
                 document.getElementById("URL").value = strURL ;
             }   
         </script>
         <title>%s</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
     </head>
-    <body onload = "inininin()">
+    <body onload = "bodyInit()">
         <div id="titlewords">%s</div>
-        <script type="text/javascript">
-            //if the html is in a inframe
-            if(window.location!=top.location){
-                document.getElementById("titlewords").style.display="none";
-            }else{
-                Dragging(getDraggingDialog).enable();
-            }
-        </script>
-        <div style = "clear:both" class = "window">
+        <div id="mainWindow" style = "clear:both" class = "window">
             <div class = "window-title">%s</div>
             <div class = "window-button">
                 <input type="button" value = "main" id = "method_gotomain" onclick = "method_gotomain()"/>
