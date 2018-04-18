@@ -1,6 +1,6 @@
 ﻿# -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-VERSION = "2018/03/15";
+VERSION = "2018/04/18";
 THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
@@ -30,10 +30,11 @@ DEFAULT_FILE_DIR = '/home';
 DEFAULT_GZIP = 0;
 DEFAULT_ENC = 'utf-8';
 DEFAULT_ROBOTS_TXT = 'User-agent: *\r\nDisallow: /FILE/\r\n'
-DEFAULT_ENC_ROBOTS_TXT = DEFAULT_ROBOTS_TXT.encode(DEFAULT_ENC, 'surrogateescape');
-DEFAULT_ICON_ZLIB_B64 = "eJwBlgJp/YlQTkcNChoKAAAADUlIRFIAAABAAAAAQAgGAAAAqmlx3gAAAl1JREFUeF7tlt1SxiAMBXn/l1YpfrVsoeQE6M/YHffGhuQk44UhvMzn6+fHK3s9gq9IYZleOed2LItvKSzRZdb6RmTJtnCBXgswy6kwzA4u0GMDZpsOA1ThIl4NMOM0OPgQLuLVCLOOhvPacBGPIjEng4/g05jz2nAhVYFtzix9J2zMucdwIVUB5vxbwQ8brprhQooCzLexCzbLNPNZSNUIc0E3bFTURKxTNcI8FWXYoKqJWKdqgFkamuHDpiZinWIDZjBqgo9MNok1VhtwtmATPpA8C84VPYTFsrPhPIdVWOh2FpzTYREWuZ0BZ3S6gwVuZ8JZnWbwo8sz4MwOM/hR9kw422kGP8qeCWc7XeEH2StgBqdhSV/4IHkFzOA0VNMXioteCbNYxHttAzYTnw+HWdRc8gHuhrJsiccfoJf3APzFf+P9C3gP0HOA+LTj+R2wH+CzbMkrYRYxz/4AbGbxSpilZoV0ABZ7vAJmUF1a/OcDhOW/yAQ/uDwTzna4Lv8eYNQBomfAmU7nHCA6E87qMDvAI47AGR1y9wUWuZ0F53TI3VdYKDsbznPInTNYLHkWnCvKnXfwgdkGqbXNJpxt9HfFY/jIZIPU1q4JZjCYNjTAh4caSC01TWxzNFwWU2CDokZSO00T2ywHLgt5YKNMI6mNrplPnopxDzdstiqQ2vg0E2srhl7YUCW18CkR62EYRdZYID31KxPf/BpGszQWSc/6lEnv5sF5NWLpCBXCWXBwiVg2QivhbBiAxJJRtghXwjCR+OuR1gh3AsGGSsID2C3R61MWL7FbRnAq39s3pzcpuPMTAAAAAElFTkSuQmCCzKEm/A==";
-DEFAULT_ICON_ZLIB = base64.b64decode(DEFAULT_ICON_ZLIB_B64);
-DEFAULT_ICON = zlib.decompress(DEFAULT_ICON_ZLIB);
+DEFAULT_ROBOTS_TXT_ENC = DEFAULT_ROBOTS_TXT.encode(DEFAULT_ENC, 'surrogateescape');
+DEFAULT_ROBOTS_TXT_GZIP = gzip.compress(DEFAULT_ROBOTS_TXT_ENC);
+DEFAULT_ICON_B64 = "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACXUlEQVR4Xu2W3VLGIAwFef+XVil+tWyh5AToz9gd98aG5CTjhSG8zOfr58crez2Cr0hhmV4553Ysi28pLNFl1vpGZMm2cIFeCzDLqTDMDi7QYwNmmw4DVOEiXg0w4zQ4+BAu4tUIs46G89pwEY8iMSeDj+DTmPPacCFVgW3OLH0nbMy5x3AhVQHm/FvBDxuumuFCigLMt7ELNss081lI1QhzQTdsVNRErFM1wjwVZdigqolYp2qAWRqa4cOmJmKdYgNmMGqCj0w2iTVWG3C2YBM+kDwLzhU9hMWys+E8h1VY6HYWnNNhERa5nQFndLqDBW5nwlmdZvCjyzPgzA4z+FH2TDjbaQY/yp4JZztd4QfZK2AGp2FJX/ggeQXM4DRU0xeKi14Js1jEe20DNhOfD4dZ1FzyAe6GsmyJxx+gl/cA/MV/4/0LeA/Qc4D4tOP5HbAf4LNsySthFjHP/gBsZvFKmKVmhXQAFnu8AmZQXVr85wOE5b/IBD+4PBPOdrgu/x5g1AGiZ8CZTuccIDoTzuowO8AjjsAZHXL3BRa5nQXndMjdV1goOxvOc8idM1gseRacK8qdd/CB2Qaptc0mnG30d8Vj+Mhkg9TWrglmMJg2NMCHhxpILTVNbHM0XBZTYIOiRlI7TRPbLAcuC3lgo0wjqY2umU+einEPN2y2KpDa+DQTayuGXthQJbXwKRHrYRhF1lggPfUrE9/8GkazNBZJz/qUSe/mwXk1YukIFcJZcHCJWDZCK+FsGIDEklG2CFfCMJH465HWCHcCwYZKwgPYLdHrUxYvsVtGcCrf2zenNym48xMAAAAASUVORK5CYII="
+DEFAULT_ICON = base64.b64decode(DEFAULT_ICON_B64);
+
 DEFAULT_TITLE = 'EXsimple';
 DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
@@ -53,8 +54,7 @@ if THIS_IS_DAILYPASTE:
     </div>
 ''' % (DEFAULT_TITLE);
 
-DEFAULT_CSS = '''
-<style type="text/css">
+LIST_DIRECTORY_CSS = '''
 html,body{
     font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
     margin:0px;
@@ -66,12 +66,8 @@ html,body{
 body {
     background-color: #FFFFFF;
 }
-
-
-
 .-body {
 }
-
 ul {
     font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
     font-weight : 800;
@@ -127,9 +123,15 @@ a.link_in_list:hover {
     text-decoration:none;
 }
 /*访问过后的样式*/
-</style>
+ul li{
+    list-style: none;
+    display: block;
+    word-wrap: break-word;
+    word-break: normal; 
+}
 '''
-DEFAULT_ENC_CSS = DEFAULT_CSS.encode(DEFAULT_ENC, 'surrogateescape');
+LIST_DIRECTORY_CSS_ENC = LIST_DIRECTORY_CSS.encode(DEFAULT_ENC, 'surrogateescape');
+LIST_DIRECTORY_CSS_GZIP = gzip.compress(LIST_DIRECTORY_CSS_ENC);
 
 # DEFAULT_JSCRIPT = '''
 #         <script type="text/javascript">
@@ -511,7 +513,7 @@ DEFAULT_METHOD_UPLOAD = '''
     </head>
     <body>
         <header>
-       </header>
+        </header>
         <div class="container">
             <div class="contr"><h2>Select the file and click Upload button</h2></div>
 
@@ -554,7 +556,8 @@ DEFAULT_METHOD_UPLOAD = '''
     </body>
 </html>
 '''
-DEFAULT_ENC_METHOD_UPLOAD = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogateescape');
+DEFAULT_METHOD_UPLOAD_ENC = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogateescape');
+DEFAULT_METHOD_UPLOAD_GZIP = gzip.compress(DEFAULT_METHOD_UPLOAD_ENC);
 
 DEFAULT_INDEX = '''
 <!DOCTYPE html>
@@ -562,7 +565,6 @@ DEFAULT_INDEX = '''
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="icon" type="image/png" href="/favicon.png" />
-
         <style type="text/css">
             html,body{
                 font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
@@ -876,10 +878,9 @@ DEFAULT_INDEX = '''
         </div>
     </body>
 </html>
-''' % (DEFAULT_TITLE, DEFAULT_TITLE_WORDS, DEFAULT_TITLE)
-
-DEFAULT_ENC_INDEX = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
-
+''' % (DEFAULT_TITLE, DEFAULT_TITLE_WORDS, DEFAULT_TITLE);
+DEFAULT_INDEX_ENC = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
+DEFAULT_INDEX_GZIP = gzip.compress(DEFAULT_INDEX_ENC);
 # DEFAULT_METHOD_PY = '''
 # MODE = %d;
 # CHEKEY = b'%s';
@@ -1017,43 +1018,47 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, request, client_address, server):
         http.server.SimpleHTTPRequestHandler.__init__(self=self, request=request, client_address=client_address, server=server); 
 
-    def give_index(self):
+    def give_index(self): 
         f = io.BytesIO();
-        f.write(DEFAULT_ENC_INDEX)
+        f.write(DEFAULT_INDEX_GZIP);
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC)
-        self.send_header("Content-Length", str(len(DEFAULT_ENC_INDEX)))
+#         self.send_header("Content-Length", str(len(DEFAULT_ENC_INDEX)))
+#         self.send_header("Content-Encoding", "gzip")
         self.end_headers()
         return f
     
     def give_robots_txt(self):
         f = io.BytesIO();
-        f.write(DEFAULT_ENC_ROBOTS_TXT)
+        f.write(DEFAULT_ROBOTS_TXT_GZIP)
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/txt; charset=%s" % DEFAULT_ENC)
-        self.send_header("Content-Length", str(len(DEFAULT_ROBOTS_TXT)))
+#         self.send_header("Content-Length", str(len(DEFAULT_ROBOTS_TXT)))
+#         self.send_header("Content-Encoding", "gzip")
         self.end_headers()
         return f
     
-    def give_css(self):        
+    def give_list_directory_css(self):        
         f = io.BytesIO();
-        f.write(DEFAULT_ENC_CSS)
+        f.write(LIST_DIRECTORY_CSS_GZIP)
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/css; charset=%s" % DEFAULT_ENC)
-        self.send_header("Content-Length", str(len(DEFAULT_ENC_CSS)))
+#         self.send_header("Content-Length", str(len(DEFAULT_ENC_CSS)))
+#         self.send_header("Content-Encoding", "gzip")
         self.end_headers()
         return f
     
-    def give_method_upload(self):        
+    def give_method_upload(self): 
         f = io.BytesIO();
-        f.write(DEFAULT_ENC_METHOD_UPLOAD)
+        f.write(DEFAULT_METHOD_UPLOAD_GZIP)
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC)
-        self.send_header("Content-Length", str(len(DEFAULT_ENC_METHOD_UPLOAD)))
+#         self.send_header("Content-Length", str(len(DEFAULT_ENC_METHOD_UPLOAD)))
+#         self.send_header("Content-Encoding", "gzip")
         self.end_headers()
         return f
     
@@ -1068,14 +1073,15 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 </html>
                 ''' % (self.path[5:]);
         
-        ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
+        RETURNED_MESSAGE_ENC = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
         f = io.BytesIO();
-        f.write(ENC_RETURNED_MESSAGE);
+        f.write(gzip.compress(RETURNED_MESSAGE_ENC));
         f.seek(0);
         self.send_response(200);
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC);
-        self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
+#         self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
+
         self.end_headers();
         return f;
 
@@ -1126,16 +1132,17 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 </html>
                 ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
         
-        ENC_RETURNED_MESSAGE = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
+        RETURNED_MESSAGE_ENC = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
         f = io.BytesIO();
-        f.write(ENC_RETURNED_MESSAGE);
+        f.write(gzip.compress(RETURNED_MESSAGE_ENC));
         f.seek(0);
-        self.send_response(200)
-        self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC)
-        self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)))
-        self.end_headers()
-        return f
+        self.send_response(200);
+        self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC);
+#         self.send_header("Content-Length", str(len(ENC_RETURNED_MESSAGE)));
+
+        self.end_headers();
+        return f;
         
 #     def give_method_down_all(self):
 #         DEBUG_PRINT('EMPTY here:');
@@ -1165,13 +1172,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #         self.end_headers();
 #         return f;
     
-    def give_ico(self):        
+    def give_ico(self):
         f = io.BytesIO();
         f.write(DEFAULT_ICON)
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "image/x-icon")
-        self.send_header("Content-Length", str(len(DEFAULT_ICON)))
+#         self.send_header("Content-Length", str(len(DEFAULT_ICON)))
+#         self.send_header("Content-Encoding", "gzip")
         self.end_headers()
         return f
     
@@ -1345,60 +1353,61 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 #             return self.give_index();
         if(self.path == '/robots.txt' or self.path == '/robot.txt'):
             return self.give_robots_txt();
-        if(path.endswith('stylesheet.css')):
-            return self.give_css();
+        if(self.path == '/list_directory_css.css'):
+            return self.give_list_directory_css();
         if(self.path == '/favicon.png'):
             return self.give_ico();
         if(path.endswith('method_upload')):
             return self.give_method_upload();
-        if(path.endswith('method_down_all.py')):
-            return self.give_method_down_all();
-        if(path.endswith('method_up_all.py')):
-            return self.give_method_up_all();
+#         if(path.endswith('method_down_all.py')):
+#             return self.give_method_down_all();
+#         if(path.endswith('method_up_all.py')):
+#             return self.give_method_up_all();
         if(path.endswith('method_new_folder')):
             return self.give_method_new_folder(path=path[:len(path) - len('method_new_folder')]);
         
-        f = None
+        f = None;
         if os.path.isdir(path):
-            parts = urllib.parse.urlsplit(self.path)
+            parts = urllib.parse.urlsplit(self.path);
             if not parts.path.endswith('/'):
-                # redirect browser - doing basically what apache does
-                self.send_response(301)
+                # redirect browser
+                self.send_response(301);
                 new_parts = (parts[0], parts[1], parts[2] + '/',
-                             parts[3], parts[4])
-                new_url = urllib.parse.urlunsplit(new_parts)
-                self.send_header("Location", new_url)
-                self.end_headers()
-                return None
+                             parts[3], parts[4]);
+                new_url = urllib.parse.urlunsplit(new_parts);
+                self.send_header("Location", new_url);
+                self.end_headers();
+                return None;
 #             for index in "index.html", "index.htm":
 #                 index = os.path.join(path, index)
 #                 if os.path.exists(index):
 #                     path = index
 #                     break
 #             else:
-            return self.list_directory(path)
-        ctype = self.guess_type(path)
+            return self.list_directory(path);
+        ctype = self.guess_type(path);
         
         if (not os.path.isfile(path)):
             if (not path.endswith('/')):
                 path += '/';
             return self.empty_here(path);
         
+#         then if here is a file then get it.
         try:
-            f = open(path, 'rb')
+            f = open(path, 'rb');
         except IOError:
-            self.send_error(404, "File not found")
+            self.send_error(404, "File not found");
             return None
         try:
-            self.send_response(200)
-            self.send_header("Content-type", ctype)
-            fs = os.fstat(f.fileno())
-            self.send_header("Content-Length", str(fs[6]))
-            self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
-            self.end_headers()
-            return f
+            self.send_response(200);
+            self.send_header("Content-type", ctype);
+            fs = os.fstat(f.fileno());
+            self.send_header("Content-Length", str(fs[6]));
+            self.send_header("Last-Modified", self.date_time_string(fs.st_mtime));
+            self.end_headers();
+            return f;
         except:
-            f.close()
+            f.close();
             raise
     
     def do_CONNECT(self):
@@ -1437,20 +1446,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('<html>\n<head>')
         r.append('<meta http-equiv="Content-Type" '
                  'content="text/html; charset=%s">' % DEFAULT_ENC)
-#         r.append('<link type="text/css" rel="stylesheet" href="stylesheet.css"/>');
+        r.append('<link type="text/css" rel="stylesheet" href="/list_directory_css.css"/>');
         r.append('<link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />');
-        r.append(DEFAULT_CSS);
+        r.append('');
 #         r.append(DEFAULT_JSCRIPT);
-        r.append('''
-        <style>
-        ul li{
-            list-style: none;
-            display: block;
-            word-wrap: break-word;
-            word-break: normal; 
-        }
-        </style>
-        ''');
         r.append('''
         <script type="text/javascript">
             function sayhi(){
