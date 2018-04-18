@@ -1,6 +1,6 @@
 ﻿# -*- coding: UTF-8 -*-
 #!/usr/bin/python3 python3
-VERSION = "2018/04/18";
+VERSION = "2018/04/19";
 THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
@@ -38,21 +38,23 @@ DEFAULT_ICON = base64.b64decode(DEFAULT_ICON_B64);
 DEFAULT_TITLE = 'EXsimple';
 DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
+    <h1 class = "subtitle">V%s</h1>
     <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
     <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
-''' % (DEFAULT_TITLE);
+''' % (DEFAULT_TITLE, VERSION);
 
 if THIS_IS_DAILYPASTE:
     DEFAULT_TITLE = 'DailyPaste!'
     DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
+    <h1 class = "subtitle">V%s</h1>
     <h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!</h1>
     <div>
         <p class = "subtitle">(Don't over-use it or I will be bankrupt!)</p>
         <p class = "subtitle">provided by XenoAmess!</p>
         <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
     </div>
-''' % (DEFAULT_TITLE);
+''' % (DEFAULT_TITLE, VERSION);
 
 LIST_DIRECTORY_CSS = '''
 html,body{
