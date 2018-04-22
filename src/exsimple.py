@@ -19,7 +19,6 @@ import urllib.parse
 import base64
 import gzip
 import posixpath
-import zlib
 
 # -----SETTING_BEGIN-------
 
@@ -31,7 +30,7 @@ DEFAULT_GZIP = 0;
 DEFAULT_ENC = 'utf-8';
 DEFAULT_ROBOTS_TXT = 'User-agent: *\r\nDisallow: /FILE/\r\n'
 DEFAULT_ROBOTS_TXT_ENC = DEFAULT_ROBOTS_TXT.encode(DEFAULT_ENC, 'surrogateescape');
-DEFAULT_ROBOTS_TXT_GZIP = gzip.compress(DEFAULT_ROBOTS_TXT_ENC);
+# DEFAULT_ROBOTS_TXT_GZIP = gzip.compress(DEFAULT_ROBOTS_TXT_ENC);
 DEFAULT_ICON_B64 = "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACXUlEQVR4Xu2W3VLGIAwFef+XVil+tWyh5AToz9gd98aG5CTjhSG8zOfr58crez2Cr0hhmV4553Ysi28pLNFl1vpGZMm2cIFeCzDLqTDMDi7QYwNmmw4DVOEiXg0w4zQ4+BAu4tUIs46G89pwEY8iMSeDj+DTmPPacCFVgW3OLH0nbMy5x3AhVQHm/FvBDxuumuFCigLMt7ELNss081lI1QhzQTdsVNRErFM1wjwVZdigqolYp2qAWRqa4cOmJmKdYgNmMGqCj0w2iTVWG3C2YBM+kDwLzhU9hMWys+E8h1VY6HYWnNNhERa5nQFndLqDBW5nwlmdZvCjyzPgzA4z+FH2TDjbaQY/yp4JZztd4QfZK2AGp2FJX/ggeQXM4DRU0xeKi14Js1jEe20DNhOfD4dZ1FzyAe6GsmyJxx+gl/cA/MV/4/0LeA/Qc4D4tOP5HbAf4LNsySthFjHP/gBsZvFKmKVmhXQAFnu8AmZQXVr85wOE5b/IBD+4PBPOdrgu/x5g1AGiZ8CZTuccIDoTzuowO8AjjsAZHXL3BRa5nQXndMjdV1goOxvOc8idM1gseRacK8qdd/CB2Qaptc0mnG30d8Vj+Mhkg9TWrglmMJg2NMCHhxpILTVNbHM0XBZTYIOiRlI7TRPbLAcuC3lgo0wjqY2umU+einEPN2y2KpDa+DQTayuGXthQJbXwKRHrYRhF1lggPfUrE9/8GkazNBZJz/qUSe/mwXk1YukIFcJZcHCJWDZCK+FsGIDEklG2CFfCMJH465HWCHcCwYZKwgPYLdHrUxYvsVtGcCrf2zenNym48xMAAAAASUVORK5CYII="
 DEFAULT_ICON = base64.b64decode(DEFAULT_ICON_B64);
 
@@ -133,7 +132,7 @@ ul li{
 }
 '''
 LIST_DIRECTORY_CSS_ENC = LIST_DIRECTORY_CSS.encode(DEFAULT_ENC, 'surrogateescape');
-LIST_DIRECTORY_CSS_GZIP = gzip.compress(LIST_DIRECTORY_CSS_ENC);
+# LIST_DIRECTORY_CSS_GZIP = gzip.compress(LIST_DIRECTORY_CSS_ENC);
 
 # DEFAULT_JSCRIPT = '''
 #         <script type="text/javascript">
@@ -559,7 +558,7 @@ DEFAULT_METHOD_UPLOAD = '''
 </html>
 '''
 DEFAULT_METHOD_UPLOAD_ENC = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogateescape');
-DEFAULT_METHOD_UPLOAD_GZIP = gzip.compress(DEFAULT_METHOD_UPLOAD_ENC);
+# DEFAULT_METHOD_UPLOAD_GZIP = gzip.compress(DEFAULT_METHOD_UPLOAD_ENC);
 
 DEFAULT_INDEX = '''
 <!DOCTYPE html>
@@ -882,7 +881,7 @@ DEFAULT_INDEX = '''
 </html>
 ''' % (DEFAULT_TITLE, DEFAULT_TITLE_WORDS, DEFAULT_TITLE);
 DEFAULT_INDEX_ENC = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
-DEFAULT_INDEX_GZIP = gzip.compress(DEFAULT_INDEX_ENC);
+# DEFAULT_INDEX_GZIP = gzip.compress(DEFAULT_INDEX_ENC);
 # DEFAULT_METHOD_PY = '''
 # MODE = %d;
 # CHEKEY = b'%s';
@@ -1022,7 +1021,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def give_index(self): 
         f = io.BytesIO();
-        f.write(DEFAULT_INDEX_GZIP);
+#         f.write(DEFAULT_INDEX_GZIP);
+        f.write(DEFAULT_INDEX_ENC);
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC)
@@ -1033,7 +1033,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     
     def give_robots_txt(self):
         f = io.BytesIO();
-        f.write(DEFAULT_ROBOTS_TXT_GZIP)
+#         f.write(DEFAULT_ROBOTS_TXT_GZIP)
+        f.write(DEFAULT_ROBOTS_TXT_ENC)
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/txt; charset=%s" % DEFAULT_ENC)
@@ -1044,7 +1045,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     
     def give_list_directory_css(self):        
         f = io.BytesIO();
-        f.write(LIST_DIRECTORY_CSS_GZIP)
+#         f.write(LIST_DIRECTORY_CSS_GZIP)
+        f.write(LIST_DIRECTORY_CSS_ENC)
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/css; charset=%s" % DEFAULT_ENC)
@@ -1055,7 +1057,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     
     def give_method_upload(self): 
         f = io.BytesIO();
-        f.write(DEFAULT_METHOD_UPLOAD_GZIP)
+#         f.write(DEFAULT_METHOD_UPLOAD_GZIP)
+        f.write(DEFAULT_METHOD_UPLOAD_ENC)
         f.seek(0)
         self.send_response(200)
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC)
@@ -1078,7 +1081,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         RETURNED_MESSAGE_ENC = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
         f = io.BytesIO();
-        f.write(gzip.compress(RETURNED_MESSAGE_ENC));
+#         f.write(gzip.compress(RETURNED_MESSAGE_ENC));
+        f.write(RETURNED_MESSAGE_ENC);
         f.seek(0);
         self.send_response(200);
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC);
@@ -1137,7 +1141,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         RETURNED_MESSAGE_ENC = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
         
         f = io.BytesIO();
-        f.write(gzip.compress(RETURNED_MESSAGE_ENC));
+        f.write(RETURNED_MESSAGE_ENC);
         f.seek(0);
         self.send_response(200);
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC);
