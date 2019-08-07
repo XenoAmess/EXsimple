@@ -1712,10 +1712,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         #     ]);
         # else:
         self.subprocess_cmd(
-            command=[
+            [
                 "git", "clone", git_repo,
             ],
-            path=path + "__temp__" + repo_name);
+            path + "__temp__" + repo_name);
 
         self.zip_dir(path + "__temp__" + repo_name + "/" + repo_name);
         if os.path.isfile(path + "__temp__" + repo_name + "/" + repo_name + ".zip"):
