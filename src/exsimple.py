@@ -1730,8 +1730,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def subprocess_cmd(self, command):
         process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-        proc_stdout = process.communicate()[0].strip()
-        DEBUG_PRINT(proc_stdout);
+        DEBUG_PRINT(process);
+        DEBUG_PRINT(process.communicate());
+        # proc_stdout = process.communicate()[0].strip()
+        # DEBUG_PRINT(proc_stdout);
 
     def zip_dir(self, dirname):
         zipfilename = dirname + ".zip"
