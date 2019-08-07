@@ -1715,7 +1715,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             [
                 "git", "clone", git_repo,
             ],
-            path + "__temp__" + repo_name);
+            path + "__temp__" + repo_name + "/");
 
         self.zip_dir(path + "__temp__" + repo_name + "/" + repo_name);
         if os.path.isfile(path + "__temp__" + repo_name + "/" + repo_name + ".zip"):
@@ -1735,6 +1735,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE,
                                    shell=True)
+        process.wait();
         DEBUG_PRINT(process);
         # DEBUG_PRINT(process.communicate());
         # proc_stdout = process.communicate()[0].strip()
