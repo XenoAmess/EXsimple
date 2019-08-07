@@ -1708,12 +1708,12 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if (sysstr == "Windows"):
             self.subprocess_cmd(command=[
                 "cd", path + "__temp__" + repo_name, "&",
-                "git", "clone", git_repo,
+                "git", "-C", path + "__temp__" + repo_name, "clone", git_repo,
             ]);
         else:
             self.subprocess_cmd(command=[
                 "cd", path + "__temp__" + repo_name + ";",
-                "git", "clone", git_repo,
+                "git", "-C", path + "__temp__" + repo_name, "clone", git_repo,
             ]);
 
         self.zip_dir(path + "__temp__" + repo_name + "/" + repo_name);
