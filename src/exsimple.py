@@ -1687,11 +1687,13 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         DEBUG_PRINT("repo_name : " + repo_name);
 
         DEBUG_PRINT("path : " + path);
+        DEBUG_PRINT("temp folder path : " + path + "__temp__" + repo_name);
         if os.path.isdir(path + "__temp__" + repo_name):
             try:
                 shutil.rmtree(path + "__temp__" + repo_name);
             except Exception:
                 pass;
+        DEBUG_PRINT("zip filepath : " + path + repo_name + ".zip");
         if os.path.isfile(path + repo_name + ".zip"):
             try:
                 os.remove(path + repo_name + ".zip");
@@ -1701,10 +1703,12 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if not os.path.isdir(path + "__temp__" + repo_name):
             os.mkdir(path + "__temp__" + repo_name);
 
-        self.subprocess_cmd(command=[
-            "cd", path + "__temp__" + repo_name, "&",
-            "git", "clone", git_repo,
-        ]);
+        DEBUG_PRINT(
+            self.subprocess_cmd(command=[
+                "cd", path + "__temp__" + repo_name, "&",
+                "git", "clone", git_repo,
+            ])
+        );
         self.zip_dir(path + "__temp__" + repo_name + "/" + repo_name);
         if os.path.isfile(path + "__temp__" + repo_name + "/" + repo_name + ".zip"):
             shutil.move(path + "__temp__" + repo_name + "/" + repo_name + ".zip", path)
