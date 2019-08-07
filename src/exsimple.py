@@ -1711,11 +1711,18 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         #         "git", "-C", path + "__temp__" + repo_name, "clone", git_repo,
         #     ]);
         # else:
-        self.subprocess_cmd(
-            [
-                "git", "clone", git_repo,
-            ],
-            path + "__temp__" + repo_name + "/");
+
+        # self.subprocess_cmd(
+        #     [
+        #         "git", "clone", git_repo,
+        #     ],
+        #     path + "__temp__" + repo_name + "/");
+        os.system("git clone " + git_repo + " " + path + "__temp__" + repo_name + "/" + repo_name);
+        # self.subprocess_cmd(
+        #     [
+        #         "git", "clone", git_repo,
+        #     ],
+        # );
 
         self.zip_dir(path + "__temp__" + repo_name + "/" + repo_name);
         if os.path.isfile(path + "__temp__" + repo_name + "/" + repo_name + ".zip"):
@@ -1729,18 +1736,18 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         return self.send_head();
 
-    def subprocess_cmd(self, command, path):
-        process = subprocess.Popen(command,
-                                   cwd=os.path.dirname(path),
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE,
-                                   shell=True)
-        # process.wait();
-        process.communicate()
-        DEBUG_PRINT(process);
-        # DEBUG_PRINT(process.communicate());
-        # proc_stdout = process.communicate()[0].strip()
-        # DEBUG_PRINT(proc_stdout);
+    # def subprocess_cmd(self, command, path):
+    #     process = subprocess.Popen(command,
+    #                                cwd=os.path.dirname(path),
+    #                                stdout=subprocess.PIPE,
+    #                                stderr=subprocess.PIPE,
+    #                                shell=True)
+    #     # process.wait();
+    #     process.communicate()
+    #     DEBUG_PRINT(process);
+    #     # DEBUG_PRINT(process.communicate());
+    #     # proc_stdout = process.communicate()[0].strip()
+    #     # DEBUG_PRINT(proc_stdout);
 
     def zip_dir(self, dirname):
         zipfilename = dirname + ".zip"
