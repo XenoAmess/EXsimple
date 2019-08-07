@@ -1730,12 +1730,11 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return self.send_head();
 
     def subprocess_cmd(self, command, path):
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-        pr = subprocess.Popen(['/usr/bin/git clone ' + path],
-                              cwd=os.path.dirname('path'),
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              shell=True)
+        process = subprocess.Popen(command,
+                                   cwd=os.path.dirname(path),
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE,
+                                   shell=True)
         DEBUG_PRINT(process);
         # DEBUG_PRINT(process.communicate());
         # proc_stdout = process.communicate()[0].strip()
