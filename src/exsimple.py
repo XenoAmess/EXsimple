@@ -1686,7 +1686,6 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if (repo_name.endswith(".git")):
             repo_name = repo_name[:len(repo_name) - len(".git")]
         DEBUG_PRINT("repo_name : " + repo_name);
-
         DEBUG_PRINT("path : " + path);
         DEBUG_PRINT("temp folder path : " + path + "__temp__" + repo_name);
         if os.path.isdir(path + "__temp__" + repo_name):
