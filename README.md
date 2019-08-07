@@ -14,15 +14,20 @@ http://dailypaste.com/
   
 # drag it to move!
   It might be really hard to notice it without Instructions. 
-  ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/drag.gif)
+  ![dragit](pic/drag.gif)
   
-# enter a not-in-use url,and press Enter,then press new-folder button,boom!a new folder appears!
+# enter a not-in-use url, and press Enter,then press new-folder button,boom!a new folder appears!
   It might be really hard to notice it without Instructions,too.
-  ![dragit](https://raw.githubusercontent.com/XenoAmess/EXsimple/master/pic/newFolder.gif)
+  ![dragit](pic/newFolder.gif)
 
-# get it in a inframe,and it would be streamline smartly!
-[example link](https://xenoamess.github.io/).
+# clone git repo and zip it into current folder for download!
+  You know some people have bad connection to some git repo, so this can be used as a cache.
+  ![dragit](pic/gitClone.gif)
 
+
+# get it in a iframe, and it would be streamline smartly!
+
+<iframe src="http://dailypaste.com/" frameborder="0" scrolling="no" width="404" height="604">Dailypaste!</iframe>
 
 # Do not upload a file with a same name to a file in the same folder.
   doing that would replace the old file with the new one,the old file just rest-in-peace.
