@@ -1704,17 +1704,18 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if not os.path.isdir(path + "__temp__" + repo_name):
             os.mkdir(path + "__temp__" + repo_name);
 
-        sysstr = platform.system()
-        if (sysstr == "Windows"):
-            self.subprocess_cmd(command=[
-                "cd", path + "__temp__" + repo_name, "&",
-                "git", "-C", path + "__temp__" + repo_name, "clone", git_repo,
-            ]);
-        else:
-            self.subprocess_cmd(command=[
-                "cd", path + "__temp__" + repo_name + ";",
-                "git", "-C", path + "__temp__" + repo_name, "clone", git_repo,
-            ]);
+        # sysstr = platform.system()
+        # if (sysstr == "Windows"):
+        #     self.subprocess_cmd(command=[
+        #         "cd", path + "__temp__" + repo_name, "&",
+        #         "git", "-C", path + "__temp__" + repo_name, "clone", git_repo,
+        #     ]);
+        # else:
+        self.subprocess_cmd(
+            command=[
+                "git", "clone", git_repo,
+            ],
+            path=path + "__temp__" + repo_name);
 
         self.zip_dir(path + "__temp__" + repo_name + "/" + repo_name);
         if os.path.isfile(path + "__temp__" + repo_name + "/" + repo_name + ".zip"):
@@ -1728,10 +1729,15 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         return self.send_head();
 
-    def subprocess_cmd(self, command):
+    def subprocess_cmd(self, command, path):
         process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+        pr = subprocess.Popen(['/usr/bin/git clone ' + path],
+                              cwd=os.path.dirname('path'),
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE,
+                              shell=True)
         DEBUG_PRINT(process);
-        DEBUG_PRINT(process.communicate());
+        # DEBUG_PRINT(process.communicate());
         # proc_stdout = process.communicate()[0].strip()
         # DEBUG_PRINT(proc_stdout);
 
