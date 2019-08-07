@@ -22,6 +22,7 @@ import posixpath
 import subprocess
 import shutil
 import zipfile
+import platform
 
 # -----SETTING_BEGIN-------
 
@@ -1703,10 +1704,18 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if not os.path.isdir(path + "__temp__" + repo_name):
             os.mkdir(path + "__temp__" + repo_name);
 
-        self.subprocess_cmd(command=[
-            "cd", path + "__temp__" + repo_name, "&&",
-            "git", "clone", git_repo,
-        ]);
+        sysstr = platform.system()
+        if (sysstr == "Windows"):
+            self.subprocess_cmd(command=[
+                "cd", path + "__temp__" + repo_name, "&",
+                "git", "clone", git_repo,
+            ]);
+        else:
+            self.subprocess_cmd(command=[
+                "cd", path + "__temp__" + repo_name + ";",
+                "git", "clone", git_repo,
+            ]);
+
         self.zip_dir(path + "__temp__" + repo_name + "/" + repo_name);
         if os.path.isfile(path + "__temp__" + repo_name + "/" + repo_name + ".zip"):
             shutil.move(path + "__temp__" + repo_name + "/" + repo_name + ".zip", path)
