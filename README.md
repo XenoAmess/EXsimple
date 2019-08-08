@@ -27,9 +27,9 @@ http://dailypaste.com/
 
 # cache files from url to server!
   Sometimes we just need this.
-  ![dragit](pic/gitClone.gif)
-  * Do not cache large files to http://dailypaste.com .I only have 20G ssd there.
-  * Feel free to do it on your own vps.
+  ![dragit](pic/cache.gif)
+  * Do not cache large files to http://dailypaste.com .I have only 20G ssd there.
+Feel free to do that on your own vps.
 
 # get it in a iframe, and it would be streamline smartly!
 
