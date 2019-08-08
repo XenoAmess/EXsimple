@@ -23,7 +23,13 @@ http://dailypaste.com/
 # clone git repo and zip it into current folder for download!
   You know some people have bad connection to some git repo, so this can be used as a cache.
   ![dragit](pic/gitClone.gif)
+  * You must have git installed on the server machine before you do that.
 
+# cache files from url to server!
+  Sometimes we just need this.
+  ![dragit](pic/gitClone.gif)
+  * Do not cache large files to http://dailypaste.com .I only have 20G ssd there.
+  * Feel free to do it on your own vps.
 
 # get it in a iframe, and it would be streamline smartly!
 

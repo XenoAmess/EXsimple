@@ -1,6 +1,6 @@
 ﻿# -*- coding: UTF-8 -*-
 # !/usr/bin/python3 python3
-VERSION = "2019/08/07";
+VERSION = "2019/08/08";
 THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
@@ -19,10 +19,12 @@ import urllib.parse
 import base64
 import gzip
 import posixpath
-import subprocess
 import shutil
 import zipfile
-import platform
+import urllib.request
+import time
+from os.path import basename
+from urllib.parse import urlsplit
 
 # -----SETTING_BEGIN-------
 
@@ -571,7 +573,7 @@ DEFAULT_METHOD_GIT_CLONE = '''
         <meta charset="utf-8" />
         <title>git-clone</title>
         <style type = "text/css">
-        .upload_form_cont {
+        .git_clone_form_cont {
             background: -moz-linear-gradient(#ffffff, #f2f2f2);
             background: -ms-linear-gradient(#ffffff, #f2f2f2);
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #f2f2f2));
@@ -584,7 +586,7 @@ DEFAULT_METHOD_GIT_CLONE = '''
             color:#000;
             overflow:hidden;
         }
-        #upload_form {
+        #git_clone_form {
             float:left;
             padding:5px;
             width:100%;
@@ -595,7 +597,7 @@ DEFAULT_METHOD_GIT_CLONE = '''
             /*float:left;*/
             width:80%;
         }
-        #upload_form > div {
+        #git_clone_form > div {
             margin-bottom:10px;
         }
         #speed,#remaining {
@@ -846,7 +848,291 @@ DEFAULT_METHOD_GIT_CLONE = '''
 </html>
 '''
 DEFAULT_METHOD_GIT_CLONE_ENC = DEFAULT_METHOD_GIT_CLONE.encode(DEFAULT_ENC, 'surrogateescape');
-# DEFAULT_METHOD_GIT_CLONE_GZIP = gzip.compress(DEFAULT_METHOD_UPLOAD_ENC);
+# DEFAULT_METHOD_GIT_CLONE_GZIP = gzip.compress(DEFAULT_METHOD_GIT_CLONE_ENC);
+
+DEFAULT_METHOD_CACHE = '''
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>git-clone</title>
+        <style type = "text/css">
+        .cache_form_cont {
+            background: -moz-linear-gradient(#ffffff, #f2f2f2);
+            background: -ms-linear-gradient(#ffffff, #f2f2f2);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #f2f2f2));
+            background: -webkit-linear-gradient(#ffffff, #f2f2f2);
+            background: -o-linear-gradient(#ffffff, #f2f2f2);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f2f2f2');
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f2f2f2')";
+            background: linear-gradient(#ffffff, #f2f2f2);
+
+            color:#000;
+            overflow:hidden;
+        }
+        #cache_form {
+            float:left;
+            padding:5px;
+            width:100%;
+        }
+        #preview {
+            background-color:#fff;
+            display:block;
+            /*float:left;*/
+            width:80%;
+        }
+        #cache_form > div {
+            margin-bottom:10px;
+        }
+        #speed,#remaining {
+            float:left;
+            width:80%;
+        }
+        #b_transfered {
+            float:right;
+            text-align:right;
+        }
+        .clear_both {
+            clear:both;
+        }
+        input {
+            border-radius:10px;
+            -moz-border-radius:10px;
+            -ms-border-radius:10px;
+            -o-border-radius:10px;
+            -webkit-border-radius:10px;
+
+            border:1px solid #ccc;
+            font-size:14pt;
+            padding:5px 10px;
+        }
+        input[type=button] {
+            background: -moz-linear-gradient(#ffffff, #dfdfdf);
+            background: -ms-linear-gradient(#ffffff, #dfdfdf);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #dfdfdf));
+            background: -webkit-linear-gradient(#ffffff, #dfdfdf);
+            background: -o-linear-gradient(#ffffff, #dfdfdf);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf');
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf')";
+            background: linear-gradient(#ffffff, #dfdfdf);
+        }
+        #upload_file {
+            width:90%;
+        }
+        #progress_info {
+            font-size:10pt;
+        }
+        #fileinfo,#error,#error2,#abort,#warnsize {
+            color:#aaa;
+            display:none;
+            font-size:10pt;
+            font-style:italic;
+            margin-top:10px;
+        }
+        #progress {
+            border:1px solid #ccc;
+            display:none;
+            float:left;
+            height:14px;
+
+            border-radius:10px;
+            -moz-border-radius:10px;
+            -ms-border-radius:10px;
+            -o-border-radius:10px;
+            -webkit-border-radius:10px;
+
+            background: -moz-linear-gradient(#66cc00, #4b9500);
+            background: -ms-linear-gradient(#66cc00, #4b9500);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #66cc00), color-stop(100%, #4b9500));
+            background: -webkit-linear-gradient(#66cc00, #4b9500);
+            background: -o-linear-gradient(#66cc00, #4b9500);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66cc00', endColorstr='#4b9500');
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#66cc00', endColorstr='#4b9500')";
+            background: linear-gradient(#66cc00, #4b9500);
+        }
+        #progress_percent {
+            float:right;
+        }
+        #upload_response {
+            margin-top: 5px;
+            padding: 5px;
+            overflow: hidden;
+            display: none;
+            border: 1px solid #ccc;
+
+            border-radius:10px;
+            -moz-border-radius:10px;
+            -ms-border-radius:10px;
+            -o-border-radius:10px;
+            -webkit-border-radius:10px;
+
+            box-shadow: 0 0 5px #ccc;
+            background: -moz-linear-gradient(#bbb, #eee);
+            background: -ms-linear-gradient(#bbb, #eee);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bbb), color-stop(100%, #eee));
+            background: -webkit-linear-gradient(#bbb, #eee);
+            background: -o-linear-gradient(#bbb, #eee);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbb', endColorstr='#eee');
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbb', endColorstr='#eee')";
+            background: linear-gradient(#bbb, #eee);
+        }
+        </style>
+
+        <script type="text/javascript" language="javascript">
+        // common variables
+        var iBytesUploaded = 0;
+        var iBytesTotal = 0;
+        var iPreviousBytesLoaded = 0;
+        var iMaxFilesize = 1048576; // 1MB
+        var oTimer = 0;
+        var sResultFileSize = '';
+
+        function secondsToTime(secs) { // we will use this function to convert seconds in normal time format
+            var hr = Math.floor(secs / 3600);
+            var min = Math.floor((secs - (hr * 3600))/60);
+            var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
+
+            if (hr < 10) {hr = "0" + hr; }
+            if (min < 10) {min = "0" + min;}
+            if (sec < 10) {sec = "0" + sec;}
+            if (hr) {hr = "00";}
+            return hr + ':' + min + ':' + sec;
+        };
+
+        function bytesToSize(bytes) {
+            var sizes = ['Bytes', 'KB', 'MB'];
+            if (bytes == 0) return 'n/a';
+            var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
+        };
+
+        function startUploading() {
+            // cleanup all temp states
+            iPreviousBytesLoaded = 0;
+            document.getElementById('upload_response').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('error2').style.display = 'none';
+            document.getElementById('abort').style.display = 'none';
+            document.getElementById('warnsize').style.display = 'none';
+            document.getElementById('progress_percent').innerHTML = '';
+            var oProgress = document.getElementById('progress');
+            oProgress.style.display = 'block';
+            oProgress.style.width = '0px';
+
+            // get form data for POSTing
+            //var vFD = document.getElementById('upload_form').getFormData(); // for FF3
+            //console.log(document.getElementById('upload_file'));
+
+
+            var vFD = new FormData();
+            for (i=0;i<document.getElementById('upload_file').files.length;i++){
+                vFD.append(""+document.getElementById('upload_file').files.length,document.getElementById('upload_file').files[i]); 
+            }
+            var oXHR = new XMLHttpRequest();
+            oXHR.upload.addEventListener('progress', uploadProgress, true);
+            oXHR.upload.addEventListener('load', uploadFinish, true);
+            oXHR.upload.addEventListener('error', uploadError, true);
+            oXHR.upload.addEventListener('abort', uploadAbort, true);
+            oXHR.open('POST', document.URL);
+            oXHR.send(vFD);
+
+            //console.log(vFD);
+            // create XMLHttpRequest object, adding few event listeners, and POSTing our data
+
+
+            // set inner timer
+            oTimer = setInterval(doInnerUpdates, 300);
+        }
+
+        function doInnerUpdates() { // we will use this function to display upload speed
+            var iCB = iBytesUploaded;
+            var iDiff = iCB - iPreviousBytesLoaded;
+
+            // if nothing new loaded - exit
+            if (iDiff == 0)
+                return;
+
+            iPreviousBytesLoaded = iCB;
+            iDiff = iDiff * 2;
+            var iBytesRem = iBytesTotal - iPreviousBytesLoaded;
+            var secondsRemaining = iBytesRem / iDiff;
+
+            // update speed info
+            var iSpeed = iDiff.toString() + 'B/s';
+            if (iDiff > 1024 * 1024) {
+                iSpeed = (Math.round(iDiff * 100/(1024*1024))/100).toString() + 'MB/s';
+            } else if (iDiff > 1024) {
+                iSpeed =  (Math.round(iDiff * 100/1024)/100).toString() + 'KB/s';
+            }
+
+            document.getElementById('speed').innerHTML = iSpeed;
+            document.getElementById('remaining').innerHTML = '| ' + secondsToTime(secondsRemaining);        
+        }
+
+        function uploadProgress(e) { // upload process in progress
+            if (e.lengthComputable) {
+                iBytesUploaded = e.loaded;
+                iBytesTotal = e.total;
+                var iPercentComplete = Math.round(e.loaded * 100 / e.total);
+                var iBytesTransfered = bytesToSize(iBytesUploaded);
+
+                document.getElementById('progress_percent').innerHTML = iPercentComplete.toString() + '%';
+                document.getElementById('progress').style.width = (iPercentComplete * 4).toString() + 'px';
+                document.getElementById('b_transfered').innerHTML = iBytesTransfered;
+                if (iPercentComplete == 100) {
+                    var oUploadResponse = document.getElementById('upload_response');
+                    oUploadResponse.innerHTML = '<h1>Please wait...processing</h1>';
+                    oUploadResponse.style.display = 'block';
+                }
+            } else {
+                document.getElementById('progress').innerHTML = 'unable to compute';
+            }
+        }
+
+        function uploadFinish(e) { // upload successfully finished
+            var oUploadResponse = document.getElementById('upload_response');
+            oUploadResponse.innerHTML = e.target.responseText || "Upload Succeed!";
+            oUploadResponse.style.display = 'block';
+            document.getElementById('progress_percent').innerHTML = '100%';
+            document.getElementById('progress').style.width = '400px';
+            document.getElementById('filesize').innerHTML = sResultFileSize;
+            document.getElementById('remaining').innerHTML = '| 00:00:00';
+
+            clearInterval(oTimer);
+        }
+
+        function uploadError(e) { // upload error
+            document.getElementById('error2').style.display = 'block';
+            clearInterval(oTimer);
+        }  
+
+        function uploadAbort(e) { // upload abort
+            document.getElementById('abort').style.display = 'block';
+            clearInterval(oTimer);
+        }
+        </script>
+
+    </head>
+    <body>
+        <header>
+        </header>
+        <div class="container">
+            <div class="contr"><h2>Input the download url that you want to cache.</h2></div>
+
+            <div class="cache_form_cont">
+                <form id="cache_form" method="post" action="method_cache">
+                    <input type="text" name="cache_url" />
+                    <br/>
+                    <input type="submit" value="start cache">
+                </form>
+                <div id="preview"/>
+            </div>
+        </div>
+    </body>
+</html>
+'''
+DEFAULT_METHOD_CACHE_ENC = DEFAULT_METHOD_CACHE.encode(DEFAULT_ENC, 'surrogateescape');
+# DEFAULT_METHOD_CACHE_GZIP = gzip.compress(DEFAULT_METHOD_CACHE_ENC);
 
 DEFAULT_INDEX = '''
 <!DOCTYPE html>
@@ -1032,7 +1318,7 @@ DEFAULT_INDEX = '''
                 
         
             function if_endWith_method(roota){
-                if(roota.endWith("/index.html") ||roota.endWith("/method_upload") ||roota.endWith("/method_new_folder") ||roota.endWith("/method_down_all")||roota.endWith("/method_up_all")||roota.endWith("/method_git_clone")){
+                if(roota.endWith("/index.html") ||roota.endWith("/method_upload") ||roota.endWith("/method_new_folder") ||roota.endWith("/method_down_all")||roota.endWith("/method_up_all")||roota.endWith("/method_git_clone")||roota.endWith("/method_cache")){
                     return true;
                 }
                 return false;
@@ -1102,6 +1388,21 @@ DEFAULT_INDEX = '''
                 roota = roota +"/method_git_clone";
                 document.getElementById("innerframe").src = roota;
             }; 
+            function method_cache(){
+                var roota = window.frames["innerframe"].document.location.pathname;
+                
+                if(roota.endWith("//")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                if(if_endWith_method(roota)){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                while(roota.endWith("/")){
+                    roota = roota.substring(0,roota.lastIndexOf("/"));
+                }
+                roota = roota +"/method_cache";
+                document.getElementById("innerframe").src = roota;
+            }; 
             function method_down_all(){
                 var roota =  window.frames["innerframe"].document.location.pathname;
                 if(roota.endWith("//")){
@@ -1167,7 +1468,8 @@ DEFAULT_INDEX = '''
                 <input type="button" value = "back" id = "method_back" onclick = "method_back()"/>
                 <input type="button" value = "upload" id = "method_upload" onclick = "method_upload()"/>
                 <input type="button" value = "new-folder" id = "method_new_folder" onclick = "method_new_folder()"/>
-                <input type="button" value = "git-clone" id = "git_clone" onclick = "method_git_clone()"/>
+                <input type="button" value = "git-clone" id = "method_git_clone" onclick = "method_git_clone()"/>
+                <input type="button" value = "cache" id = "method_cache" onclick = "method_cache()"/>
                 <!--
                     <br/>
                     <input type="button" value = "down-all" id = "method_down_all" onclick = "method_down_all()"/>
@@ -1386,6 +1688,18 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         return f
 
+    def give_method_cache(self):
+        f = io.BytesIO();
+        #         f.write(DEFAULT_METHOD_UPLOAD_GZIP)
+        f.write(DEFAULT_METHOD_CACHE_ENC)
+        f.seek(0)
+        self.send_response(200)
+        self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC)
+        #         self.send_header("Content-Length", str(len(DEFAULT_ENC_METHOD_UPLOAD)))
+        #         self.send_header("Content-Encoding", "gzip")
+        self.end_headers()
+        return f
+
     def empty_here(self, path):
         DEBUG_PRINT('EMPTY here:', path);
         RETURNED_MESSAGE = '''
@@ -1552,6 +1866,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.receive_post_method_upload();
         elif self.path.endswith("method_git_clone"):
             self.receive_post_method_git_clone();
+        elif self.path.endswith("method_cache"):
+            self.receive_post_method_cache();
 
     def receive_post_method_upload(self):
         path = self.translate_path(self.path);
@@ -1734,6 +2050,49 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             zf.write(tar, arcname)
         zf.close()
 
+    def receive_post_method_cache(self):
+        path = self.translate_path(self.path);
+        path = path[:len(path) - len("method_cache")];
+
+        DEBUG_PRINT('RAW PATH:', self.path);
+        DEBUG_PRINT('TRSLATED PATH:', path);
+
+        self._writeheaders();
+        remain_bytes = int(self.headers.get('content-length'));
+
+        if remain_bytes >= 10000:
+            return None;
+
+        line = self.rfile.read(remain_bytes).decode("utf-8")
+        cache_url = urllib.parse.unquote(line[len("cache_url="):]);
+        DEBUG_PRINT("cache_url : " + cache_url);
+
+        self.download(url=cache_url, localPath=path);
+        return self.send_head();
+
+    def download(self, url, localPath="", localFileName=None):
+        # this function is learned from
+        # https://stackoverflow.com/questions/862173/how-to-download-a-file-using-python-in-a-smarter-way
+        localName = basename(urlsplit(url)[2])
+        req = urllib.request.Request(url)
+        r = urllib.request.urlopen(req)
+        if 'Content-Disposition' in r.info():
+            # If the response has Content-Disposition, we take file name from it
+            localName = r.info()['Content-Disposition'].split('filename=')[1]
+            if localName[0] == '"' or localName[0] == "'":
+                localName = localName[1:-1]
+        elif r.url != url:
+            # if we were redirected, the real file name we take from the final URL
+            localName = basename(urlsplit(r.url)[2])
+        if localFileName:
+            # we can force to save the file as specified name
+            localName = localFileName
+        if len(localName) is 0:
+            localName = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime()) + ".nameless_file"
+        f = open(localPath + localName, 'wb')
+        shutil.copyfileobj(r, f)
+        f.close()
+
     def send_head(self):
         """Common code for GET and HEAD commands.
 
@@ -1765,6 +2124,9 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.give_method_upload();
         if (path.endswith('method_git_clone')):
             return self.give_method_git_clone();
+        if (path.endswith('method_cache')):
+            return self.give_method_cache();
+
         #         if(path.endswith('method_down_all.py')):
         #             return self.give_method_down_all();
         #         if(path.endswith('method_up_all.py')):
