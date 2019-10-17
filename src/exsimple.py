@@ -1997,7 +1997,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         git_repo_split = git_repo.split("/");
         DEBUG_PRINT(git_repo_split);
         repo_name = git_repo_split[-1];
-        if len(repo_name) is 0:
+        if len(repo_name) == 0:
             repo_name = git_repo_split[-2];
         if (repo_name.endswith(".git")):
             repo_name = repo_name[:len(repo_name) - len(".git")]
@@ -2087,7 +2087,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if localFileName:
             # we can force to save the file as specified name
             localName = localFileName
-        if len(localName) is 0:
+        if len(localName) == 0:
             localName = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime()) + ".nameless_file"
         f = open(localPath + localName, 'wb')
         shutil.copyfileobj(r, f)
