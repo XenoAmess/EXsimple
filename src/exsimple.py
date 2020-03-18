@@ -1,6 +1,6 @@
 ﻿# -*- coding: UTF-8 -*-
 # !/usr/bin/python3 python3
-VERSION = "2019/08/08";
+VERSION = "2020/03/18";
 THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
@@ -41,25 +41,30 @@ DEFAULT_ICON_B64 = "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACXUlEQVR4Xu2W
 DEFAULT_ICON = base64.b64decode(DEFAULT_ICON_B64);
 
 DEFAULT_TITLE = 'EXsimple';
+DEFAULT_DESCRIPTION = "convenient way to set up a simple file-server, provided by XenoAmess.";
+
 DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
-    <h1 class = "subtitle">V%s</h1>
-    <h1 class = "subtitle">convenient way to set up a simple file-server , provided by XenoAmess.</h1>
-    <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
-''' % (DEFAULT_TITLE, VERSION);
+    <div>
+        <p class = "subtitle">V%s</h1>
+        <p class = "subtitle">%s</h1>
+        <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
+    </div>
+''' % (DEFAULT_TITLE, DEFAULT_DESCRIPTION, VERSION);
 
 if THIS_IS_DAILYPASTE:
-    DEFAULT_TITLE = 'DailyPaste!'
+    DEFAULT_TITLE = 'DailyPaste!';
+    DEFAULT_DESCRIPTION = "A free shared file Pastebin who cleans all things at 00:00UTC!";
     DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
-    <h1 class = "subtitle">V%s</h1>
-    <h1 class = "subtitle">A free file Pastebin who cleans all things at 00:00UTC!</h1>
     <div>
+        <p class = "subtitle">V%s</h1>
+        <p class = "subtitle">%s</h1>
         <p class = "subtitle">(Don't over-use it or I will be bankrupt!)</p>
         <p class = "subtitle">provided by XenoAmess!</p>
         <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
     </div>
-''' % (DEFAULT_TITLE, VERSION);
+''' % (DEFAULT_TITLE, DEFAULT_DESCRIPTION, VERSION);
 
 LIST_DIRECTORY_CSS = '''
 html,body{
@@ -205,7 +210,7 @@ LIST_DIRECTORY_CSS_ENC = LIST_DIRECTORY_CSS.encode(DEFAULT_ENC, 'surrogateescape
 
 DEFAULT_METHOD_UPLOAD = '''
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
     <head>
     <!--modified from https://www.script-tutorials.com/pure-html5-file-upload/-->
         <meta charset="utf-8" />
@@ -568,7 +573,7 @@ DEFAULT_METHOD_UPLOAD_ENC = DEFAULT_METHOD_UPLOAD.encode(DEFAULT_ENC, 'surrogate
 
 DEFAULT_METHOD_GIT_CLONE = '''
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
     <head>
         <meta charset="utf-8" />
         <title>git-clone</title>
@@ -852,7 +857,7 @@ DEFAULT_METHOD_GIT_CLONE_ENC = DEFAULT_METHOD_GIT_CLONE.encode(DEFAULT_ENC, 'sur
 
 DEFAULT_METHOD_CACHE = '''
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
     <head>
         <meta charset="utf-8" />
         <title>git-clone</title>
@@ -1136,7 +1141,7 @@ DEFAULT_METHOD_CACHE_ENC = DEFAULT_METHOD_CACHE.encode(DEFAULT_ENC, 'surrogatees
 
 DEFAULT_INDEX = '''
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="icon" type="image/png" href="/favicon.png" />
@@ -1159,9 +1164,6 @@ DEFAULT_INDEX = '''
                 font-weight : 800;
                 font-size : 80px;
                 font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
-            }
-            h1.subtitle {
-                font-size : 30px;
             }
             p.subtitle{
                 margin: 0px;
@@ -1458,6 +1460,7 @@ DEFAULT_INDEX = '''
         </script>
         <title>%s</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+        <meta name="description" content="%s">
     </head>
     <body onload = "bodyInit()">
         <div id="titlewords">%s</div>
@@ -1480,12 +1483,12 @@ DEFAULT_INDEX = '''
                 <input type="text" name="URL" id ="URL" value="" onKeyDown="keydownEvent()"  style="width:95%%"/>
             </div>
             <div class = "window-body">
-                <iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false" scrolling="auto" style="overflow-x:scroll; overflow-y:hidden;"/>
+                <iframe id = "innerframe" name = "innerframe" target = "_self" frameborder="false"  width = "100%%" height = "100%%" style="border:none;"   allowtransparency="false" scrolling="auto" style="overflow-x:scroll; overflow-y:hidden;"></iframe>
             </div>
         </div>
     </body>
 </html>
-''' % (DEFAULT_TITLE, DEFAULT_TITLE_WORDS, DEFAULT_TITLE);
+''' % (DEFAULT_TITLE, DEFAULT_DESCRIPTION, DEFAULT_TITLE_WORDS, DEFAULT_TITLE);
 DEFAULT_INDEX_ENC = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 # DEFAULT_INDEX_GZIP = gzip.compress(DEFAULT_INDEX_ENC);
 # DEFAULT_METHOD_PY = '''
@@ -1703,7 +1706,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def empty_here(self, path):
         DEBUG_PRINT('EMPTY here:', path);
         RETURNED_MESSAGE = '''
-                <html>
+                <html lang="en-US">
                    <head/>
                    <body>
                        <h3>No file nor folder here.Here 's empty.Click [new-folder] to creat a folder here:<br/>%s</h3>
@@ -1733,7 +1736,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         if (os.path.isdir(path)):
             RETURNED_MESSAGE = '''
-            <html>
+            <html lang="en-US">
                <head/>
                <body>
                    <h3>ERROR!You had tried to creat an already-existed folder at:<br/>%s</h3>
@@ -1743,7 +1746,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         elif (os.path.isfile(path)):
             RETURNED_MESSAGE = '''
-            <html>
+            <html lang="en-US">
                <head/>
                <body>
                    <h3>ERROR!You had tried to creat an folder whose path is same to an already-existed file at:<br/>%s</h3>
@@ -1754,7 +1757,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 os.makedirs(path);
                 RETURNED_MESSAGE = '''
-                <html>
+                <html lang="en-US">
                    <head/>
                    <body>
                        <h3>SUCCESS!You had created a new folder at:<br/>%s</h3>
@@ -1763,7 +1766,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
             except BaseException:
                 RETURNED_MESSAGE = '''
-                <html>
+                <html lang="en-US">
                    <head/>
                    <body>
                        <h3>ERROR!You had failed to create a new folder at:<br/>%s</h3>
@@ -2211,7 +2214,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         #         title = '路径: %s' % displaypath
         r.append('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" '
                  '"http://www.w3.org/TR/html4/strict.dtd">')
-        r.append('<html>\n<head>')
+        r.append('<html lang="en-US">\n<head>')
         r.append('<meta http-equiv="Content-Type" '
                  'content="text/html; charset=%s">' % DEFAULT_ENC)
         r.append('<link type="text/css" rel="stylesheet" href="/list_directory_css.css"/>');
