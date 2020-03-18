@@ -1,6 +1,6 @@
 ﻿# -*- coding: UTF-8 -*-
 # !/usr/bin/python3 python3
-VERSION = "2020/03/18";
+VERSION = "2020/03/19";
 THIS_IS_DAILYPASTE = False;
 # DEFAULT_SERVER_IP = '127.0.0.1';
 # change it by yourself!!!
@@ -50,7 +50,7 @@ DEFAULT_TITLE_WORDS = '''
         <p class = "subtitle">%s</h1>
         <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
     </div>
-''' % (DEFAULT_TITLE, DEFAULT_DESCRIPTION, VERSION);
+''' % (DEFAULT_TITLE, VERSION, DEFAULT_DESCRIPTION);
 
 if THIS_IS_DAILYPASTE:
     DEFAULT_TITLE = 'DailyPaste!';
@@ -64,7 +64,7 @@ if THIS_IS_DAILYPASTE:
         <p class = "subtitle">provided by XenoAmess!</p>
         <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
     </div>
-''' % (DEFAULT_TITLE, DEFAULT_DESCRIPTION, VERSION);
+''' % (DEFAULT_TITLE, VERSION, DEFAULT_DESCRIPTION);
 
 LIST_DIRECTORY_CSS = '''
 html,body{
