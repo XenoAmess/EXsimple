@@ -2,7 +2,8 @@
 
 # living example
 http://dailypaste.com/
-https://dailypaste.com/
+
+(https is still testing)https://dailypaste.com/
 
 # what is it:
   
