@@ -2,7 +2,8 @@
 
 # living example
 http://dailypaste.com/
-	
+https://dailypaste.com/
+
 # what is it:
   
   It is used as a public,open,share netdisc.
@@ -73,4 +74,5 @@ Feel free to do that on your own vps.
 
 # Acceleration solution
 A acceleration solution of this project is hold on: [SpeedyExsimple](https://github.com/XenoAmess/SpeedyExsimple).
-Which is used on dailypaste.com
+
+Which is used on current version of dailypaste.com
