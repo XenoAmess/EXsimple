@@ -3,8 +3,6 @@
 # living example
 http://dailypaste.com/
 
-(https is still testing)https://dailypaste.com/
-
 # what is it:
   
   It is used as a public,open,share netdisc.

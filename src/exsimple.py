@@ -46,8 +46,8 @@ DEFAULT_DESCRIPTION = "convenient way to set up a simple file-server, provided b
 DEFAULT_TITLE_WORDS = '''
     <h1>%s</h1>
     <div>
-        <p class = "subtitle">V%s</h1>
-        <p class = "subtitle">%s</h1>
+        <p class = "subtitle">V%s</p>
+        <p class = "subtitle">%s</p>
         <p class = "subtitle">github : <a target="_blank" href="https://github.com/XenoAmess/EXsimple">https://github.com/XenoAmess/EXsimple/</a></p>
     </div>
 ''' % (DEFAULT_TITLE, VERSION, DEFAULT_DESCRIPTION);
@@ -1143,7 +1143,9 @@ DEFAULT_INDEX = '''
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
+        <meta http-equiv="content-language" content="en-gb">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="description" content="A free shared file Pastebin who cleans all things at 00:00UTC!">
         <link rel="icon" type="image/png" href="/favicon.png" />
         <style type="text/css">
             html,body{
