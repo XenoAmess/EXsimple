@@ -1,11 +1,13 @@
 # EXsimple
+sources: https://github.com/XenoAmess/EXsimple
+release: https://pypi.org/project/exsimple/
 
 # living example
 http://dailypaste.com/
 
 # what is it:
   
-  It is used as a public,open,share netdisc.
+  It is used as a public, open, share net-disc.
   
   Yes,it supports multi-files upload in one turn.
   

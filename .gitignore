@@ -1,5 +1,9 @@
 FILE
 
+**/.pypirc
+**/dist
+**/exsimple.egg-info
+
 *.bak
 .project
 .pydevproject
