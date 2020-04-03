@@ -1,12 +1,12 @@
 import codecs
 from setuptools import setup, find_packages
 
-with codecs.open('../README.md', encoding='utf-8') as f:
+with codecs.open('README.md', encoding='utf-8') as f:
     long_description = f.read();
 
 setup(
     name="exsimple",
-    version="1.0.2",
+    version="1.0.3",
     license='https://github.com/XenoAmess/EXsimple/blob/master/LICENCE',
     description="A public, open, share net-disc.",
     author='XenoAmess',

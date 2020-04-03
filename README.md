@@ -72,6 +72,12 @@ Feel free to do that on your own vps.
           also,notice that if you use pypy3 instead of python3,it might run far faster.
           
           nuitka is even far more faster than pypy.but it is not so easy to use.
+          
+  pypi:
+  
+          pip install exsimple
+          
+          screen -dmS exsimple exsimple
 
 # Acceleration solution
 A acceleration solution of this project is hold on: [SpeedyExsimple](https://github.com/XenoAmess/SpeedyExsimple).
