@@ -1584,8 +1584,8 @@ DEFAULT_INDEX_ENC = DEFAULT_INDEX.encode(DEFAULT_ENC, 'surrogateescape');
 MODE_DEBUG = False;
 
 
-def DEBUG_PRINT(*strs):
-    if (MODE_DEBUG):
+def debug_print(*strs):
+    if MODE_DEBUG:
         #         print("\033[1;36;41m",end='');
         for stra in strs:
             print(stra, end=' ');
@@ -1610,7 +1610,7 @@ def txt_wrap_by(start_str, end_str, html_str):
     return html_str[start:end].strip();
 
 
-def QUICK_START(file_dir=DEFAULT_FILE_DIR, port=DEFAULT_PORT):
+def quick_start(file_dir=DEFAULT_FILE_DIR, port=DEFAULT_PORT):
     global DEFAULT_PORT;
     global DEFAULT_FILE_DIR
     DEFAULT_PORT = port;
@@ -1706,8 +1706,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
 
     def empty_here(self, path):
-        DEBUG_PRINT('EMPTY here:', path);
-        RETURNED_MESSAGE = '''
+        debug_print('EMPTY here:', path);
+        returned_message = '''
                 <html lang="en-US">
                    <head/>
                    <body>
@@ -1716,11 +1716,11 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 </html>
                 ''' % (self.path[5:]);
 
-        RETURNED_MESSAGE_ENC = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
+        returned_message_enc = returned_message.encode(DEFAULT_ENC, 'surrogateescape')
 
         f = io.BytesIO();
         #         f.write(gzip.compress(RETURNED_MESSAGE_ENC));
-        f.write(RETURNED_MESSAGE_ENC);
+        f.write(returned_message_enc);
         f.seek(0);
         self.send_response(200);
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC);
@@ -1730,14 +1730,14 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f;
 
     def give_method_new_folder(self, path):
-        DEBUG_PRINT('new FOLDER:', path);
-        RETURNED_MESSAGE = '';
+        debug_print('new FOLDER:', path);
+        returned_message = '';
 
-        if (not self.path.startswith("/FILE/")):
+        if not self.path.startswith("/FILE/"):
             return "";
 
-        if (os.path.isdir(path)):
-            RETURNED_MESSAGE = '''
+        if os.path.isdir(path):
+            returned_message = '''
             <html lang="en-US">
                <head/>
                <body>
@@ -1746,8 +1746,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             </html>
             ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
 
-        elif (os.path.isfile(path)):
-            RETURNED_MESSAGE = '''
+        elif os.path.isfile(path):
+            returned_message = '''
             <html lang="en-US">
                <head/>
                <body>
@@ -1758,7 +1758,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         else:
             try:
                 os.makedirs(path);
-                RETURNED_MESSAGE = '''
+                returned_message = '''
                 <html lang="en-US">
                    <head/>
                    <body>
@@ -1767,7 +1767,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 </html>
                 ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
             except BaseException:
-                RETURNED_MESSAGE = '''
+                returned_message = '''
                 <html lang="en-US">
                    <head/>
                    <body>
@@ -1776,10 +1776,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 </html>
                 ''' % (self.path[5:len(self.path) - len('method_new_folder')]);
 
-        RETURNED_MESSAGE_ENC = RETURNED_MESSAGE.encode(DEFAULT_ENC, 'surrogateescape')
+        returned_message_enc = returned_message.encode(DEFAULT_ENC, 'surrogateescape')
 
         f = io.BytesIO();
-        f.write(RETURNED_MESSAGE_ENC);
+        f.write(returned_message_enc);
         f.seek(0);
         self.send_response(200);
         self.send_header("Content-type", "text/html; charset=%s" % DEFAULT_ENC);
@@ -1828,25 +1828,25 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return f
 
     def _writeheaders(self):
-        DEBUG_PRINT("_writeheaders")
-        DEBUG_PRINT("self.path", self.path)
-        DEBUG_PRINT("self.headers", self.headers)
+        debug_print("_writeheaders")
+        debug_print("self.path", self.path)
+        debug_print("self.headers", self.headers)
         self.send_response(200);
         self.send_header('Content-type', 'text/html');
         self.end_headers()
 
     def printHeaders(self):
-        DEBUG_PRINT();
-        DEBUG_PRINT();
-        DEBUG_PRINT("-----HEADERS_BEGIN-----");
-        DEBUG_PRINT(self.headers);
-        DEBUG_PRINT("-----HEADERS_END-------");
-        DEBUG_PRINT();
-        DEBUG_PRINT();
+        debug_print();
+        debug_print();
+        debug_print("-----HEADERS_BEGIN-----");
+        debug_print(self.headers);
+        debug_print("-----HEADERS_END-------");
+        debug_print();
+        debug_print();
 
     def do_GET(self):
         """Serve a GET request."""
-        DEBUG_PRINT("do_GET");
+        debug_print("do_GET");
 
         self.printHeaders();
 
@@ -1864,8 +1864,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 f.close();
 
     def do_POST(self):
-        DEBUG_PRINT("do_POST");
-        DEBUG_PRINT(self.path);
+        debug_print("do_POST");
+        debug_print(self.path);
         self.printHeaders();
         if self.path.endswith("method_upload"):
             self.receive_post_method_upload();
@@ -1878,10 +1878,10 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         path = self.translate_path(self.path);
         path = path[:len(path) - len("method_upload")];
 
-        DEBUG_PRINT('RAW PATH:', self.path);
-        DEBUG_PRINT('TRSLATED PATH:', path);
+        debug_print('RAW PATH:', self.path);
+        debug_print('TRSLATED PATH:', path);
 
-        if (not self.path.startswith("/FILE/")):
+        if not self.path.startswith("/FILE/"):
             self.send_error(403, "No permission to upload in this folder!")
             return None
 
@@ -1892,67 +1892,67 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         str_boundary = self.headers.get('Content-Type').split('boundary=')[1].strip('-');
         b_boundary = bytes(str_boundary, DEFAULT_ENC);
 
-        DEBUG_PRINT("remain_bytes", remain_bytes);
-        DEBUG_PRINT("str_boundary", str_boundary);
+        debug_print("remain_bytes", remain_bytes);
+        debug_print("str_boundary", str_boundary);
 
         #         index = self.headers.find('boundary=');
 
         # -----------------------------9158069810016882161586011283\r\n
         now_line = self.rfile.readline();
         remain_bytes -= len(now_line);
-        DEBUG_PRINT("now_line", now_line);
+        debug_print("now_line", now_line);
         filesum = 1 << 30;
         getfilenum = 0;
         while getfilenum < filesum:
-            DEBUG_PRINT("getfilenum", getfilenum);
+            debug_print("getfilenum", getfilenum);
             getfilenum += 1;
             # Content-Disposition: form-data; name="image_file"; filename="1.txt"\r\n
             now_line = b"";
             now_line = self.rfile.readline();
             remain_bytes -= len(now_line);
 
-            DEBUG_PRINT("NAME_LINE", now_line);
+            debug_print("NAME_LINE", now_line);
             str_filename = str(txt_wrap_by(b'filename="', b'"', now_line), DEFAULT_ENC);
-            if (filesum == (1 << 30)):
+            if filesum == (1 << 30):
                 filesum = int(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC))
-            DEBUG_PRINT("filesum", filesum);
+            debug_print("filesum", filesum);
             #             DEBUG_PRINT("strbname",);
             #             DEBUG_PRINT(str(txt_wrap_by(b'name="', b'"; filename=', now_line), DEFAULT_ENC));
             # Content-Type: text/plain\r\n
             now_line = self.rfile.readline();
-            DEBUG_PRINT("firstline", now_line);
+            debug_print("firstline", now_line);
 
             remain_bytes -= len(now_line);
             # \r\n
             now_line = self.rfile.readline();
             remain_bytes -= len(now_line);
-            DEBUG_PRINT("secondline", now_line);
+            debug_print("secondline", now_line);
 
-            DEBUG_PRINT("path", path);
-            DEBUG_PRINT("str_filename", str_filename);
+            debug_print("path", path);
+            debug_print("str_filename", str_filename);
             f = io.BufferedIOBase();
             global DEFAULT_GZIP;
-            if (DEFAULT_GZIP == 1):
+            if DEFAULT_GZIP == 1:
                 f = gzip.GzipFile(filename="", mode="wb", compresslevel=9, fileobj=open(path + str_filename, 'wb'));
             else:
                 f = open(path + str_filename, 'wb');
 
             now_line = b'';
             old_line = self.rfile.readline();
-            DEBUG_PRINT("oldline", old_line);
+            debug_print("oldline", old_line);
             while 1:
                 now_line = old_line;
                 old_line = self.rfile.readline();
                 #                 DEBUG_PRINT(old_line);
-                if (b_boundary in old_line):
-                    DEBUG_PRINT("lastline", old_line);
-                    DEBUG_PRINT("last2line", now_line);
+                if b_boundary in old_line:
+                    debug_print("lastline", old_line);
+                    debug_print("last2line", now_line);
                     f.write(now_line[:-2]);
                     break;
                 f.write(now_line);
-            DEBUG_PRINT("FILE_OUTPUT_COMPLETE:", str_filename);
+            debug_print("FILE_OUTPUT_COMPLETE:", str_filename);
             f.close();
-        DEBUG_PRINT("DO_POST_OVER");
+        debug_print("DO_POST_OVER");
         return self.send_head();
 
     #         return self.send_head();
@@ -1986,8 +1986,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         path = self.translate_path(self.path);
         path = path[:len(path) - len("method_git_clone")];
 
-        DEBUG_PRINT('RAW PATH:', self.path);
-        DEBUG_PRINT('TRSLATED PATH:', path);
+        debug_print('RAW PATH:', self.path);
+        debug_print('TRSLATED PATH:', path);
 
         self._writeheaders();
         remain_bytes = int(self.headers.get('content-length'));
@@ -1997,24 +1997,24 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         line = self.rfile.read(remain_bytes).decode("utf-8")
         git_repo = urllib.parse.unquote(line[len("git_clone_repo="):]);
-        DEBUG_PRINT("git_repo : " + git_repo);
+        debug_print("git_repo : " + git_repo);
 
         git_repo_split = git_repo.split("/");
-        DEBUG_PRINT(git_repo_split);
+        debug_print(git_repo_split);
         repo_name = git_repo_split[-1];
         if len(repo_name) == 0:
             repo_name = git_repo_split[-2];
-        if (repo_name.endswith(".git")):
+        if repo_name.endswith(".git"):
             repo_name = repo_name[:len(repo_name) - len(".git")]
-        DEBUG_PRINT("repo_name : " + repo_name);
-        DEBUG_PRINT("path : " + path);
-        DEBUG_PRINT("temp folder path : " + path + "__temp__" + repo_name);
+        debug_print("repo_name : " + repo_name);
+        debug_print("path : " + path);
+        debug_print("temp folder path : " + path + "__temp__" + repo_name);
         if os.path.isdir(path + "__temp__" + repo_name):
             try:
                 shutil.rmtree(path + "__temp__" + repo_name);
             except Exception:
                 pass;
-        DEBUG_PRINT("zip filepath : " + path + repo_name + ".zip");
+        debug_print("zip filepath : " + path + repo_name + ".zip");
         if os.path.isfile(path + repo_name + ".zip"):
             try:
                 os.remove(path + repo_name + ".zip");
@@ -2059,8 +2059,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         path = self.translate_path(self.path);
         path = path[:len(path) - len("method_cache")];
 
-        DEBUG_PRINT('RAW PATH:', self.path);
-        DEBUG_PRINT('TRSLATED PATH:', path);
+        debug_print('RAW PATH:', self.path);
+        debug_print('TRSLATED PATH:', path);
 
         self._writeheaders();
         remain_bytes = int(self.headers.get('content-length'));
@@ -2070,7 +2070,7 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         line = self.rfile.read(remain_bytes).decode("utf-8")
         cache_url = urllib.parse.unquote(line[len("cache_url="):]);
-        DEBUG_PRINT("cache_url : " + cache_url);
+        debug_print("cache_url : " + cache_url);
 
         self.download(url=cache_url, localPath=path);
         return self.send_head();
@@ -2111,32 +2111,32 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         """
         path = self.translate_path(self.path);
 
-        DEBUG_PRINT('html PATH:', self.path);
-        DEBUG_PRINT('real PATH:', path);
+        debug_print('html PATH:', self.path);
+        debug_print('real PATH:', path);
         #         DEBUG_PRINT('addr:', self.address_string());
 
-        if (self.path == '/' or self.path == ''):
+        if self.path == '/' or self.path == '':
             return self.give_index();
         #         if(self.path == '/index.html'):
         #             return self.give_index();
-        if (self.path == '/robots.txt' or self.path == '/robot.txt'):
+        if self.path == '/robots.txt' or self.path == '/robot.txt':
             return self.give_robots_txt();
-        if (self.path == '/list_directory_css.css'):
+        if self.path == '/list_directory_css.css':
             return self.give_list_directory_css();
-        if (self.path == '/favicon.png'):
+        if self.path == '/favicon.png':
             return self.give_ico();
-        if (path.endswith('method_upload')):
+        if path.endswith('method_upload'):
             return self.give_method_upload();
-        if (path.endswith('method_git_clone')):
+        if path.endswith('method_git_clone'):
             return self.give_method_git_clone();
-        if (path.endswith('method_cache')):
+        if path.endswith('method_cache'):
             return self.give_method_cache();
 
         #         if(path.endswith('method_down_all.py')):
         #             return self.give_method_down_all();
         #         if(path.endswith('method_up_all.py')):
         #             return self.give_method_up_all();
-        if (path.endswith('method_new_folder')):
+        if path.endswith('method_new_folder'):
             return self.give_method_new_folder(path=path[:len(path) - len('method_new_folder')]);
 
         f = None;
@@ -2160,8 +2160,8 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.list_directory(path);
         ctype = self.guess_type(path);
 
-        if (not os.path.isfile(path)):
-            if (not path.endswith('/')):
+        if not os.path.isfile(path):
+            if not path.endswith('/'):
                 path += '/';
             return self.empty_here(path);
 
@@ -2239,18 +2239,18 @@ class EX_SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         r.append('<ul>');
 
         #         如果不在根目录
-        if (displaypath != '/FILE/'):
+        if displaypath != '/FILE/':
 
             fatherpath = None;
             for i in range(0, len(displaypath) - 1)[::-1]:
-                if (displaypath[i] == '/'):
+                if displaypath[i] == '/':
                     fatherpath = displaypath[:i + 1];
                     break;
 
             #             DEBUG_PRINT('now user is in displaypath:', displaypath);
             #             DEBUG_PRINT('user can go back fatherpath:', fatherpath);
 
-            if (fatherpath != None):
+            if fatherpath != None:
                 r.append('<li class = "link"><a class = "link_in_list" href="%s" target="_self" >%s</a></li>'
                          % (urllib.parse.quote(fatherpath,
                                                errors='surrogatepass'),
@@ -2470,54 +2470,58 @@ def translate_path(path):
 #             string = False
 #         return string
 
+def startup(file_dir, arguments):
+    global DEFAULT_FILE_DIR
+    global DEFAULT_GZIP
+    global MODE_DEBUG
+    global DEFAULT_PORT
 
-if (__name__ == "__main__"):
-    DEFAULT_FILE_DIR = os.getcwd();
-    DEBUG_PRINT("received commands:");
-    for au in sys.argv:
-        DEBUG_PRINT(au);
+    DEFAULT_FILE_DIR = file_dir;
+    debug_print("received commands:");
+    for au in arguments:
+        debug_print(au);
         au_num = -1;
         try:
             au_num = int(au);
         except:
             pass;
-        if (au_num != -1):
+        if au_num != -1:
             DEFAULT_PORT = au_num;
         else:
-            if (au[-len('.py'):] == '.py'):
+            if au[-len('.py'):] == '.py':
                 pass;
             #                DEFAULT_FILE_DIR = os.path.dirname(au) + '/FILE';
 
-            if (os.path.isdir(au)):
+            if os.path.isdir(au):
                 DEFAULT_FILE_DIR = au;
-            elif (au.startswith("dir=")):
+            elif au.startswith("dir="):
                 DEFAULT_FILE_DIR = au[-(len(au) - len("dir=")):];
-            elif (au.startswith("dir:")):
+            elif au.startswith("dir:"):
                 DEFAULT_FILE_DIR = au[-(len(au) - len("dir:")):];
             else:
-                if (au == "no_gzip"):
+                if au == "no_gzip":
                     DEFAULT_GZIP = 0;
-                elif (au == "gzip_no"):
+                elif au == "gzip_no":
                     DEFAULT_GZIP = 0;
-                elif (au == "gzip=0"):
+                elif au == "gzip=0":
                     DEFAULT_GZIP = 0;
-                elif (au == "gzip:0"):
+                elif au == "gzip:0":
                     DEFAULT_GZIP = 0;
-                elif (au == "yes_gzip"):
+                elif au == "yes_gzip":
                     DEFAULT_GZIP = 1;
-                elif (au == "gzip_yes"):
+                elif au == "gzip_yes":
                     DEFAULT_GZIP = 1;
-                elif (au == "gzip=1"):
+                elif au == "gzip=1":
                     DEFAULT_GZIP = 1;
-                elif (au == "gzip:1"):
+                elif au == "gzip:1":
                     DEFAULT_GZIP = 1;
-                elif (au == "gzip"):
+                elif au == "gzip":
                     DEFAULT_GZIP = 1;
-                elif (au == "debug"):
+                elif au == "debug":
                     MODE_DEBUG = True;
-                elif (au.startswith("port=")):
+                elif au.startswith("port="):
                     DEFAULT_PORT = int(au[-(len(au) - len("port=")):]);
-                elif (au.startswith("port:")):
+                elif au.startswith("port:"):
                     DEFAULT_PORT = int(au[-(len(au) - len("port:")):]);
 
     if not os.path.isdir(DEFAULT_FILE_DIR):
@@ -2525,10 +2529,13 @@ if (__name__ == "__main__"):
     if not os.path.isdir(DEFAULT_FILE_DIR + "/FILE/"):
         os.mkdir(DEFAULT_FILE_DIR + "/FILE/");
     #     print(DEFAULT_FILE_DIR);
-    while (1):
+    while 1:
         try:
-            QUICK_START(DEFAULT_FILE_DIR, DEFAULT_PORT);
+            quick_start(DEFAULT_FILE_DIR, DEFAULT_PORT);
         except OSError:
             DEFAULT_PORT += 1;
             pass;
-#     QUICK_START("/home/sfeq/FILES", 10001);
+
+
+if __name__ == "__main__":
+    startup(os.getcwd(), sys.argv);
